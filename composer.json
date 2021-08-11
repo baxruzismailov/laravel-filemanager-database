@@ -1,0 +1,40 @@
+{
+    "name": "baxruzismailov/laravel-filemanager",
+    "description": "File manager for Laravel",
+    "keywords": [
+        "laravel",
+        "file",
+        "manager"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Baxruz Ismailov",
+            "email": "baxruz@ismailov.az",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.0",
+        "ext-zip": "*",
+        "ext-json": "*",
+        "laravel/framework": "^5.5|^6.0|^7.0|^8.0",
+        "league/flysystem": "^1.0",
+        "intervention/image": "^2.4",
+        "intervention/imagecache": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Baxruzismailov\\Filemanager\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Baxruzismailov\\Filemanager\\FilemanagerServiceProvider"
+            ]
+        }
+    }
+}
