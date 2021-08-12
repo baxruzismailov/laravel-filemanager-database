@@ -1,1 +1,1 @@
-#filemanager-bi-container{background:red}
+#filemanager-bi{margin:20px;-webkit-box-sizing:border-box;box-sizing:border-box;border:1px solid #efefef}#filemanager-bi .filemanager-bi-container{display:flex}#filemanager-bi .filemanager-bi-container .left-menu{width:275px;overflow:auto;padding:10px;background:#f7f8f9}#filemanager-bi .filemanager-bi-container .right-content{width:100%;overflow:auto;border:1px solid #efefef;background:#4383e3;padding:10px}
