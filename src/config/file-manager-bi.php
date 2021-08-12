@@ -3,7 +3,7 @@
 return [
 
 
-    'middleware_fm' => ['web','fm-bi-acl'],
+    'middleware_fm_bi' => ['web','fm-bi-acl'],
 
 
 ];

@@ -30,7 +30,7 @@ class FilemanagerServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/file-manager-bi.php',
-            'file-manager'
+            'file-manager-bi'
         );
 
         $this->app['router']->aliasMiddleware('fm-bi-acl', FileManagerMiddleware::class);
