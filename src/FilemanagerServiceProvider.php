@@ -30,7 +30,7 @@ class FilemanagerServiceProvider extends ServiceProvider
 
         //Translations
         $this->publishes([
-            __DIR__ . '/resources/lang' => resource_path('lang'),
+            __DIR__ . '/resources/lang' => resource_path('lang/vendor/file-manager-bi'),
         ], 'fm-bi-translations');
 
 
