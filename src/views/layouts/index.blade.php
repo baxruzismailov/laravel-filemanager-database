@@ -7,21 +7,20 @@
     <link href="{{ asset('vendor/file-manager-bi/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/file-manager-bi/plugins/fontawesemo5/css/all.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/file-manager-bi/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/file-manager-bi/css/responsive.css') }}" rel="stylesheet">
 
 
     <title>File Manager</title>
 </head>
 <body>
 
-<div id="filemanager-bi-container">
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-md-2">Menular <i class="fab fa-apple"></i></div>
-            <div class="col-md-10 bg-info">
-                Dogru yerdesen
-            </div>
-        </div>
+<div id="filemanager-bi">
+
+    <div class="filemanager-bi-container">
+        <div class="left-menu">SOl Menu</div>
+        <div class="right-content">Content</div>
     </div>
+
 </div>
 
 

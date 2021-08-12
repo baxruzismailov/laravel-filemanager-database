@@ -1,5 +1,25 @@
-#filemanager-bi-container{
+#filemanager-bi{
+    margin: 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #efefef;
+    .filemanager-bi-container{
+        display: flex;
 
-    background: red;
+        .left-menu{
+            width: 275px;
+            overflow: auto;
+            padding: 10px;
+            background: #F7F8F9;
+        }
+
+        .right-content{
+            width: 100%;
+            overflow: auto;
+            border: 1px solid #efefef;
+            background: #4383e3;
+            padding: 10px;
+        }
+    }
 
 }
