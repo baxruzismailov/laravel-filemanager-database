@@ -15,7 +15,7 @@ class FilemanagerServiceProvider extends ServiceProvider
         //Views
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'filemanager');
         //Translations
-        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'translations');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'fm-translations');
 
         //Config
         $this->publishes([

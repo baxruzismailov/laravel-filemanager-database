@@ -1,6 +1,6 @@
 @extends('filemanager::layouts.index')
 @section('content')
-    TEst content
+{{ trans('fm-translations::filemanager-bi.upload_server') }}
 @endsection
 
 @section('CSS')
