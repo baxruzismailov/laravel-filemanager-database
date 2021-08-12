@@ -10,8 +10,12 @@ class FilemanagerServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        //Routes
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
-        $this->loadViewsFrom(__DIR__ . '/views', 'filemanager');
+        //Views
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'filemanager');
+        //Translations
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'translations');
 
         //Config
         $this->publishes([
@@ -23,6 +27,13 @@ class FilemanagerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/assets' => public_path('vendor/file-manager-bi'),
         ], 'fm-bi-assets');
+
+        //Translations
+        $this->publishes([
+            __DIR__ . '/resources/lang' => resource_path('lang'),
+        ], 'fm-bi-translations');
+
+
     }
 
     public function register()

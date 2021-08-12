@@ -11,8 +11,7 @@ class FilemanagerController extends Controller
 
     public function index()
     {
-
-        return view('filemanager::layouts.index');
+        return view('filemanager::main.index');
     }
 
 
