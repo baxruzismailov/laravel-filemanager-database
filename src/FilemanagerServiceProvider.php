@@ -30,16 +30,16 @@ class FilemanagerServiceProvider extends ServiceProvider
 
 
         // Views
-        $this->publishes([
-            __DIR__
-            .'/resources/views' => resource_path('views/vendor/file-manager-bi'),
-        ], 'fm-bi-views');
+//        $this->publishes([
+//            __DIR__
+//            .'/resources/views' => resource_path('views/vendor/file-manager-bi'),
+//        ], 'fm-bi-views');
 
 
         //Translations
-        $this->publishes([
-            __DIR__ . '/resources/lang' => resource_path('lang/vendor/file-manager-bi'),
-        ], 'fm-bi-translations');
+//        $this->publishes([
+//            __DIR__ . '/resources/lang' => resource_path('lang/vendor/file-manager-bi'),
+//        ], 'fm-bi-translations');
 
 
     }

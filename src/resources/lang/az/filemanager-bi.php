@@ -2,7 +2,8 @@
 
 return [
 
-    'upload_server' => 'Yukle Server',
+    'upload_server' => 'Serverə yüklə',
+    'sub_folder' => 'Yeni alt qovluq',
 
 
 ];
