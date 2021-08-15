@@ -59,7 +59,6 @@ const $autoNavMoreList = $("#autoNavMoreList");
 autoNavMore = () => {
     let childNumber = 2;
 
-
     if ($(window).width() >= 300) {
         // GET MENU AND NAV WIDTH
         const $menuWidth = $mainMenu.width();
