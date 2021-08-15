@@ -1,5 +1,6 @@
 @include('filemanager::layouts.header')
 <div id="filemanager-bi">
+    @yield('modal')
     @include('filemanager::layouts.navbar')
     <div class="filemanager-bi-container">
         @include('filemanager::layouts.menu')

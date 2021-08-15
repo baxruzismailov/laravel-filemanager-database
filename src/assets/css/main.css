@@ -1,12 +1,12 @@
 #filemanager-bi {
-  margin: 20px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid #d7dcdf;
   color: #373a3c;
   font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
-  display: none; }
-  #filemanager-bi .btn {
+  display: none;
+  position: relative; }
+  #filemanager-bi .my-btn {
     display: inline-block;
     font-weight: 400;
     color: #373a3c;
@@ -27,8 +27,34 @@
     transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out;
     transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
     cursor: pointer; }
-    #filemanager-bi .btn:hover {
+    #filemanager-bi .my-btn span {
+      white-space: nowrap; }
+    #filemanager-bi .my-btn:hover {
       background: #F7F8F9; }
+  #filemanager-bi .my-btn-success {
+    background: #00C4B4;
+    color: #FFFFFF;
+    border: 1px solid #ffffff; }
+    #filemanager-bi .my-btn-success:hover {
+      background: #00d0bf; }
+  #filemanager-bi .my-btn-danger {
+    background: #DC3545;
+    color: #FFFFFF;
+    border: 1px solid #ffffff; }
+    #filemanager-bi .my-btn-danger:hover {
+      background: #da4c5b; }
+  #filemanager-bi .my-btn-warning {
+    background: #FFC107;
+    color: #373a3c;
+    border: 1px solid #ffffff; }
+    #filemanager-bi .my-btn-warning:hover {
+      background: #ffcb3c; }
+  #filemanager-bi .my-bg-success {
+    background: #00C4B4; }
+  #filemanager-bi .my-bg-danger {
+    background: #DC3545; }
+  #filemanager-bi .my-bg-warning {
+    background: #FFC107; }
   #filemanager-bi .form-control {
     display: block;
     padding: 3px 5px;
@@ -59,8 +85,10 @@
     border-bottom: 1px solid #d7dcdf; }
     #filemanager-bi .filemanager-bi-navbar .left-navbar-item {
       display: flex;
-      justify-content: center;
-      align-items: center; }
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+      width: calc(100% - 380px); }
       #filemanager-bi .filemanager-bi-navbar .left-navbar-item button {
         margin-right: 5px;
         display: flex;
@@ -71,7 +99,6 @@
           margin-right: 7px; }
     #filemanager-bi .filemanager-bi-navbar .right-navbar-item {
       display: flex;
-      justify-content: center;
       align-items: center; }
       #filemanager-bi .filemanager-bi-navbar .right-navbar-item div {
         margin-left: 8px;
@@ -126,5 +153,104 @@
       background: #ffffff;
       padding: 10px;
       border-left: 1px solid #d7dcdf; }
+
+/*   MODAL START   */
+.filemanager-bi-modal-overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.36);
+  transition: all 0.1s ease-in-out; }
+  .filemanager-bi-modal-overlay .modalOverlayClass {
+    display: none; }
+
+.filemanager-bi-modal-lg {
+  width: 768px;
+  margin: 10px; }
+
+.filemanager-bi-modal-md {
+  width: 500px;
+  margin: 10px; }
+
+.filemanager-bi-modal-sm {
+  width: 300px;
+  margin: 10px; }
+
+.filemanager-bi-modal-overlay.visible {
+  z-index: 999;
+  opacity: 1;
+  visibility: visible; }
+
+.filemanager-bi-modal-container {
+  background: #FFFFFF;
+  position: relative; }
+  .filemanager-bi-modal-container .filemanager-bi-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d7dcdf;
+    background: #F7F8F9;
+    padding: 5px;
+    box-sizing: border-box; }
+    .filemanager-bi-modal-container .filemanager-bi-modal-header .headerClose {
+      margin: 0px;
+      cursor: pointer;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      transition: color 0.2s ease-in-out; }
+      .filemanager-bi-modal-container .filemanager-bi-modal-header .headerClose .fas:hover {
+        color: #707070;
+        transition: color 0.2s ease-in-out; }
+    .filemanager-bi-modal-container .filemanager-bi-modal-header h4 {
+      margin: 0;
+      padding: 0; }
+  .filemanager-bi-modal-container .filemanager-bi-modal-body {
+    padding: 20px; }
+  .filemanager-bi-modal-container .filemanager-bi-modal-footer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    justify-content: flex-end;
+    width: 100%;
+    border-top: 1px solid #d7dcdf;
+    background: #F7F8F9;
+    padding: 5px;
+    box-sizing: border-box; }
+    .filemanager-bi-modal-container .filemanager-bi-modal-footer button {
+      margin: 5px; }
+
+/*   MODAL END   */
+.main-menu {
+  display: inline-flex; }
+
+.main-nav {
+  display: inline-flex;
+  padding: 0; }
+
+.more-btn {
+  color: red; }
+
+.auto-nav-more {
+  position: relative; }
+
+.auto-nav-more-list {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s; }
+
+.auto-nav-more:hover .auto-nav-more-list {
+  opacity: 1;
+  visibility: visible; }
 
 /*# sourceMappingURL=main.css.map */
