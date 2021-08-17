@@ -1,15 +1,14 @@
-$(function (){
+$(function () {
     $('#filemanager-bi').show();
 
     var windowHeight = $(window).height() - 100;
-    $('.filemanager-bi-container').css('height',windowHeight+'px')
+    $('.filemanager-bi-container').css('height', windowHeight + 'px')
 
-    $( window ).resize(function() {
-         windowHeight = $(window).height() - 100;
-        $('.filemanager-bi-container').css('height',windowHeight+'px')
+    $(window).resize(function () {
+        windowHeight = $(window).height() - 100;
+        $('.filemanager-bi-container').css('height', windowHeight + 'px')
     });
 })
-
 
 
 /*   MODAL START   */
@@ -19,7 +18,7 @@ const modalOpen = document.querySelector(".modalOpen");
 const modalClose = document.querySelector(".modalClose");
 
 
-function filemanagerModalOpen(clickID){
+function filemanagerModalOpen(clickID) {
     modalOverlay = document.querySelector(clickID);
     modalOverlay.classList.add("visible");
     let modalOverlayClass = document.querySelector(".modalOverlayClass");
@@ -30,7 +29,7 @@ function filemanagerModalOpen(clickID){
 // Initialize Close Modal by Click Button
 
 
-function filemanagerModalClose(){
+function filemanagerModalClose() {
     modalOverlayClass();
 }
 
@@ -42,61 +41,57 @@ window.addEventListener("click", (e) => {
     }
 });
 
-function modalOverlayClass(){
+function modalOverlayClass() {
     let modalOverlayClass = document.querySelector(".modalOverlayClass").innerHTML;
     modalOverlay = document.querySelector(modalOverlayClass);
     modalOverlay.classList.remove("visible");
     document.querySelector(".modalOverlayClass").innerHTML = '';
 }
+
 /*   MODAL END   */
 
 
-// MAIN MENU
-const $mainMenu = $("#mainMenu");
-const $autoNav = $("#autoNav");
-const $autoNavMore = $("#autoNavMore");
-const $autoNavMoreList = $("#autoNavMoreList");
-autoNavMore = () => {
-    let childNumber = 2;
+// LEFT MENU START
 
-    if ($(window).width() >= 300) {
-        // GET MENU AND NAV WIDTH
-        const $menuWidth = $mainMenu.width();
-        const $autoNavWidth = $autoNav.width();
-        if ($autoNavWidth > $menuWidth) {
-            // CODE FIRES WHEN WINDOW SIZE GOES DOWN
-            $autoNav
-                .children(`.responsiveNav:nth-last-child(${childNumber})`)
-                .prependTo($autoNavMoreList);
-            autoNavMore();
-        } else {
-            // CODE FIRES WHEN WINDOW SIZE GOES UP
-            const $autoNavMoreFirst = $autoNavMoreList
-                .children(".responsiveNav:first-child")
-                .width();
-            // CHECK IF ITEM HAS ENOUGH SPACE TO PLACE IN MENU
-            if ($autoNavWidth + $autoNavMoreFirst < $menuWidth) {
-                $autoNavMoreList.children(".responsiveNav:first-child").insertBefore($autoNavMore);
-            }
+var mobileItems = document.querySelectorAll('#filemanager-bi-slide-out .filemanager-bi-nav-mobile .filemanager-bi-main-menu li.filemanager-bi-menu-item-has-children');
+[].forEach.call(mobileItems, function(el){
+    var i = document.createElement('i');
+    i.setAttribute('class','filemanager-bi-mobile-arrows fas fa-caret-right');
+    el.appendChild(i);
+});
+
+var li_i = document.querySelectorAll('li.filemanager-bi-menu-item-has-children i.filemanager-bi-mobile-arrows');
+[].forEach.call(li_i, function(el){
+    el.addEventListener('click', function(){
+        if(this.className.indexOf('fa-caret-right') != -1){
+            this.classList.remove("fa-caret-right");
+            this.classList.add("fa-caret-down");
+        }else{
+            this.classList.remove("fa-caret-down");
+            this.classList.add("fa-caret-right");
         }
-        if ($autoNavMoreList.children().length > 0) {
-            $autoNavMore.show();
-            childNumber = 2;
-        } else {
-            $autoNavMore.hide();
-            childNumber = 1;
-        }
-    }
-};
-// INIT
-$(function (){
-    autoNavMore();
+
+        var ul = this.parentNode.querySelectorAll('ul')[0];
+        ul.style.display = ul.offsetParent === null ? 'block' : 'none';
+
+    });
+});
+
+
+$(document).on('click','.filemanager-bi-main-menu-item-container',function (){
+
+    $('.filemanager-bi-main-menu ul li .filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-mobile-menu-active')
+    $(this).addClass('filemanager-bi-mobile-menu-active');
+    $('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').removeClass('fa-folder-open');
+    $('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').addClass('fa-folder');
+
+    $('.filemanager-bi-mobile-menu-active').find('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').removeClass('fa-folder');
+    $('.filemanager-bi-mobile-menu-active').find('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').addClass('fa-folder-open');
+
+
 })
 
 
-$( window ).resize(function() {
-    autoNavMore();
-    // console.log($( window ).width());
-});
-// MAIN MENU END
+
+// LEFT MENU END
 

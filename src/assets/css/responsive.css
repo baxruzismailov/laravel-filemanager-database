@@ -1,0 +1,9 @@
+@media (max-width: 767px) {
+    #filemanager-bi .my-col-md-10 {
+        flex: 0 0 auto;
+        width: 100%; }
+
+    #filemanager-bi .my-col-md-2 {
+        flex: 0 0 auto;
+        width: 100%; }
+}
