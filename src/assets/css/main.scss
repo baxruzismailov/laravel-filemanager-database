@@ -8,6 +8,7 @@
     text-decoration: none
 }
 
+
 #filemanager-bi {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -16,7 +17,56 @@
     font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
     display: none;
     position: relative;
+    overflow: hidden;
 
+    ::-webkit-scrollbar {
+        width: 5px;
+        background-color: #cacaca;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #f7f8f9;
+        border-radius: 50px;
+        box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.51) inset;
+    }
+
+    #filemanager-bi-settings {
+        position: absolute;
+        right: 0;
+        width: 275px;
+        height: 100%;
+        overflow-y: auto;
+        border-left: 1px solid #d7dcdf;
+        z-index: 2;
+        background: #FFFFFF;
+        display: none;
+
+        .filemanager-bi-settings-header {
+            height: 41px;
+            border-bottom: 1px solid #d7dcdf;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background: #F7F8F9;
+
+            i {
+                font-size: 20px;
+                font-weight: 600;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+        }
+
+        .filemanager-bi-settings-body {
+            padding: 15px 10px;
+            background: #ffffff;
+        }
+    }
 
     .my-row {
         display: flex;
@@ -128,7 +178,7 @@
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid #e4e6ef;
-        border-radius: .42rem;
+        border-radius: 4px;
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
@@ -145,15 +195,31 @@
     }
 
 
-    .filemanager-bi-navbar {
+    #filemanager-bi-navbar {
         background: #F7F8F9;
-        padding: 5px 11px;
+        padding: 10px 11px;
         border-bottom: 1px solid #d7dcdf;;
 
 
-        .left-navbar-item {
+        #left-navbar-item {
             display: flex;
             align-items: center;
+
+            .filemanager-bi-menu-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 10px;
+                cursor: pointer;
+                background: transparent;
+                width: 30px;
+                height: 30px;
+
+                i {
+                    font-size: 19px;
+                    color: #373a3c;
+                }
+            }
 
             div {
                 margin-left: 8px;
@@ -190,10 +256,31 @@
             }
         }
 
-        .right-navbar-item {
+        #right-navbar-item {
             display: flex;
             align-items: center;
             justify-content: flex-end;
+
+            #filemanager-bi-filter {
+                width: 140px;
+                height: 29px;
+            }
+
+            .filemanager-bi-menu-icon {
+                display: flex;
+                align-items: center;
+                margin-left: 7px;
+                cursor: pointer;
+                background: transparent;
+                width: 30px;
+                height: 30px;
+                flex: 1;
+
+                i {
+                    font-size: 19px;
+                    color: #373a3c;
+                }
+            }
 
             div {
                 margin-left: 8px;
@@ -217,15 +304,30 @@
         }
     }
 
-    .filemanager-bi-container {
+    #filemanager-bi-information {
+        background: #F7F8F9;
+        padding: 10px 17px;
+        border-bottom: 1px solid #f1f1f1;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        justify-content: space-between;
+        #filemanager-bi-information-folder-name {
+            font-weight: 600;
+        }
+    }
+
+    #filemanager-bi-container {
         display: flex;
 
 
-        .filemanager-bi-left-menu {
+        #filemanager-bi-left-menu {
             min-width: 275px;
             overflow: auto;
             background: #F7F8F9;
-
+            display: none;
+            border-right: 1px solid #d7dcdf;
 
             #filemanager-bi-slide-out {
                 background: #F7F8F9;
@@ -236,7 +338,8 @@
 
                 #filemanager-bi-mobile-menu {
                     cursor: pointer;
-                    .filemanager-bi-mobile-menu-active{
+
+                    .filemanager-bi-menu-active {
                         border: 2px solid #0a90eb !important;
                         background: #FFFFFF !important;
                         line-height: 1px;
@@ -311,12 +414,7 @@
                                     }
                                 }
 
-                                .filemanager-bi-main-menu-item-right {
-                                    margin-right: 26px;
-                                    font-size: 14px;
-                                    display: flex;
-                                    align-items: center;
-                                }
+
                             }
 
 
@@ -368,54 +466,164 @@
             }
 
 
-            //ul {
-            //    list-style: none;
-            //    padding: 0;
-            //    margin: 0;
-            //    cursor: pointer;
-            //
-            //    .active {
-            //        border: 2px solid #0a90eb !important;
-            //    }
-            //
-            //    li {
-            //
-            //        border-bottom: 1px solid #d7dcdf;
-            //        padding: 12px 11px;
-            //        transition: background-color 0.2s ease;
-            //
-            //        &:hover {
-            //            background: white;
-            //            transition: background-color 0.2s ease;
-            //        }
-            //
-            //        .filemanager-bi-left-menu-item {
-            //            display: flex;
-            //            justify-content: space-between;
-            //            align-items: center;
-            //
-            //            .filemanager-bi-left-menu-item-left {
-            //                display: flex;
-            //                align-items: center;
-            //
-            //                i {
-            //                    font-size: 19px;
-            //                    color: #0A90EB;
-            //                    margin-right: 5px;
-            //                }
-            //            }
-            //
-            //        }
-            //    }
-            //}
         }
 
-        .filemanager-bi-content {
+        #filemanager-bi-content {
             width: 100%;
-            overflow: auto;
             background: #ffffff;
-            padding: 10px;
-            border-left: 1px solid #d7dcdf;
+
+            #filemanager-bi-content-item {
+                width: 100%;
+                overflow: auto;
+                background: #ffffff;
+                padding: 25px;
+
+                #filemanager-bi-content-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, 155px);
+                    justify-content: space-evenly;
+                    grid-gap: 20px;
+                    align-content: start;
+
+
+
+                    .filemanager-bi-content-item-box {
+                        width: 155px;
+                        height: 150px;
+                        background: #F7F8F9;
+                        border: 1px solid #dfe4e6;
+                        border-radius: 3px;
+                        display: inline-block;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        border: 3px solid #FFFFFF;
+
+                        &:hover {
+                            .filemanager-bi-content-item-info {
+                                transform: translateY(-33px);
+                                transition: 0.3s all;
+                                border-radius: 0;
+                            }
+                        }
+
+                        &:last-child {
+                            margin-bottom: 30px;
+                        }
+
+                        .filemanager-bi-select-file {
+                            position: absolute;
+                            width: 22px;
+                            height: 22px;
+                            background: white;
+                            top: 4px;
+                            left: 4px;
+                            border-radius: 3px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid #dedede;
+
+                            i {
+                                color: #0A90EB;
+                            }
+                        }
+
+
+                        .filemanager-bi-content-item-image {
+                            width: 149px;
+                            height: 110px;
+                            border-top: 1px solid #eaeaea;
+                            border-left: 1px solid #eaeaea;
+                            border-right: 1px solid #eaeaea;
+
+                            img {
+                                width: 153px;
+                                height: 111px;
+                                object-fit: cover;
+                                border-radius: 2px 2px 0 0;
+                            }
+
+                            .photoswipe-item {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 113px;
+
+                                .photoswipe-item-files {
+                                    object-fit: contain;
+                                    width: 60px;
+                                }
+                            }
+                        }
+
+                        .filemanager-bi-content-item-info {
+                            background: #ffffff;
+                            height: 34px;
+                            width: 149px;
+                            overflow: hidden;
+                            padding: 6px;
+                            line-height: 18px;
+                            font-size: 13px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            border-radius: 0 0 2px 2px;
+                            border: 1px solid #eaeaea;
+                            transition: 0.3s all;
+                            position: relative;
+                            z-index: 2;
+
+                        }
+
+
+                        .filemanager-bi-content-item-tools {
+                            background: white;
+                            position: absolute;
+                            width: 100%;
+                            bottom: 0;
+                            z-index: 1;
+                            height: 33px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-evenly;
+                            padding: 0 10px;
+                            border-bottom: 1px solid #eaeaea;
+                            border-left: 1px solid #eaeaea;
+                            border-right: 1px solid #eaeaea;
+                            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.08) inset;
+
+                            i{
+                                background: transparent;
+                                width: 25px;
+                                height: 25px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                transition: color 0.3s ease;
+                                &:hover{
+                                    color: #0A90EB;
+                                    transition: color 0.3s ease;
+                                }
+                            }
+                        }
+
+                    }
+
+                    .filemanager-bi-content-item-footer {
+                        height: 33px;
+                        width: 100%;
+                        justify-content: center;
+                        display: flex;
+                        font-size: 17px;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        grid-column: 1 / -1;
+                    }
+
+
+                }
+            }
         }
     }
 
@@ -526,4 +734,7 @@
 /*   MODAL END   */
 
 
+.select-file-active{
+    border: 3px solid #00b6fd !important;
+}
 

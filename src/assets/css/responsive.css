@@ -1,9 +1,44 @@
 @media (max-width: 767px) {
     #filemanager-bi .my-col-md-10 {
         flex: 0 0 auto;
-        width: 100%; }
+        width: 100%;
+    }
 
     #filemanager-bi .my-col-md-2 {
         flex: 0 0 auto;
-        width: 100%; }
+        width: 100%;
+    }
+
+    #filemanager-bi #filemanager-bi-navbar #left-navbar-item .filemanager-bi-menu-icon {
+        display: none;
+    }
+
+    #filemanager-bi #filemanager-bi-navbar #left-navbar-item {
+        display: flex;
+        height: 41px;
+        align-items: center;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    #filemanager-bi #filemanager-bi-navbar #right-navbar-item {
+        height: 34px;
+    }
+
+    #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter {
+        top: 2px;
+        position: relative;
+    }
+
+    #filemanager-bi #filemanager-bi-navbar #right-navbar-item div {
+        position: relative;
+        top: 3px;
+    }
+}
+
+@media (min-width: 767px) {
+
+
+    #filemanager-bi #filemanager-bi-navbar #right-navbar-item .filemanager-bi-menu-icon {
+        display: none;
+    }
 }
