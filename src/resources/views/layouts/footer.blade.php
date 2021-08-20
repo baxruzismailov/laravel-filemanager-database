@@ -9,7 +9,8 @@
 <!--  MAIN JS  -->
 <script>
     const selectFileTranslate = "{{ trans('fm-translations::filemanager-bi.select_file_length') }}",
-          deleteAllFileTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_all') }}";
+          deleteAllFileTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_all') }}",
+          deleteFiletextTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_text') }}";
 </script>
 <script src="{{ asset('vendor/file-manager-bi/js/main.js') }}"></script>
 @yield('JS')

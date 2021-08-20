@@ -12,9 +12,12 @@ return [
     'file_edit' => 'Redaktə et',
     'file_delete' => 'Sil',
     'file_delete_all' => 'Hamısını sil',
+    'file_delete_text' => 'Silmək istədiyinizə əminsiniz?',
     'file_download' => 'Yüklə',
     'select_all' => 'Hamısını seç',
     'select_file_length' => 'Seçilmiş fayl',
+    'cancle' => 'İmtina et',
+    'success' => 'Tətbiq et',
 
 
 ];

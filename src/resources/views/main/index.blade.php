@@ -6,20 +6,25 @@
         <div id="filemanager-bi-content-container" class="photoswipe-wrapper">
 
 
-
             <!--  IMAGES  -->
             <div class="filemanager-bi-content-item-box"
-                data-file-id="1"
+                 data-file-id="1"
+                 data-file-name="menim screenshot filemendir burasdasd asd.png"
             >
                 <!--  SELECT FILE  -->
-                <div class="filemanager-bi-select-file" data-select-file-checked="0"></div>
+                <div class="filemanager-bi-select-file"></div>
 
                 <div class="filemanager-bi-content-item-image">
                     <div class="photoswipe-item">
                         <a
                             data-title="Fotodur burda"
                             href="{{ asset('storage/test.jpg') }}">
-                            <img src="{{ asset('storage/test.jpg') }}" >
+                            <img src="{{ asset('storage/test.jpg') }}">
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>image asda sad asdasd asdasd aasd asd.png</div>
+                                <div>20.08.2021 14:14</div>
+                                <div>14.0 MB</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -28,10 +33,17 @@
                 </div>
                 <!--  TOOLS  -->
                 <div class="filemanager-bi-content-item-tools">
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}" class="far fa-arrow-alt-circle-down"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}" class="fas fa-feather-alt"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
+                       class="far fa-arrow-alt-circle-down"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}"
+                       class="fas fa-feather-alt"></i>
                     <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}" class="far fa-trash-alt"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-file"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-file-modal"
+                    ></i>
                 </div>
             </div>
 
@@ -39,9 +51,10 @@
             <!--  VIDEO 1  -->
             <div class="filemanager-bi-content-item-box"
                  data-file-id="2"
+                 data-file-name="video menim.mp4"
             >
                 <!--  SELECT FILE  -->
-                <div class="filemanager-bi-select-file" data-select-file-checked="0"></div>
+                <div class="filemanager-bi-select-file"></div>
 
                 <div class="filemanager-bi-content-item-image">
                     <div class="photoswipe-item">
@@ -52,7 +65,15 @@
                                        <video width="960" class="pswp__video" src="{{ asset('storage/test.mp4') }}" controls></video>
                                        </div>
                                        </div>'>
-                            <img class="photoswipe-item-files" src="{{ asset('vendor/file-manager-bi/images/play.svg') }}">
+                            <div class="photoswipe-item-files-container">
+                                <img class="photoswipe-item-files"
+                                     src="{{ asset('vendor/file-manager-bi/images/play.svg') }}">
+                            </div>
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>image asda sad asdasd asdasd aasd asd.png</div>
+                                <div>20.08.2021 14:14</div>
+                                <div>14.0 MB</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -61,10 +82,17 @@
                 </div>
                 <!--  TOOLS  -->
                 <div class="filemanager-bi-content-item-tools">
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}" class="far fa-arrow-alt-circle-down"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}" class="fas fa-feather-alt"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
+                       class="far fa-arrow-alt-circle-down"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}"
+                       class="fas fa-feather-alt"></i>
                     <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}" class="far fa-trash-alt"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-file"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-file-modal"
+                    ></i>
                 </div>
 
             </div>
@@ -73,9 +101,10 @@
             <!--  AUDIO 1 -->
             <div class="filemanager-bi-content-item-box"
                  data-file-id="3"
+                 data-file-name="audio menim.mp3"
             >
                 <!--  SELECT FILE  -->
-                <div class="filemanager-bi-select-file" data-select-file-checked="0"></div>
+                <div class="filemanager-bi-select-file"></div>
 
                 <div class="filemanager-bi-content-item-image">
                     <div class="photoswipe-item">
@@ -86,7 +115,15 @@
                                        <audio controls><source class="pswp__audio" src="{{ asset('storage/test.mp3') }}" type="audio/mpeg"> Your browser does not support the audio element. </audio>
                                        </div>
                                        </div>'>
-                            <img class="photoswipe-item-files" src="{{ asset('vendor/file-manager-bi/images/audio.svg') }}">
+                            <div class="photoswipe-item-files-container">
+                                <img class="photoswipe-item-files"
+                                     src="{{ asset('vendor/file-manager-bi/images/audio.svg') }}">
+                            </div>
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>image asda sad asdasd asdasd aasd asd.png</div>
+                                <div>20.08.2021 14:14</div>
+                                <div>14.0 MB</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -95,10 +132,17 @@
                 </div>
                 <!--  TOOLS  -->
                 <div class="filemanager-bi-content-item-tools">
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}" class="far fa-arrow-alt-circle-down"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}" class="fas fa-feather-alt"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
+                       class="far fa-arrow-alt-circle-down"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}"
+                       class="fas fa-feather-alt"></i>
                     <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}" class="far fa-trash-alt"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-file"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-file-modal"
+                    ></i>
                 </div>
             </div>
 
@@ -106,9 +150,10 @@
             <!--  DOCUMENT  -->
             <div class="filemanager-bi-content-item-box"
                  data-file-id="4"
+                 data-file-name="zip menim.zip"
             >
                 <!--  SELECT FILE  -->
-                <div class="filemanager-bi-select-file" data-select-file-checked="0"></div>
+                <div class="filemanager-bi-select-file"></div>
 
                 <div class="filemanager-bi-content-item-image">
                     <div class="photoswipe-item">
@@ -119,7 +164,15 @@
                                       <img src="{{ asset('vendor/file-manager-bi/images/document.svg') }}">
                                        </div>
                                        </div>'>
-                            <img class="photoswipe-item-files" src="{{ asset('vendor/file-manager-bi/images/document.svg') }}">
+                            <div class="photoswipe-item-files-container">
+                                <img class="photoswipe-item-files"
+                                     src="{{ asset('vendor/file-manager-bi/images/document.svg') }}">
+                            </div>
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>image asda sad asdasd asdasd aasd asd.png</div>
+                                <div>20.08.2021 14:14</div>
+                                <div>14.0 MB</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -128,30 +181,41 @@
                 </div>
                 <!--  TOOLS  -->
                 <div class="filemanager-bi-content-item-tools">
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}" class="far fa-arrow-alt-circle-down"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}" class="fas fa-feather-alt"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
+                       class="far fa-arrow-alt-circle-down"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}"
+                       class="fas fa-feather-alt"></i>
                     <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}" class="far fa-trash-alt"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-file"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-file-modal"
+                    ></i>
                 </div>
             </div>
-
-
 
 
             <!--  TEST START  -->
             <!--  IMAGES  -->
             <div class="filemanager-bi-content-item-box"
                  data-file-id="5"
+                 data-file-name="mamed.jpg"
             >
                 <!--  SELECT FILE  -->
-                <div class="filemanager-bi-select-file" data-select-file-checked="0"></div>
+                <div class="filemanager-bi-select-file"></div>
 
                 <div class="filemanager-bi-content-item-image">
                     <div class="photoswipe-item">
                         <a
                             data-title="Fotodur burda"
-                            href="{{ asset('storage/test.jpg') }}">
-                            <img src="{{ asset('storage/test.jpg') }}" >
+                            href="{{ asset('storage/test2.jpg') }}">
+                            <img src="{{ asset('storage/test2.jpg') }}">
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>image asda sad asdasd asdasd aasd asd.png</div>
+                                <div>20.08.2021 14:14</div>
+                                <div>14.0 MB</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -160,15 +224,21 @@
                 </div>
                 <!--  TOOLS  -->
                 <div class="filemanager-bi-content-item-tools">
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}" class="far fa-arrow-alt-circle-down"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}" class="fas fa-feather-alt"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
+                       class="far fa-arrow-alt-circle-down"></i>
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_rename') }}"
+                       class="fas fa-feather-alt"></i>
                     <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
-                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}" class="far fa-trash-alt"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-file"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-file-modal"
+                    ></i>
                 </div>
             </div>
 
             <!--  TEST END  -->
-
 
 
             <div class="filemanager-bi-content-item-footer">
@@ -252,5 +322,52 @@
         <div class="modalOverlayClass"></div>
     </div>
 
+    <!--  REMOVE SELECT FILES MODAL START  -->
+    <div class="filemanager-bi-modal-overlay" id="remove-files-modal">
+        <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
+            <div class="filemanager-bi-modal-header">
+                <h4></h4>
+                <div class="headerClose" onclick="filemanagerModalClose()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="filemanager-bi-modal-body"></div>
+            <div class="filemanager-bi-modal-footer">
+                <button class="my-btn " onclick="filemanagerModalClose()">
+                    {{ trans('fm-translations::filemanager-bi.cancle') }}
+                </button>
+                <button id="remove-files-modal-success" class="my-btn my-btn-success">
+                    {{ trans('fm-translations::filemanager-bi.success') }}
+                </button>
+            </div>
+
+        </div>
+        <div class="modalOverlayClass"></div>
+    </div>
+    <!--  REMOVE SELECT FILES MODAL END  -->
+
+    <!--  REMOVE ONLY ONE FILE MODAL START  -->
+    <div class="filemanager-bi-modal-overlay" id="remove-only-one-file-modal">
+        <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
+            <div class="filemanager-bi-modal-header">
+                <h4></h4>
+                <div class="headerClose" onclick="filemanagerModalClose()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="filemanager-bi-modal-body"></div>
+            <div class="filemanager-bi-modal-footer">
+                <button class="my-btn " onclick="filemanagerModalClose()">
+                    {{ trans('fm-translations::filemanager-bi.cancle') }}
+                </button>
+                <button id="remove-only-one-file-modal-success" class="my-btn my-btn-success">
+                    {{ trans('fm-translations::filemanager-bi.success') }}
+                </button>
+            </div>
+
+        </div>
+        <div class="modalOverlayClass"></div>
+    </div>
+    <!--  REMOVE ONLY ONE FILE MODAL END  -->
 @endsection
 

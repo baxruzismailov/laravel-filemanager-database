@@ -26,6 +26,7 @@ function removeNavbarRightInfo() {
 function addNavbarToolsButton() {
     /*   DELETE BUTTON   */
     $('#left-navbar-item').append(`<div id="filemanager-bi-delete-select-file"
+        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-files-modal"
          title="${deleteAllFileTranslate}">
         <i class="fas fa-trash-alt"></i>
     </div>`);
@@ -149,7 +150,7 @@ $(document).on('click', '#filemanager-bi-settings .filemanager-bi-settings-heade
 
 $(document).on('click', '.filemanager-bi-select-file', function () {
 
-    var selectActiveBox =  $(this).parent('.select-file-active');
+    var selectActiveBox = $(this).parent('.select-file-active');
 
 
     if (selectActiveBox.length == 1) {
@@ -183,7 +184,7 @@ $(document).on('click', '#filemanager-bi-select-all', function () {
     var selectActiveBox = $('.select-file-active');
 
 
-    selectAllFile.each(function (index,el) {
+    selectAllFile.each(function (index, el) {
 
         var selectFiles = $(this).find('.filemanager-bi-select-file');
 
@@ -207,24 +208,71 @@ $(document).on('click', '#filemanager-bi-select-all', function () {
     })
 
 
-
-
-
 })
 /*   SELECT ALL FILE END   */
 
 
 /*   DELETE SELECT FILE START   */
-
 $(document).on('click', '#filemanager-bi-delete-select-file', function () {
     const selectActiveFile = $('.select-file-active');
 
-    //IDLERI AL AJAX SORGUNU GONDER
-    selectActiveFile.each(function () {
-        $(this).remove();
-    });
+    if (selectActiveFile.length == 1) {
+        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + selectActiveFile.attr('data-file-name'));
+    } else {
+        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + selectFileTranslate + ' - ' + selectActiveFile.length);
+    }
 
-    removeNavbarRightInfo();
+
 
 })
+
+$(document).on('click','#remove-files-modal-success',function (){
+    const selectActiveFile = $('.select-file-active');
+
+    //Check files ID & Ajax Post
+    var dataFilesID = [];
+    selectActiveFile.each(function () {
+        const filesID = $(this).attr('data-file-id');
+        dataFilesID.push(filesID);
+        // $(this).remove();
+    });
+
+    //Bunu ajaxla qarshi terefe gondereceysen
+    // dataFilesID
+    console.log(dataFilesID);
+
+    // removeNavbarRightInfo();
+    // filemanagerModalClose()
+})
 /*   DELETE SELECT FILE END   */
+
+
+/*   DELETE ONLY ONE FILE START   */
+$(document).on('click', '.filemanager-bi-delete-one-file', function () {
+    const thisFile = $(this).closest('.filemanager-bi-content-item-box');
+    $('.filemanager-bi-content-item-box').removeClass('only-one-file-active');
+    thisFile.addClass('only-one-file-active');
+    $('#remove-only-one-file-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + thisFile.attr('data-file-name'));
+
+})
+
+$(document).on('click','#remove-only-one-file-modal-success',function (){
+
+    const activeFile = $('.only-one-file-active');
+
+    //Check files ID & Ajax Post
+    var dataFileID = activeFile.attr('data-file-id');
+
+    //Bunu ajaxla qarshi terefe gondereceysen
+    // dataFileID
+    // console.log(dataFileID);
+
+    const selectActiveFile = $('.select-file-active');
+    if(selectActiveFile.length != 0){
+        $('#filemanager-bi-information-right').html(selectFileTranslate + ' - ' + $('.select-file-active').length);
+    }else {
+        removeNavbarRightInfo();
+    }
+    filemanagerModalClose()
+})
+/*   DELETE ONLY ONE FILE END   */
