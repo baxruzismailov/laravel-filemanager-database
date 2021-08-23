@@ -6,6 +6,83 @@
         <div id="filemanager-bi-content-container" class="photoswipe-wrapper">
 
 
+            <!--  FOLDER BACK  -->
+            <div class="filemanager-bi-content-item-folder-back-box"
+                 data-back-folder-id="1"
+            >
+
+                <div class="filemanager-bi-content-item-folder-back-image">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="filemanager-bi-content-item-folder-back-name">
+                   Geri
+                </div>
+            </div>
+
+
+            <!--  FOLDERS  -->
+            <div class="filemanager-bi-content-item-folder-box"
+                 data-folder-id="1"
+                 data-folder-name="Toshiba"
+            >
+                <!--  SELECT FILE  -->
+                <div class="filemanager-bi-select-folder"></div>
+
+                <div class="filemanager-bi-content-item-folder-image">
+                    <img src="{{ asset('vendor/file-manager-bi/images/folder.svg') }}" alt="Folder Name">
+                </div>
+                <div class="filemanager-bi-content-item-folder-info-mobile">
+                    <div>Papka adi</div>
+                    <div>20.08.2021 14:14</div>
+                    <div>150 fayl</div>
+                </div>
+                <div class="filemanager-bi-content-item-folder-name">
+                    Folderin adi
+                </div>
+                <!-- FOLDER TOOLS  -->
+                <div class="filemanager-bi-content-item-folder-tools">
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-folder"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-folder-modal"
+                    ></i>
+                </div>
+            </div>
+
+            <div class="filemanager-bi-content-item-folder-box"
+                 data-folder-id="2"
+                 data-folder-name="Samsung"
+            >
+                <!--  SELECT FILE  -->
+                <div class="filemanager-bi-select-folder"></div>
+
+                <div class="filemanager-bi-content-item-folder-image">
+                    <img src="{{ asset('vendor/file-manager-bi/images/folder.svg') }}" alt="Folder Name">
+                </div>
+                <div class="filemanager-bi-content-item-folder-info-mobile">
+                    <div>Papka adi</div>
+                    <div>20.08.2021 14:14</div>
+                    <div>150 fayl</div>
+                </div>
+                <div class="filemanager-bi-content-item-folder-name">
+                    Folderin adi
+                </div>
+                <!-- FOLDER TOOLS  -->
+                <div class="filemanager-bi-content-item-folder-tools">
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-folder"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-folder-modal"
+                    ></i>
+                </div>
+            </div>
+
+
+
             <!--  IMAGES  -->
             <div class="filemanager-bi-content-item-box"
                  data-file-id="1"
@@ -67,7 +144,7 @@
                                        </div>'>
                             <div class="photoswipe-item-files-container">
                                 <img class="photoswipe-item-files"
-                                     src="{{ asset('vendor/file-manager-bi/images/play.svg') }}">
+                                     src="{{ asset('vendor/file-manager-bi/images/extensions/mp4.png') }}">
                             </div>
                             <div class="fm-photoswipe-item-mobile">
                                 <div>image asda sad asdasd asdasd aasd asd.png</div>
@@ -117,7 +194,7 @@
                                        </div>'>
                             <div class="photoswipe-item-files-container">
                                 <img class="photoswipe-item-files"
-                                     src="{{ asset('vendor/file-manager-bi/images/audio.svg') }}">
+                                     src="{{ asset('vendor/file-manager-bi/images/extensions/mp3.png') }}">
                             </div>
                             <div class="fm-photoswipe-item-mobile">
                                 <div>image asda sad asdasd asdasd aasd asd.png</div>
@@ -161,12 +238,12 @@
                            data-title="Filedir burda"
                            data-document='<div class="wrapper">
                                        <div class="document-wrapper">
-                                      <img src="{{ asset('vendor/file-manager-bi/images/document.svg') }}">
+                                      <img src="{{ asset('vendor/file-manager-bi/images/extensions/zip.png') }}">
                                        </div>
                                        </div>'>
                             <div class="photoswipe-item-files-container">
                                 <img class="photoswipe-item-files"
-                                     src="{{ asset('vendor/file-manager-bi/images/document.svg') }}">
+                                     src="{{ asset('vendor/file-manager-bi/images/extensions/zip.png') }}">
                             </div>
                             <div class="fm-photoswipe-item-mobile">
                                 <div>image asda sad asdasd asdasd aasd asd.png</div>
@@ -241,11 +318,20 @@
             <!--  TEST END  -->
 
 
+            <!--  FOLDER BACK  -->
+            <div class="filemanager-bi-content-item-folder-not-box" >
+                FAYL YOXDUR
+            </div>
+
+
             <div class="filemanager-bi-content-item-footer">
-                <div class="filemanager-bi-content-item-footer-text">Fayl yoxdur</div>
+                <!--  NOT FILE   -->
+                <div class="filemanager-bi-content-item-footer-text"></div>
             </div>
 
         </div>
+
+
 
         <!--  CONTENT END  -->
     </div>
@@ -255,119 +341,23 @@
 @section('CSS')
 @endsection
 @section('JS')
+
+    <script>
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+        });
+
+    </script>
+
+
 @endsection
 @section('modal')
-
-
-    <!--  MODAL 1  -->
-    <div class="filemanager-bi-modal-overlay" id="testmodal1">
-        <div class="filemanager-bi-modal-container filemanager-bi-modal-lg">
-            <div class="filemanager-bi-modal-header">
-                <h4>Yeni ad</h4>
-                <div class="headerClose" onclick="filemanagerModalClose()">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="filemanager-bi-modal-body">
-                Lorem ipsum dolor sit amet.
-            </div>
-            <div class="filemanager-bi-modal-footer">
-                <button class="my-btn my-btn-danger" onclick="filemanagerModalClose()">Imtina et</button>
-                <button class="my-btn my-btn-success">tetbiq et</button>
-            </div>
-
-        </div>
-        <div class="modalOverlayClass"></div>
-    </div>
-
-    <!--  MODAL 2 -->
-    <div class="filemanager-bi-modal-overlay" id="testmodal2">
-        <div class="filemanager-bi-modal-container filemanager-bi-modal-md">
-            <div class="filemanager-bi-modal-header">
-                <h4>Yeni ad</h4>
-                <div class="headerClose" onclick="filemanagerModalClose()">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="filemanager-bi-modal-body">
-                Lorem ipsum dolor sit amet.
-            </div>
-            <div class="filemanager-bi-modal-footer">
-                <button class="my-btn my-btn-warning" onclick="filemanagerModalClose()">Imtina et</button>
-                <button class="my-btn my-btn-success">tetbiq et</button>
-            </div>
-
-        </div>
-        <div class="modalOverlayClass"></div>
-    </div>
-
-    <!--  MODAL 3  -->
-    <div class="filemanager-bi-modal-overlay" id="testmodal3">
-        <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
-            <div class="filemanager-bi-modal-header">
-                <h4>Yeni ad</h4>
-                <div class="headerClose" onclick="filemanagerModalClose()">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="filemanager-bi-modal-body">
-                Lorem ipsum dolor sit amet.
-            </div>
-            <div class="filemanager-bi-modal-footer">
-                <button class="my-btn " onclick="filemanagerModalClose()">Imtina et</button>
-                <button class="my-btn my-btn-success">tetbiq et</button>
-            </div>
-
-        </div>
-        <div class="modalOverlayClass"></div>
-    </div>
-
-    <!--  REMOVE SELECT FILES MODAL START  -->
-    <div class="filemanager-bi-modal-overlay" id="remove-files-modal">
-        <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
-            <div class="filemanager-bi-modal-header">
-                <h4></h4>
-                <div class="headerClose" onclick="filemanagerModalClose()">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="filemanager-bi-modal-body"></div>
-            <div class="filemanager-bi-modal-footer">
-                <button class="my-btn " onclick="filemanagerModalClose()">
-                    {{ trans('fm-translations::filemanager-bi.cancle') }}
-                </button>
-                <button id="remove-files-modal-success" class="my-btn my-btn-success">
-                    {{ trans('fm-translations::filemanager-bi.success') }}
-                </button>
-            </div>
-
-        </div>
-        <div class="modalOverlayClass"></div>
-    </div>
-    <!--  REMOVE SELECT FILES MODAL END  -->
-
-    <!--  REMOVE ONLY ONE FILE MODAL START  -->
-    <div class="filemanager-bi-modal-overlay" id="remove-only-one-file-modal">
-        <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
-            <div class="filemanager-bi-modal-header">
-                <h4></h4>
-                <div class="headerClose" onclick="filemanagerModalClose()">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="filemanager-bi-modal-body"></div>
-            <div class="filemanager-bi-modal-footer">
-                <button class="my-btn " onclick="filemanagerModalClose()">
-                    {{ trans('fm-translations::filemanager-bi.cancle') }}
-                </button>
-                <button id="remove-only-one-file-modal-success" class="my-btn my-btn-success">
-                    {{ trans('fm-translations::filemanager-bi.success') }}
-                </button>
-            </div>
-
-        </div>
-        <div class="modalOverlayClass"></div>
-    </div>
-    <!--  REMOVE ONLY ONE FILE MODAL END  -->
+    @include('filemanager::main.modal')
 @endsection
 

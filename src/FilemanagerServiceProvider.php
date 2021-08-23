@@ -28,6 +28,18 @@ class FilemanagerServiceProvider extends ServiceProvider
             __DIR__ . '/assets' => public_path('vendor/file-manager-bi'),
         ], 'fm-bi-assets');
 
+        //CSS & JS
+        $this->publishes([
+            __DIR__ . '/assets' => public_path('vendor/file-manager-bi'),
+        ], 'fm-bi-assets');
+
+        //Migrations
+        $this->publishes([
+            __DIR__
+            .'/migrations' => database_path('migrations'),
+        ], 'fm-bi-migrations');
+
+
 
         // Views
 //        $this->publishes([

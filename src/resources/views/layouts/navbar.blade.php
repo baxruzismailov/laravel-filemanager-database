@@ -20,18 +20,29 @@
                     <i class="fas fa-folder-plus"></i>
                 </div>
 
-                <div
-                    onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#testmodal3"
-                    title="{{ trans('fm-translations::filemanager-bi.sub_folder') }}">
-                    <i class="fas fa-folder-plus"></i>
-                </div>
+            {{--                <div--}}
+            {{--                    onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#testmodal3"--}}
+            {{--                    title="{{ trans('fm-translations::filemanager-bi.sub_folder') }}">--}}
+            {{--                    <i class="fas fa-folder-plus"></i>--}}
+            {{--                </div>--}}
 
-                <!--  SELECT ALL START  -->
+            <!--  SELECT ALL FOLDER START  -->
+                <span class="filemanager-bi-select-navbar-folder-box">
+                    <div id="filemanager-bi-select-folder-all"
+                         title="{{ trans('fm-translations::filemanager-bi.select_folder_all') }}">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                </span>
+                <!--  SELECT ALL FOLDER END  -->
+
+                <!--  SELECT ALL FILE START  -->
+                <span class="filemanager-bi-select-navbar-file-box">
                 <div id="filemanager-bi-select-all"
                      title="{{ trans('fm-translations::filemanager-bi.select_all') }}">
                     <i class="fas fa-check-double"></i>
                 </div>
-                <!--  SELECT ALL END  -->
+                </span>
+                <!--  SELECT ALL FILE END  -->
 
 
             </div>
@@ -41,8 +52,10 @@
                 <span class="filemanager-bi-menu-icon">
                     <i class="fas fa-align-justify"></i>
                 </span>
-                <input id="filemanager-bi-filter" type="text" class="form-control" placeholder="{{ trans('fm-translations::filemanager-bi.filter_placeholder') }}">
-                <div title="{{ trans('fm-translations::filemanager-bi.settings') }}" id="filemanager-bi-setting-icon" data-setting-status="0">
+                <input id="filemanager-bi-filter" type="text" class="form-control"
+                       placeholder="{{ trans('fm-translations::filemanager-bi.filter_placeholder') }}">
+                <div title="{{ trans('fm-translations::filemanager-bi.settings') }}" id="filemanager-bi-setting-icon"
+                     data-setting-status="0">
                     <i class="fas fa-cog"></i>
                 </div>
             </div>

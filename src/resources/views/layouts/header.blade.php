@@ -17,6 +17,7 @@
     <!--  MAIN CSS  -->
     <link href="{{ asset('vendor/file-manager-bi/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/file-manager-bi/css/responsive.css') }}" rel="stylesheet">
+
     @yield('CSS')
 
     <title>File Manager</title>

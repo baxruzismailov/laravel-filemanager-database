@@ -7,7 +7,7 @@
     text-decoration: none
 }
 
-h1,h2,h3,h4,h5,h6{
+h1, h2, h3, h4, h5, h6 {
     padding: 0;
     margin: 0;
 }
@@ -209,6 +209,14 @@ h1,h2,h3,h4,h5,h6{
             display: flex;
             align-items: center;
 
+            .filemanager-bi-select-navbar-folder-box {
+                display: flex;
+            }
+
+            .filemanager-bi-select-navbar-file-box {
+                display: flex;
+            }
+
             .filemanager-bi-menu-icon {
                 display: flex;
                 justify-content: center;
@@ -226,6 +234,9 @@ h1,h2,h3,h4,h5,h6{
             }
 
             div {
+                font-size: 14px;
+                width: 29px;
+                height: 29px;
                 margin-left: 8px;
                 background: white;
                 border-radius: 50%;
@@ -317,6 +328,7 @@ h1,h2,h3,h4,h5,h6{
         align-items: center;
         font-size: 15px;
         justify-content: space-between;
+
         #filemanager-bi-information-folder-name {
             font-weight: 600;
         }
@@ -412,7 +424,7 @@ h1,h2,h3,h4,h5,h6{
                                     align-items: center;
 
                                     .filemanager-bi-main-menu-item-folder {
-                                        color: #0A90EB;
+                                        color: #ffc929;
                                         margin-right: 5px;
                                         font-size: 15px;
                                     }
@@ -426,45 +438,45 @@ h1,h2,h3,h4,h5,h6{
                     }
 
 
-                    ul {
-                        ul {
-                            .filemanager-bi-main-menu-item-container {
-                                padding-left: 30px
-                            }
-                        }
-                    }
-
-                    ul {
-                        ul {
-                            ul {
-                                .filemanager-bi-main-menu-item-container {
-                                    padding-left: 40px
-                                }
-                            }
-                        }
-                    }
-
-                    ul {
-                        ul {
-                            ul {
-                                .filemanager-bi-main-menu-item-container {
-                                    padding-left: 50px
-                                }
-                            }
-                        }
-                    }
-
-                    ul {
-                        ul {
-                            ul {
-                                ul {
-                                    .filemanager-bi-main-menu-item-container {
-                                        padding-left: 60px
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //ul {
+                    //    ul {
+                    //        .filemanager-bi-main-menu-item-container {
+                    //            padding-left: 30px
+                    //        }
+                    //    }
+                    //}
+                    //
+                    //ul {
+                    //    ul {
+                    //        ul {
+                    //            .filemanager-bi-main-menu-item-container {
+                    //                padding-left: 40px
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    //
+                    //ul {
+                    //    ul {
+                    //        ul {
+                    //            .filemanager-bi-main-menu-item-container {
+                    //                padding-left: 50px
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    //
+                    //ul {
+                    //    ul {
+                    //        ul {
+                    //            ul {
+                    //                .filemanager-bi-main-menu-item-container {
+                    //                    padding-left: 60px
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                 }
             }
@@ -488,7 +500,6 @@ h1,h2,h3,h4,h5,h6{
                     justify-content: space-evenly;
                     grid-gap: 20px;
                     align-content: start;
-
 
 
                     .filemanager-bi-content-item-box {
@@ -577,7 +588,8 @@ h1,h2,h3,h4,h5,h6{
                             transition: 0.3s all;
                             position: relative;
                             z-index: 2;
-
+                            text-align: center;
+                            line-height: 21px;
                         }
 
 
@@ -597,7 +609,7 @@ h1,h2,h3,h4,h5,h6{
                             border-right: 1px solid #eaeaea;
                             box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.08) inset;
 
-                            i{
+                            i {
                                 background: transparent;
                                 width: 25px;
                                 height: 25px;
@@ -605,7 +617,8 @@ h1,h2,h3,h4,h5,h6{
                                 justify-content: center;
                                 align-items: center;
                                 transition: color 0.3s ease;
-                                &:hover{
+
+                                &:hover {
                                     color: #0A90EB;
                                     transition: color 0.3s ease;
                                 }
@@ -613,6 +626,205 @@ h1,h2,h3,h4,h5,h6{
                         }
 
                     }
+
+
+                    .filemanager-bi-content-item-folder-box {
+                        width: 155px;
+                        height: 150px;
+                        background: #F7F8F9;
+                        border: 1px solid #dfe4e6;
+                        border-radius: 3px;
+                        display: inline-block;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        border: 3px solid #FFFFFF;
+
+                        &:hover {
+                            .filemanager-bi-content-item-folder-name {
+                                transform: translateY(-33px);
+                                transition: 0.3s all;
+                                border-radius: 0;
+                            }
+                        }
+
+                        &:last-child {
+                            margin-bottom: 30px;
+                        }
+
+                        .filemanager-bi-select-folder {
+                            position: absolute;
+                            width: 22px;
+                            height: 22px;
+                            background: white;
+                            top: 4px;
+                            left: 4px;
+                            border-radius: 3px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid #dedede;
+
+                            i {
+                                color: #0A90EB;
+                            }
+                        }
+
+
+                        .filemanager-bi-content-item-folder-image {
+                            width: 149px;
+                            height: 110px;
+                            border-top: 1px solid #eaeaea;
+                            border-left: 1px solid #eaeaea;
+                            border-right: 1px solid #eaeaea;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            img {
+                                width: 88px;
+                                height: 88px;
+                            }
+
+
+                        }
+
+                        .filemanager-bi-content-item-folder-info-mobile{
+                            display: none;
+                        }
+
+                        .filemanager-bi-content-item-folder-name {
+                            background: #ffffff;
+                            height: 34px;
+                            width: 149px;
+                            overflow: hidden;
+                            padding: 6px;
+                            line-height: 18px;
+                            font-size: 13px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            border-radius: 0 0 2px 2px;
+                            border: 1px solid #eaeaea;
+                            transition: 0.3s all;
+                            position: relative;
+                            z-index: 2;
+                            text-align: center;
+                            line-height: 21px;
+
+                        }
+
+
+                        .filemanager-bi-content-item-folder-tools {
+                            background: white;
+                            position: absolute;
+                            width: 100%;
+                            bottom: 0;
+                            z-index: 1;
+                            height: 33px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-evenly;
+                            padding: 0 10px;
+                            border-bottom: 1px solid #eaeaea;
+                            border-left: 1px solid #eaeaea;
+                            border-right: 1px solid #eaeaea;
+                            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.08) inset;
+
+                            i {
+                                background: transparent;
+                                width: 25px;
+                                height: 25px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                transition: color 0.3s ease;
+
+                                &:hover {
+                                    color: #0A90EB;
+                                    transition: color 0.3s ease;
+                                }
+                            }
+                        }
+
+                    }
+
+                    .filemanager-bi-content-item-folder-back-box {
+                        width: 155px;
+                        height: 150px;
+                        background: #F7F8F9;
+                        border: 1px solid #dfe4e6;
+                        border-radius: 3px;
+                        display: inline-block;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        border: 3px solid #FFFFFF;
+
+
+                        &:last-child {
+                            margin-bottom: 30px;
+                        }
+
+
+                        .filemanager-bi-content-item-folder-back-image {
+                            width: 149px;
+                            height: 110px;
+                            border-top: 1px solid #eaeaea;
+                            border-left: 1px solid #eaeaea;
+                            border-right: 1px solid #eaeaea;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            i {
+                                font-size: 60px;
+                                color: #909090;
+                            }
+                        }
+
+                        .filemanager-bi-content-item-folder-back-name {
+                            background: #ffffff;
+                            height: 34px;
+                            width: 149px;
+                            overflow: hidden;
+                            padding: 6px;
+                            line-height: 18px;
+                            font-size: 13px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            border-radius: 0 0 2px 2px;
+                            border: 1px solid #eaeaea;
+                            transition: 0.3s all;
+                            position: relative;
+                            z-index: 2;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                        }
+
+
+                    }
+
+                    .filemanager-bi-content-item-folder-not-box {
+                        width: 155px;
+                        height: 150px;
+                        background: #F7F8F9;
+                        border: 1px solid #eaeaea !important;
+                        border-radius: 3px;
+                        display: inline-block;
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-weight: bold;
+                        color: #909090;
+
+
+                    }
+
 
                     .filemanager-bi-content-item-footer {
                         height: 33px;
@@ -738,7 +950,7 @@ h1,h2,h3,h4,h5,h6{
 /*   MODAL END   */
 
 
-.select-file-active{
+.select-file-active {
     border: 3px solid #00b6fd !important;
 }
 

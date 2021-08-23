@@ -18,14 +18,17 @@ $(function () {
 
 })
 
-//REMOVE RIGHT NAVBAR INFO
+/*   REMOVE RIGHT NAVBAR INFO START   */
 function removeNavbarRightInfo() {
     $('#filemanager-bi-information-right').html('');
 }
+/*   REMOVE RIGHT NAVBAR INFO END   */
 
+
+/*   FILE NAVBAR FUNCTION START   */
 function addNavbarToolsButton() {
     /*   DELETE BUTTON   */
-    $('#left-navbar-item').append(`<div id="filemanager-bi-delete-select-file"
+    $('.filemanager-bi-select-navbar-file-box').append(`<div id="filemanager-bi-delete-select-file"
         onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-files-modal"
          title="${deleteAllFileTranslate}">
         <i class="fas fa-trash-alt"></i>
@@ -36,6 +39,29 @@ function removeNavbarToolsButton() {
     /*   DELETE BUTTONS   */
     $('#filemanager-bi-delete-select-file').remove();
 }
+/*   FILE NAVBAR FUNCTION END   */
+
+
+
+
+/*   FOLDER NAVBAR FUNCTION START   */
+function addNavbarFolderToolsButton() {
+    /*   DELETE BUTTON   */
+    $('.filemanager-bi-select-navbar-folder-box').append(`<div id="filemanager-bi-delete-select-folder"
+        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-folders-modal"
+         title="${deleteAllFolderTranslate}">
+      <i class="fas fa-trash"></i>
+    </div>`);
+}
+
+function removeNavbarFolderToolsButton() {
+    /*   DELETE BUTTONS   */
+    $('#filemanager-bi-delete-select-folder').remove();
+}
+/*   FOLDER NAVBAR FUNCTION END   */
+
+
+
 
 /*   MODAL START   */
 // Initialize All Required DOM Elements
@@ -147,7 +173,6 @@ $(document).on('click', '#filemanager-bi-settings .filemanager-bi-settings-heade
 
 
 /*  SELECT FILE START   */
-
 $(document).on('click', '.filemanager-bi-select-file', function () {
 
     var selectActiveBox = $(this).parent('.select-file-active');
@@ -174,7 +199,6 @@ $(document).on('click', '.filemanager-bi-select-file', function () {
 
     }
 })
-
 /*  SELECT FILE END   */
 
 
@@ -276,3 +300,135 @@ $(document).on('click','#remove-only-one-file-modal-success',function (){
     filemanagerModalClose()
 })
 /*   DELETE ONLY ONE FILE END   */
+
+
+/*   ------------------------------------------------------   */
+
+/*  SELECT FOLDER START   */
+$(document).on('click', '.filemanager-bi-select-folder', function () {
+
+    var selectActiveBox = $(this).parent('.select-folder-active');
+
+
+    if (selectActiveBox.length == 1) {
+
+        $(this).parent('.filemanager-bi-content-item-folder-box').removeClass('select-folder-active');
+        $(this).html('');
+        if ($('.select-folder-active').length == 0) {
+            removeNavbarRightInfo();
+            removeNavbarFolderToolsButton();
+        } else {
+
+            $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
+        }
+
+    } else {
+        removeNavbarFolderToolsButton();
+        addNavbarFolderToolsButton();
+        $(this).parent('.filemanager-bi-content-item-folder-box').addClass('select-folder-active');
+        $(this).html('<i class="fas fa-check"></i>');
+        $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
+
+    }
+})
+/*  SELECT FOLDER END   */
+
+
+/*   SELECT ALL FOLDER START   */
+$(document).on('click', '#filemanager-bi-select-folder-all', function () {
+    let selectAllFolder = $('.filemanager-bi-content-item-folder-box');
+    var selectActiveBox = $('.select-folder-active');
+
+
+    selectAllFolder.each(function (index, el) {
+
+        var selectFolders = $(this).find('.filemanager-bi-select-folder');
+
+
+        if (selectActiveBox.length != selectAllFolder.length) {
+            $(this).addClass('select-folder-active');
+            selectFolders.html('<i class="fas fa-check"></i>');
+            $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
+
+            removeNavbarFolderToolsButton();
+            addNavbarFolderToolsButton();
+        } else {
+            $(this).removeClass('select-folder-active');
+            selectFolders.html('');
+            $('#filemanager-bi-information-right').html('');
+
+            removeNavbarFolderToolsButton();
+        }
+
+
+    })
+
+
+})
+/*   SELECT ALL FOLDER END   */
+
+/*   DELETE SELECT FOLDER START   */
+$(document).on('click', '#filemanager-bi-delete-select-folder', function () {
+
+    const selectActiveFolder = $('.select-folder-active');
+
+    if (selectActiveFolder.length == 1) {
+        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + selectActiveFolder.attr('data-folder-name'));
+    } else {
+        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + selectFolderTranslate + ' - ' + selectActiveFolder.length);
+    }
+
+
+
+})
+
+$(document).on('click','#remove-folders-modal-success',function (){
+    const selectActiveFolder = $('.select-folder-active');
+
+    //Check folders ID & Ajax Post
+    var dataFoldersID = [];
+    selectActiveFolder.each(function () {
+        const foldersID = $(this).attr('data-folder-id');
+        dataFoldersID.push(foldersID);
+        // $(this).remove();
+    });
+
+    //Bunu ajaxla qarshi terefe gondereceysen
+    // dataFoldersID
+    console.log(dataFoldersID);
+
+    // removeNavbarRightInfo();
+    // filemanagerModalClose()
+})
+/*   DELETE SELECT FOLDER END   */
+
+
+/*   DELETE ONLY ONE FOLDER START   */
+$(document).on('click', '.filemanager-bi-delete-one-folder', function () {
+    const thisFolder = $(this).closest('.filemanager-bi-content-item-folder-box');
+    $('.filemanager-bi-content-item-folder-box').removeClass('only-one-folder-active');
+    thisFolder.addClass('only-one-folder-active');
+    $('#remove-only-one-folder-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + thisFolder.attr('data-folder-name'));
+
+})
+
+$(document).on('click','#remove-only-one-folder-modal-success',function (){
+
+    const activeFolder = $('.only-one-folder-active');
+
+    //Check files ID & Ajax Post
+    var dataFolderID = activeFolder.attr('data-folder-id');
+
+    //Bunu ajaxla qarshi terefe gondereceysen
+    // dataFolderID
+    // console.log(dataFolderID);
+
+    const selectActiveFolder = $('.select-folder-active');
+    if(selectActiveFolder.length != 0){
+        $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
+    }else {
+        removeNavbarRightInfo();
+    }
+    filemanagerModalClose()
+})
+/*   DELETE ONLY ONE FOLDER END   */
