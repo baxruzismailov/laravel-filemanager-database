@@ -11,6 +11,8 @@ class FileManagerMiddleware
     public function handle(Request $request, Closure $next)
     {
 
+
+
         /**
          *  Appearance
          *  1 => sketch

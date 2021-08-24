@@ -8,10 +8,14 @@
 
 <!--  MAIN JS  -->
 <script>
+    /*   FILE   */
     const selectFileTranslate = "{{ trans('fm-translations::filemanager-bi.select_file_length') }}",
-          deleteAllFileTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_all') }}",
-          deleteFiletextTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_text') }}",
-        selectFolderTranslate = "{{ trans('fm-translations::filemanager-bi.select_folder_length') }}",
+        selectAllFileTranslate = "{{ trans('fm-translations::filemanager-bi.select_all') }}",
+        deleteAllFileTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_all') }}",
+        deleteFiletextTranslate = "{{ trans('fm-translations::filemanager-bi.file_delete_text') }}";
+    /*   FOLDER   */
+    const selectFolderTranslate = "{{ trans('fm-translations::filemanager-bi.select_folder_length') }}",
+        selectAllFolderTranslate = "{{ trans('fm-translations::filemanager-bi.select_folder_all') }}",
         deleteAllFolderTranslate = "{{ trans('fm-translations::filemanager-bi.folder_delete_all') }}",
         deleteFoldertextTranslate = "{{ trans('fm-translations::filemanager-bi.folder_delete_text') }}";
 </script>

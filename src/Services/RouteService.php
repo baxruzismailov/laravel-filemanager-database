@@ -11,15 +11,11 @@ class RouteService
     public static function routes()
     {
         Route::group(['namespace' => '\Baxruzismailov\Filemanager\Http\Controllers'], function() {
-            Route::middleware(config('file-manager-bi.middleware_fm_bi'))->group(function (){
-//                Route::prefix('filemanager-bi')->group(function (){
-//
-//                });
+            Route::middleware(array_merge(['fm-bi-acl'],config('file-manager-bi.middleware_fm_bi')))->group(function (){
 
-                Route::get('filemanager-bi', 'FilemanagerController@index');
-                /*   CATEGORIES START   */
-                Route::post('filemanager-bi/categories/sortable', 'FilemanagerController@sortable')->name('filemanagerBI.sortable');
-                /*   CATEGORIES END   */
+                Route::prefix('filemanager-bi')->group(function () {
+                    Route::get('/', 'FilemanagerController@index');
+                });
 
 
             });

@@ -26,22 +26,12 @@
             {{--                    <i class="fas fa-folder-plus"></i>--}}
             {{--                </div>--}}
 
-            <!--  SELECT ALL FOLDER START  -->
-                <span class="filemanager-bi-select-navbar-folder-box">
-                    <div id="filemanager-bi-select-folder-all"
-                         title="{{ trans('fm-translations::filemanager-bi.select_folder_all') }}">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                </span>
+                <!--  SELECT ALL FOLDER START  -->
+                <span class="filemanager-bi-select-navbar-folder-box"></span>
                 <!--  SELECT ALL FOLDER END  -->
 
                 <!--  SELECT ALL FILE START  -->
-                <span class="filemanager-bi-select-navbar-file-box">
-                <div id="filemanager-bi-select-all"
-                     title="{{ trans('fm-translations::filemanager-bi.select_all') }}">
-                    <i class="fas fa-check-double"></i>
-                </div>
-                </span>
+                <span class="filemanager-bi-select-navbar-file-box"></span>
                 <!--  SELECT ALL FILE END  -->
 
 

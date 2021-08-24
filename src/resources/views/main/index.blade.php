@@ -81,6 +81,66 @@
                 </div>
             </div>
 
+            <div class="filemanager-bi-content-item-folder-box"
+                 data-folder-id="3"
+                 data-folder-name="Samsung"
+            >
+                <!--  SELECT FILE  -->
+                <div class="filemanager-bi-select-folder"></div>
+
+                <div class="filemanager-bi-content-item-folder-image">
+                    <img src="{{ asset('vendor/file-manager-bi/images/folder.svg') }}" alt="Folder Name">
+                </div>
+                <div class="filemanager-bi-content-item-folder-info-mobile">
+                    <div>Papka adi</div>
+                    <div>20.08.2021 14:14</div>
+                    <div>150 fayl</div>
+                </div>
+                <div class="filemanager-bi-content-item-folder-name">
+                    Folderin adi
+                </div>
+                <!-- FOLDER TOOLS  -->
+                <div class="filemanager-bi-content-item-folder-tools">
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-folder"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-folder-modal"
+                    ></i>
+                </div>
+            </div>
+
+            <div class="filemanager-bi-content-item-folder-box"
+                 data-folder-id="4"
+                 data-folder-name="Samsung"
+            >
+                <!--  SELECT FILE  -->
+                <div class="filemanager-bi-select-folder"></div>
+
+                <div class="filemanager-bi-content-item-folder-image">
+                    <img src="{{ asset('vendor/file-manager-bi/images/folder.svg') }}" alt="Folder Name">
+                </div>
+                <div class="filemanager-bi-content-item-folder-info-mobile">
+                    <div>Papka adi</div>
+                    <div>20.08.2021 14:14</div>
+                    <div>150 fayl</div>
+                </div>
+                <div class="filemanager-bi-content-item-folder-name">
+                    Folderin adi
+                </div>
+                <!-- FOLDER TOOLS  -->
+                <div class="filemanager-bi-content-item-folder-tools">
+                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}" class="far fa-edit"></i>
+                    <i
+                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                        class="far fa-trash-alt filemanager-bi-delete-one-folder"
+                        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                        data-modal="#remove-only-one-folder-modal"
+                    ></i>
+                </div>
+            </div>
+
 
 
             <!--  IMAGES  -->

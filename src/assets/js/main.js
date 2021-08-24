@@ -28,7 +28,14 @@ function removeNavbarRightInfo() {
 /*   FILE NAVBAR FUNCTION START   */
 function addNavbarToolsButton() {
     /*   DELETE BUTTON   */
-    $('.filemanager-bi-select-navbar-file-box').append(`<div id="filemanager-bi-delete-select-file"
+    $('.filemanager-bi-select-navbar-file-box').append(`
+          <!--  SELECT ALL FILE START  -->
+        <div id="filemanager-bi-select-all"
+             title="${selectAllFileTranslate}">
+            <i class="fas fa-check-double"></i>
+        </div>
+        <!--  FILE REMOVE  -->
+        <div id="filemanager-bi-delete-select-file"
         onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-files-modal"
          title="${deleteAllFileTranslate}">
         <i class="fas fa-trash-alt"></i>
@@ -37,30 +44,56 @@ function addNavbarToolsButton() {
 
 function removeNavbarToolsButton() {
     /*   DELETE BUTTONS   */
-    $('#filemanager-bi-delete-select-file').remove();
+    $('.filemanager-bi-select-navbar-file-box').html('');
+}
+
+function hideCheckboxFile(){
+    let selectFolderActive = $('.select-folder-active');
+
+    if(selectFolderActive.length > 0){
+        $('.filemanager-bi-select-file').hide();
+    }else {
+        $('.filemanager-bi-select-file').show();
+    }
+
 }
 /*   FILE NAVBAR FUNCTION END   */
-
-
 
 
 /*   FOLDER NAVBAR FUNCTION START   */
 function addNavbarFolderToolsButton() {
     /*   DELETE BUTTON   */
-    $('.filemanager-bi-select-navbar-folder-box').append(`<div id="filemanager-bi-delete-select-folder"
-        onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-folders-modal"
-         title="${deleteAllFolderTranslate}">
-      <i class="fas fa-trash"></i>
-    </div>`);
+    $('.filemanager-bi-select-navbar-folder-box').append(`
+         <!--  SELECT ALL FOLDER START  -->
+                <div id="filemanager-bi-select-folder-all"
+                title="${selectAllFolderTranslate}">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+        <!--  FOLDER REMOVE  -->
+        <div id="filemanager-bi-delete-select-folder"
+                onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#remove-folders-modal"
+                 title="${deleteAllFolderTranslate}">
+             <i class="fas fa-trash-alt"></i>
+            </div>
+`);
 }
 
 function removeNavbarFolderToolsButton() {
     /*   DELETE BUTTONS   */
-    $('#filemanager-bi-delete-select-folder').remove();
+    $('.filemanager-bi-select-navbar-folder-box').html('');
+}
+
+function hideCheckboxFolder(){
+    let selectFileActive = $('.select-file-active');
+
+    if(selectFileActive.length > 0){
+        $('.filemanager-bi-select-folder').hide();
+    }else {
+        $('.filemanager-bi-select-folder').show();
+    }
+
 }
 /*   FOLDER NAVBAR FUNCTION END   */
-
-
 
 
 /*   MODAL START   */
@@ -198,6 +231,9 @@ $(document).on('click', '.filemanager-bi-select-file', function () {
         $('#filemanager-bi-information-right').html(selectFileTranslate + ' - ' + $('.select-file-active').length);
 
     }
+
+    /*   IF FILE SELECT -> HIDE FOLDER   */
+    hideCheckboxFolder();
 })
 /*  SELECT FILE END   */
 
@@ -231,7 +267,8 @@ $(document).on('click', '#filemanager-bi-select-all', function () {
 
     })
 
-
+    /*   IF FILE SELECT -> HIDE FOLDER   */
+    hideCheckboxFolder();
 })
 /*   SELECT ALL FILE END   */
 
@@ -241,16 +278,15 @@ $(document).on('click', '#filemanager-bi-delete-select-file', function () {
     const selectActiveFile = $('.select-file-active');
 
     if (selectActiveFile.length == 1) {
-        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + selectActiveFile.attr('data-file-name'));
+        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFiletextTranslate + '</h4><br>' + selectActiveFile.attr('data-file-name'));
     } else {
-        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + selectFileTranslate + ' - ' + selectActiveFile.length);
+        $('#remove-files-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFiletextTranslate + '</h4><br>' + selectFileTranslate + ' - ' + selectActiveFile.length);
     }
-
 
 
 })
 
-$(document).on('click','#remove-files-modal-success',function (){
+$(document).on('click', '#remove-files-modal-success', function () {
     const selectActiveFile = $('.select-file-active');
 
     //Check files ID & Ajax Post
@@ -276,11 +312,11 @@ $(document).on('click', '.filemanager-bi-delete-one-file', function () {
     const thisFile = $(this).closest('.filemanager-bi-content-item-box');
     $('.filemanager-bi-content-item-box').removeClass('only-one-file-active');
     thisFile.addClass('only-one-file-active');
-    $('#remove-only-one-file-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFiletextTranslate+'</h4><br>' + thisFile.attr('data-file-name'));
+    $('#remove-only-one-file-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFiletextTranslate + '</h4><br>' + thisFile.attr('data-file-name'));
 
 })
 
-$(document).on('click','#remove-only-one-file-modal-success',function (){
+$(document).on('click', '#remove-only-one-file-modal-success', function () {
 
     const activeFile = $('.only-one-file-active');
 
@@ -292,9 +328,9 @@ $(document).on('click','#remove-only-one-file-modal-success',function (){
     // console.log(dataFileID);
 
     const selectActiveFile = $('.select-file-active');
-    if(selectActiveFile.length != 0){
+    if (selectActiveFile.length != 0) {
         $('#filemanager-bi-information-right').html(selectFileTranslate + ' - ' + $('.select-file-active').length);
-    }else {
+    } else {
         removeNavbarRightInfo();
     }
     filemanagerModalClose()
@@ -312,13 +348,13 @@ $(document).on('click', '.filemanager-bi-select-folder', function () {
 
     if (selectActiveBox.length == 1) {
 
+
         $(this).parent('.filemanager-bi-content-item-folder-box').removeClass('select-folder-active');
         $(this).html('');
         if ($('.select-folder-active').length == 0) {
             removeNavbarRightInfo();
             removeNavbarFolderToolsButton();
         } else {
-
             $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
         }
 
@@ -330,6 +366,9 @@ $(document).on('click', '.filemanager-bi-select-folder', function () {
         $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
 
     }
+
+    /*   IF FOLDER SELECT -> HIDE FILES   */
+    hideCheckboxFile();
 })
 /*  SELECT FOLDER END   */
 
@@ -363,6 +402,8 @@ $(document).on('click', '#filemanager-bi-select-folder-all', function () {
 
     })
 
+    /*   IF FOLDER SELECT -> HIDE FILES   */
+    hideCheckboxFile();
 
 })
 /*   SELECT ALL FOLDER END   */
@@ -373,16 +414,15 @@ $(document).on('click', '#filemanager-bi-delete-select-folder', function () {
     const selectActiveFolder = $('.select-folder-active');
 
     if (selectActiveFolder.length == 1) {
-        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + selectActiveFolder.attr('data-folder-name'));
+        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFoldertextTranslate + '</h4><br>' + selectActiveFolder.attr('data-folder-name'));
     } else {
-        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + selectFolderTranslate + ' - ' + selectActiveFolder.length);
+        $('#remove-folders-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFoldertextTranslate + '</h4><br>' + selectFolderTranslate + ' - ' + selectActiveFolder.length);
     }
-
 
 
 })
 
-$(document).on('click','#remove-folders-modal-success',function (){
+$(document).on('click', '#remove-folders-modal-success', function () {
     const selectActiveFolder = $('.select-folder-active');
 
     //Check folders ID & Ajax Post
@@ -408,11 +448,11 @@ $(document).on('click', '.filemanager-bi-delete-one-folder', function () {
     const thisFolder = $(this).closest('.filemanager-bi-content-item-folder-box');
     $('.filemanager-bi-content-item-folder-box').removeClass('only-one-folder-active');
     thisFolder.addClass('only-one-folder-active');
-    $('#remove-only-one-folder-modal').find('.filemanager-bi-modal-body').html('<h4>'+deleteFoldertextTranslate+'</h4><br>' + thisFolder.attr('data-folder-name'));
+    $('#remove-only-one-folder-modal').find('.filemanager-bi-modal-body').html('<h4>' + deleteFoldertextTranslate + '</h4><br>' + thisFolder.attr('data-folder-name'));
 
 })
 
-$(document).on('click','#remove-only-one-folder-modal-success',function (){
+$(document).on('click', '#remove-only-one-folder-modal-success', function () {
 
     const activeFolder = $('.only-one-folder-active');
 
@@ -424,9 +464,9 @@ $(document).on('click','#remove-only-one-folder-modal-success',function (){
     // console.log(dataFolderID);
 
     const selectActiveFolder = $('.select-folder-active');
-    if(selectActiveFolder.length != 0){
+    if (selectActiveFolder.length != 0) {
         $('#filemanager-bi-information-right').html(selectFolderTranslate + ' - ' + $('.select-folder-active').length);
-    }else {
+    } else {
         removeNavbarRightInfo();
     }
     filemanagerModalClose()
