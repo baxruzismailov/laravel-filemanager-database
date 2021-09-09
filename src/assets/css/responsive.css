@@ -1,4 +1,13 @@
 @media (max-width: 767px) {
+
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .title {
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
     #filemanager-bi .my-col-md-10 {
         flex: 0 0 auto;
         width: 100%;
@@ -37,10 +46,11 @@
 
 @media (min-width: 767px) {
 
-
     #filemanager-bi #filemanager-bi-navbar #right-navbar-item .filemanager-bi-menu-icon {
         display: none;
     }
+
+
 }
 
 @media (min-width: 441px) {
@@ -225,6 +235,31 @@
         border-right: 1px solid #eaeaea;
     }
 
+    #filemanager-bi #filemanager-bi-container #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container .filemanager-bi-content-item-folder-back-box {
+        width: 100%;
+        height: 116px;
+    }
+
+    #filemanager-bi #filemanager-bi-container #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container .filemanager-bi-content-item-folder-back-box .filemanager-bi-content-item-folder-back-image {
+        width: 100%;
+        height: 76px;
+    }
+
+    #filemanager-bi #filemanager-bi-container #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container .filemanager-bi-content-item-folder-back-box .filemanager-bi-content-item-folder-back-name {
+        height: 34px;
+        width: 100%;
+    }
+
+    #filemanager-bi #filemanager-bi-container #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container .filemanager-bi-content-item-folder-back-box .filemanager-bi-content-item-folder-back-image i {
+        font-size: 40px;
+    }
+
 
     /*   FOLDER END   */
 }
+
+
+
+
+
+

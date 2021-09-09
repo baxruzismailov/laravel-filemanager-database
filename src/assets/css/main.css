@@ -142,7 +142,40 @@ h1, h2, h3, h4, h5, h6 {
     background: #DC3545; }
   #filemanager-bi .my-bg-warning {
     background: #FFC107; }
-  #filemanager-bi .form-control {
+  #filemanager-bi .mt-1 {
+    margin-top: 0.25rem !important; }
+  #filemanager-bi .mt-2 {
+    margin-top: 0.5rem !important; }
+  #filemanager-bi .mt-3 {
+    margin-top: 0.75rem !important; }
+  #filemanager-bi .mt-4 {
+    margin-top: 1rem !important; }
+  #filemanager-bi .mb-1 {
+    margin-bottom: 0.25rem !important; }
+  #filemanager-bi .mb-2 {
+    margin-bottom: 0.5rem !important; }
+  #filemanager-bi .mb-3 {
+    margin-bottom: 0.75rem !important; }
+  #filemanager-bi .mb-4 {
+    margin-bottom: 1rem !important; }
+  #filemanager-bi .ml-1 {
+    margin-left: 0.25rem !important; }
+  #filemanager-bi .ml-2 {
+    margin-left: 0.5rem !important; }
+  #filemanager-bi .ml-3 {
+    margin-left: 0.75rem !important; }
+  #filemanager-bi .ml-4 {
+    margin-left: 1rem !important; }
+  #filemanager-bi .mr-1 {
+    margin-right: 0.25rem !important; }
+  #filemanager-bi .mr-2 {
+    margin-right: 0.5rem !important; }
+  #filemanager-bi .mr-3 {
+    margin-right: 0.75rem !important; }
+  #filemanager-bi .mr-4 {
+    margin-right: 1rem !important; }
+  #filemanager-bi .fm-bi-form-control {
+    width: 100%;
     display: block;
     padding: 3px 5px;
     font-size: 1rem;
@@ -159,7 +192,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out; }
-    #filemanager-bi .form-control:focus {
+    #filemanager-bi .fm-bi-form-control:focus {
       color: #3f4254;
       background-color: #fff;
       border-color: #69b3ff;
@@ -601,6 +634,13 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.1s ease-in-out; }
   .filemanager-bi-modal-overlay .modalOverlayClass {
     display: none; }
+  .filemanager-bi-modal-overlay .filemanager-bi-error {
+    color: red;
+    padding: 0 2px;
+    display: none; }
+  .filemanager-bi-modal-overlay label {
+    color: #656565;
+    padding: 0 2px; }
 
 .filemanager-bi-modal-lg {
   width: 768px;
@@ -664,5 +704,100 @@ h1, h2, h3, h4, h5, h6 {
 /*   MODAL END   */
 .select-file-active {
   border: 3px solid #00b6fd !important; }
+
+/*   DROPZONE UPLOAD FILE START   */
+.filemanager-bi-dropzone {
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  max-height: 512px;
+  overflow: auto; }
+  .filemanager-bi-dropzone .filemanager-bi-dropzone-form {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-form.active {
+      background-color: rgba(0, 128, 0, 0.15); }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-form.active p {
+        color: green; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-form input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-form p {
+      font-size: 15px;
+      color: #999; }
+  .filemanager-bi-dropzone .filemanager-bi-dropzone-result-text {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    background: rgba(0, 98, 255, 0.149);
+    color: #0062ff; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-result-text:empty {
+      display: none; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-result-text.success {
+      background: rgba(0, 128, 0, 0.149);
+      color: green; }
+  .filemanager-bi-dropzone .filemanager-bi-dropzone-result {
+    border-top: 1px solid #ddd; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-result:empty {
+      display: none; }
+    .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file {
+      display: flex;
+      align-items: center;
+      padding: 15px 15px 15px 0; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file:not(:last-child) {
+        border-bottom: 1px solid #eee; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .icon {
+        width: 50px;
+        text-align: center; }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .icon img {
+          max-width: 60%; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner {
+        flex: 1;
+        overflow: hidden;
+        width: 0; }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .title {
+          font-size: 14px;
+          color: #444; }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .bar {
+          height: 6px;
+          border-radius: 6px;
+          background: #ddd;
+          margin-top: 7px; }
+          .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .bar span {
+            height: 6px;
+            display: block;
+            border-radius: 6px;
+            background: rebeccapurple; }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .error-text {
+          font-size: 12px;
+          color: red;
+          padding-top: 3px;
+          display: none; }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file .file-inner .abort-btn {
+          margin-top: 7px;
+          background: transparent;
+          cursor: pointer;
+          color: darkred;
+          text-decoration: underline;
+          font-size: 12px; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.error {
+        background-color: rgba(255, 0, 0, 0.162); }
+        .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.error .file-inner .error-text {
+          display: block; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.success .file-inner .abort-btn, .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.error .file-inner .abort-btn, .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.current .file-inner .abort-btn, .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.aborted .file-inner .abort-btn {
+        display: none; }
+      .filemanager-bi-dropzone .filemanager-bi-dropzone-result .file.aborted {
+        background-color: rgba(255, 166, 0, 0.135); }
+
+/*   DROPZONE UPLOAD FILE END   */
 
 /*# sourceMappingURL=main.css.map */

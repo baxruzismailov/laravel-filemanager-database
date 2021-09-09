@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilemanagerCategoriesTable extends Migration
+class CreateFilemanagerFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateFilemanagerCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('filemanager_categories', function (Blueprint $table) {
+        Schema::create('filemanager_files', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255);
-            $table->integer('parent')->default(0)->nullable();
+            $table->integer('folder')->nullable();
+            $table->string('name');
+            $table->string('url');
+            $table->string('type',20)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateFilemanagerCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filemanager_categories');
+        Schema::dropIfExists('filemanager_files');
     }
 }

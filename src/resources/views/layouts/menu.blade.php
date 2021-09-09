@@ -5,7 +5,7 @@
             <div class="filemanager-bi-main-menu">
 
                 <ul>
-                {!! \Baxruzismailov\Filemanager\Services\CategoryService::getCategories() !!}
+                {!! \Baxruzismailov\Filemanager\Services\FolderService::getFolders() !!}
 {{--                    <li>--}}
 {{--                       <div class="filemanager-bi-main-menu-item-container ">--}}
 {{--                           <div class="filemanager-bi-main-menu-item-left">--}}

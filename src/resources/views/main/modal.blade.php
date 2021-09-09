@@ -1,70 +1,41 @@
-<!--  MODAL 1  -->
-<div class="filemanager-bi-modal-overlay" id="testmodal1">
+
+<!--  FILE UPLOAD START-->
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-file-upload">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-lg">
         <div class="filemanager-bi-modal-header">
-            <h4>Yeni ad</h4>
+            <h4>{{ trans('fm-translations::filemanager-bi.upload_server') }}</h4>
             <div class="headerClose" onclick="filemanagerModalClose()">
                 <i class="fas fa-times"></i>
             </div>
         </div>
         <div class="filemanager-bi-modal-body">
-            Lorem ipsum dolor sit amet.
-        </div>
-        <div class="filemanager-bi-modal-footer">
-            <button class="my-btn my-btn-danger" onclick="filemanagerModalClose()">Imtina et</button>
-            <button class="my-btn my-btn-success">tetbiq et</button>
-        </div>
-
-    </div>
-    <div class="modalOverlayClass"></div>
-</div>
-
-<!--  MODAL 2 -->
-<div class="filemanager-bi-modal-overlay" id="testmodal2">
-    <div class="filemanager-bi-modal-container filemanager-bi-modal-md">
-        <div class="filemanager-bi-modal-header">
-            <h4>Yeni ad</h4>
-            <div class="headerClose" onclick="filemanagerModalClose()">
-                <i class="fas fa-times"></i>
+            <div class="filemanager-bi-dropzone">
+                <div class="filemanager-bi-dropzone-form">
+                    <input type="file" multiple>
+                    <p>Dosyalarınızı buraya sürükleyin ya da seçmek için tıklayın!</p>
+                </div>
+                <div class="filemanager-bi-dropzone-result-text"></div>
+                <div class="filemanager-bi-dropzone-result"></div>
             </div>
         </div>
-        <div class="filemanager-bi-modal-body">
-            Lorem ipsum dolor sit amet.
-        </div>
         <div class="filemanager-bi-modal-footer">
-            <button class="my-btn my-btn-warning" onclick="filemanagerModalClose()">Imtina et</button>
-            <button class="my-btn my-btn-success">tetbiq et</button>
+            <button class="my-btn" onclick="filemanagerModalClose()">
+                {{ trans('fm-translations::filemanager-bi.cancle') }}
+            </button>
+            <button class="my-btn my-btn-success">
+                {{ trans('fm-translations::filemanager-bi.success') }}
+            </button>
         </div>
 
     </div>
     <div class="modalOverlayClass"></div>
 </div>
-
-<!--  MODAL 3  -->
-<div class="filemanager-bi-modal-overlay" id="testmodal3">
-    <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
-        <div class="filemanager-bi-modal-header">
-            <h4>Yeni ad</h4>
-            <div class="headerClose" onclick="filemanagerModalClose()">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="filemanager-bi-modal-body">
-            Lorem ipsum dolor sit amet.
-        </div>
-        <div class="filemanager-bi-modal-footer">
-            <button class="my-btn " onclick="filemanagerModalClose()">Imtina et</button>
-            <button class="my-btn my-btn-success">tetbiq et</button>
-        </div>
-
-    </div>
-    <div class="modalOverlayClass"></div>
-</div>
+<!--  FILE UPLOAD END-->
 
 <!--  ------------------------------------  -->
 <!--  FILE MODAL START  -->
 <!--  REMOVE SELECT FILES MODAL START  -->
-<div class="filemanager-bi-modal-overlay" id="remove-files-modal">
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-remove-files-modal">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
         <div class="filemanager-bi-modal-header">
             <h4></h4>
@@ -77,7 +48,7 @@
             <button class="my-btn " onclick="filemanagerModalClose()">
                 {{ trans('fm-translations::filemanager-bi.cancle') }}
             </button>
-            <button id="remove-files-modal-success" class="my-btn my-btn-success">
+            <button id="filemanager-bi-remove-files-modal-success" class="my-btn my-btn-success">
                 {{ trans('fm-translations::filemanager-bi.success') }}
             </button>
         </div>
@@ -88,7 +59,7 @@
 <!--  REMOVE SELECT FILES MODAL END  -->
 
 <!--  REMOVE ONLY ONE FILE MODAL START  -->
-<div class="filemanager-bi-modal-overlay" id="remove-only-one-file-modal">
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-remove-only-one-file-modal">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
         <div class="filemanager-bi-modal-header">
             <h4></h4>
@@ -101,7 +72,7 @@
             <button class="my-btn " onclick="filemanagerModalClose()">
                 {{ trans('fm-translations::filemanager-bi.cancle') }}
             </button>
-            <button id="remove-only-one-file-modal-success" class="my-btn my-btn-success">
+            <button id="filemanager-bi-remove-only-one-file-modal-success" class="my-btn my-btn-success">
                 {{ trans('fm-translations::filemanager-bi.success') }}
             </button>
         </div>
@@ -115,7 +86,7 @@
 <!--  ------------------------------------  -->
 <!--  FOLDER MODAL START  -->
 <!--  REMOVE SELECT FOLDERS MODAL START  -->
-<div class="filemanager-bi-modal-overlay" id="remove-folders-modal">
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-remove-folders-modal">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
         <div class="filemanager-bi-modal-header">
             <h4></h4>
@@ -128,7 +99,7 @@
             <button class="my-btn " onclick="filemanagerModalClose()">
                 {{ trans('fm-translations::filemanager-bi.cancle') }}
             </button>
-            <button id="remove-folders-modal-success" class="my-btn my-btn-success">
+            <button id="filemanager-bi-remove-folders-modal-success" class="my-btn my-btn-success">
                 {{ trans('fm-translations::filemanager-bi.success') }}
             </button>
         </div>
@@ -139,7 +110,7 @@
 <!--  REMOVE SELECT FOLDERS MODAL END  -->
 
 <!--  REMOVE ONLY ONE FOLDER MODAL START  -->
-<div class="filemanager-bi-modal-overlay" id="remove-only-one-folder-modal">
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-remove-only-one-folder-modal">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
         <div class="filemanager-bi-modal-header">
             <h4></h4>
@@ -152,7 +123,7 @@
             <button class="my-btn " onclick="filemanagerModalClose()">
                 {{ trans('fm-translations::filemanager-bi.cancle') }}
             </button>
-            <button id="remove-only-one-folder-modal-success" class="my-btn my-btn-success">
+            <button id="filemanager-bi-remove-only-one-folder-modal-success" class="my-btn my-btn-success">
                 {{ trans('fm-translations::filemanager-bi.success') }}
             </button>
         </div>
@@ -162,3 +133,31 @@
 </div>
 <!--  REMOVE ONLY ONE FOLDER MODAL END  -->
 <!--  FOLDER MODAL END  -->
+
+<!--  ADD FOLDER MODAL START  -->
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-create-new-folder-modal">
+    <div class="filemanager-bi-modal-container filemanager-bi-modal-sm">
+        <div class="filemanager-bi-modal-header">
+            <h4>{{ trans('fm-translations::filemanager-bi.new_folder') }}</h4>
+            <div class="headerClose" onclick="filemanagerModalClose()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="filemanager-bi-modal-body">
+            <label for="file-manager-bi-new-folder-name">{{ trans('fm-translations::filemanager-bi.new_folder_name') }}</label>
+            <input id="file-manager-bi-new-folder-name" autocomplete="OFF" type="text" class="fm-bi-form-control mt-1">
+            <div class="filemanager-bi-error mt-2">Test edirem</div>
+        </div>
+        <div class="filemanager-bi-modal-footer">
+            <button class="my-btn " onclick="filemanagerModalClose()">
+                {{ trans('fm-translations::filemanager-bi.cancle') }}
+            </button>
+            <button id="filemanager-bi-new-folder-create" class="my-btn my-btn-success">
+                {{ trans('fm-translations::filemanager-bi.success') }}
+            </button>
+        </div>
+
+    </div>
+    <div class="modalOverlayClass"></div>
+</div>
+<!--  ADD FOLDER FOLDERS MODAL END  -->

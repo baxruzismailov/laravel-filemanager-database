@@ -3,7 +3,8 @@
 return [
 
     'upload_server' => 'Serverə yüklə',
-    'sub_folder' => 'Yeni qovluq',
+    'new_folder' => 'Yeni qovluq',
+    'new_folder_name' => 'Yeni qovluğun adını daxil edin',
     'information' => '<span id="filemanager-bi-information-folder-name">Images</span>&nbsp;|&nbsp;
 <span id="filemanager-bi-information-folder">0</span>&nbsp;qovluq -&nbsp;<span id="filemanager-bi-information-file">0</span>&nbsp;fayl',
     'filter_placeholder' => 'Süzgəc',
@@ -22,6 +23,12 @@ return [
     'select_folder_length' => 'Seçilmiş qovluq',
     'cancle' => 'İmtina et',
     'success' => 'Tətbiq et',
+    'file_sorting' => 'Çeşidləmə',
+    'file_sorting_name' => 'Faylın adı',
+    'file_sorting_date' => 'Faylın tarixi',
+    'file_sorting_order_by' => 'Sıralama qaydası üzrə',
+    'file_sorting_order_by_asc' => 'Aşağıdan yuxarı',
+    'file_sorting_order_by_desc' => 'Yuxarıdan aşağı',
 
 
 ];

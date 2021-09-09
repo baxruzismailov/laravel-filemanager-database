@@ -5,25 +5,33 @@
     </div>
     <div class="filemanager-bi-settings-body">
         <div class="filemanager-bi-settings-item">
-            <h4>Çeşidləmə</h4>
+            <h4>{{ trans('fm-translations::filemanager-bi.file_sorting') }}</h4>
             <label for="filemanager-bi-sorting-field-name">
-                <input id="filemanager-bi-sorting-field-name" type="radio" name="sorting_field">
-                <span>Faylın adı</span>
+                <input
+                    {{  $filemanagerBiSortField == 1 ? 'checked' : null }}
+                    id="filemanager-bi-sorting-field-name" type="radio" name="sorting_field">
+                <span>{{ trans('fm-translations::filemanager-bi.file_sorting_name') }}</span>
             </label>
             <label for="filemanager-bi-sorting-field-date">
-                <input id="filemanager-bi-sorting-field-date" type="radio" name="sorting_field">
-                <span>Faylın tarixi</span>
+                <input
+                    {{  $filemanagerBiSortField == 2 ? 'checked' : null }}
+                    id="filemanager-bi-sorting-field-date" type="radio" name="sorting_field">
+                <span>{{ trans('fm-translations::filemanager-bi.file_sorting_date') }}</span>
             </label>
         </div>
         <div class="filemanager-bi-settings-item">
-            <h4>Sıralama qaydası üzrə</h4>
+            <h4>{{ trans('fm-translations::filemanager-bi.file_sorting_order_by') }}</h4>
             <label for="filemanager-bi-sorting-desc">
-                <input id="filemanager-bi-sorting-desc" type="radio" name="sorting">
-                <span>Aşağıdan yuxarı</span>
+                <input
+                    {{  $filemanagerBiOrderBy == 1 ? 'checked' : null }}
+                    id="filemanager-bi-sorting-desc" type="radio" name="sorting">
+                <span>{{ trans('fm-translations::filemanager-bi.file_sorting_order_by_asc') }}</span>
             </label>
             <label for="filemanager-bi-sorting-asc">
-                <input id="filemanager-bi-sorting-asc" type="radio" name="sorting">
-                <span>Yuxarıdan aşağı</span>
+                <input
+                    {{  $filemanagerBiOrderBy == 2 ? 'checked' : null }}
+                    id="filemanager-bi-sorting-asc" type="radio" name="sorting">
+                <span>{{ trans('fm-translations::filemanager-bi.file_sorting_order_by_desc') }}</span>
             </label>
         </div>
     </div>

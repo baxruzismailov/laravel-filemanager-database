@@ -1,9 +1,9 @@
 /*Downloaded from https://www.codeseek.co/makshh/photoswipe-with-youtube-vimeo-and-self-hosted-videos-ONMVMm */
-$('.photoswipe-wrapper').each(function () {
-    $(this).find('a').each(function () {
-        $(this).attr('data-size', $(this).find('img').get(0).naturalWidth + 'x' + $(this).find('img').get(0).naturalHeight);
-    });
-});
+// $('.photoswipe-wrapper').each(function () {
+//     $(this).find('a').each(function () {
+//         $(this).attr('data-size', $(this).find('img').get(0).naturalWidth + 'x' + $(this).find('img').get(0).naturalHeight);
+//     });
+// });
 
 var initPhotoSwipeFromDOM = function (gallerySelector) {
 
@@ -42,9 +42,9 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
                     html: $(linkEl).data('audio'),
                     title: linkEl.getAttribute('data-title')
                 };
-            } else if ($(linkEl).data('type') == 'document') {
+            } else if ($(linkEl).data('type') == 'file') {
                 item = {
-                    html: $(linkEl).data('document'),
+                    html: $(linkEl).data('file'),
                     title: linkEl.getAttribute('data-title')
                 };
 
