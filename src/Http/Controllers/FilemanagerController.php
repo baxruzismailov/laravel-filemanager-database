@@ -52,8 +52,80 @@ class FilemanagerController extends Controller
     public function index(Request $request)
     {
         //FOLDERS
-        $folders = FilemanagerFolder::where('parent', 0)
+        $folders = FilemanagerFolder::with('files')
+            ->withCount('files')
+            ->where('parent', 0)
             ->orderBy($this->sortField, $this->orderBy)
+            ->limit(config('file-manager-bi.folders_limit'))
+            ->get();
+
+
+//        $folders = FilemanagerFolder::with(['files' => function($query) use($request){
+//
+//            //type image, media (video,audio).
+//            if (!$request->type == null) {
+//
+//                if ($request->type == 'image') {
+//                    $query->where('type', $request->type);
+//                } elseif ($request->type == 'media') {
+//                    $query->where('type', 'video');
+//                    $query->orWhere('type', 'audio');
+//                }
+//
+//            }
+//
+//            $query->limit(config('file-manager-bi.files_limit'));
+//        }])
+//            ->withCount('files')
+//            ->where('parent', 0)
+//            ->orderBy($this->sortField, $this->orderBy)
+//            ->limit(config('file-manager-bi.folders_limit'))
+//            ->get();
+
+
+
+
+        //FILES
+        $files = FilemanagerFile::where(function ($query) use ($request) {
+            //type image, media (video,audio).
+            if (!$request->type == null) {
+
+                if ($request->type == 'image') {
+                    $query->where('type', $request->type);
+                } elseif ($request->type == 'media') {
+                    $query->where('type', 'video');
+                    $query->orWhere('type', 'audio');
+                }
+
+            }
+        })
+            ->where('folder_id',0)
+            ->orderBy($this->sortField, $this->orderBy)
+            ->limit(config('file-manager-bi.files_limit'))
+            ->get();
+
+
+
+        $foldersCount = $folders->count();
+        $filesCount = $files->count();
+
+
+        return view('filemanager::main.index', compact(
+            'folders',
+            'foldersCount',
+            'files',
+            'filesCount'
+        ));
+    }
+
+    public function home(Request $request)
+    {
+        //FOLDERS
+        $folders = FilemanagerFolder::with('files')
+            ->withCount('files')
+            ->where('parent', 0)
+            ->orderBy($this->sortField, $this->orderBy)
+            ->limit(config('file-manager-bi.folders_limit'))
             ->get();
 
 
@@ -71,13 +143,23 @@ class FilemanagerController extends Controller
 
             }
         })
+            ->where('folder_id',0)
             ->orderBy($this->sortField, $this->orderBy)
+            ->limit(config('file-manager-bi.files_limit'))
             ->get();
 
-        return view('filemanager::main.index', compact(
-            'folders',
-            'files'
-        ));
+
+        $foldersCount = $folders->count();
+        $filesCount = $files->count();
+
+        return response()->json([
+            'success' => true,
+            'folders' => $folders,
+            'foldersCount' => $foldersCount,
+            'files' => $files,
+            'filesCount' => $filesCount,
+        ],200);
+
     }
 
     public function uploadFile(Request $request)
@@ -146,20 +228,100 @@ class FilemanagerController extends Controller
             return response()->json(['error' => true], 200);
         } else {
 
-            if(empty($folderName)){
+            if (empty($folderName)) {
                 return response()->json(['error' => true], 200);
-            }else{
-                $newFoldername = FolderService::uniquName($folderName,$folderID);
-                FilemanagerFolder::create([
+            } else {
+                $newFoldername = FolderService::uniquName($folderName, $folderID);
+                $folder = FilemanagerFolder::create([
                     'name' => $newFoldername,
                     'parent' => $folderID
                 ]);
 
-                return response()->json(['success' => true], 200);
+                $lastFolder = [
+                    'id' => $folder->id,
+                    'name' => $folder->name,
+                    'created_at' => \Illuminate\Support\Carbon::parse($folder->created_at)->format('Y.m.d H:i'),
+                    'folder_img' => asset('vendor/file-manager-bi/images/folder.svg'),
+                ];
+
+
+                return response()->json(['success' => true, 'folder' => $lastFolder], 200);
             }
 
 
         }
+
+
+    }
+
+    public function renameFolderName(Request $request)
+    {
+        $folderID = $request->folderID;
+        $folderName = $request->folderName;
+        $currentFolder = $request->currentFolder;
+
+        $folder = FilemanagerFolder::where('id',$folderID)
+            ->where('parent',$currentFolder)
+            ->first();
+
+        if(empty($folderName)){
+            return response()->json([
+                'error' => true,
+                'msg' => trans('fm-translations::filemanager-bi.empty_folder_name')
+            ], 200);
+        }else{
+
+            if($folder){
+
+                if($folder->name == $folderName){
+
+                    FilemanagerFolder::where('id',$folderID)
+                        ->update([
+                            'name' => $folderName
+                        ]);
+
+                    return response()->json(['success' => true,'fodlerName' => $folderName], 200);
+
+                }else{
+
+
+                    $folderExists = FilemanagerFolder::where('parent',$currentFolder)
+                        ->where('name',$folderName)
+                        ->first();
+
+                    if($folderExists){
+                        return response()->json([
+                            'error' => true,
+                            'msg' => trans('fm-translations::filemanager-bi.exists_folder_name')
+                        ], 200);
+                    }else{
+                        FilemanagerFolder::where('id',$folderID)
+                            ->update([
+                                'name' => $folderName
+                            ]);
+
+                        return response()->json(['success' => true,'fodlerName' => $folderName], 200);
+                    }
+
+
+
+                }
+
+
+            }else{
+
+                return response()->json([
+                    'error' => true,
+                    'msg' => trans('fm-translations::filemanager-bi.not_exists_folder')
+                ], 200);
+
+            }
+
+        }// ELSE Empty Folder Name
+
+
+
+
 
 
     }

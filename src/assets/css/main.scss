@@ -23,6 +23,10 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     overflow: hidden;
 
+    .filemanager-bi-effect-box {
+        background: #eefde8 !important;
+    }
+
     ::-webkit-scrollbar {
         width: 5px;
         background-color: #cacaca;
@@ -428,6 +432,28 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 15px;
         justify-content: space-between;
 
+        #filemanager-bi-information-left {
+            #filemanager-bi-get-home {
+                font-size: 14px;
+                width: 29px;
+                height: 29px;
+                background: white;
+                border-radius: 50%;
+                padding: 7px;
+                border: 1px solid #d7dcdf;
+                -webkit-transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+                transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+                transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out;
+                transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    background: #F7F8F9;
+                }
+            }
+        }
+
+
         #filemanager-bi-information-folder-name {
             font-weight: 600;
         }
@@ -751,6 +777,95 @@ h1, h2, h3, h4, h5, h6 {
                             margin-bottom: 30px;
                         }
 
+
+                        .filemanager-bi-context-menu {
+                            position: fixed;
+                            background: #ffffff;
+                            padding: 5px;
+                            width: 170px;
+                            z-index: 3;
+                            border: 1px solid #cccccc;
+                            border-radius: 3px;
+                            box-shadow: 0px 5px 5px 0px #d0d0d0;
+                            display: none;
+
+                            .filemanager-bi-context-menu-item {
+                                padding: 5px 0px;
+                                cursor: text;
+                                ul {
+                                    margin: 0;
+                                    padding: 0;
+
+                                    li {
+                                        cursor: pointer;
+                                        border: 1px solid transparent;
+                                        border-radius: 1px;
+                                        padding: 3px 3px;
+                                        font-size: 15px;
+                                        transition: background-color 0.3s ease;
+                                        display: flex;
+                                        align-items: center;
+
+
+                                        &:hover {
+                                            background-color: #ececec;
+                                            border: 1px solid #e6e6e6;
+                                            border-radius: 1px;
+                                            padding: 3px 3px;
+                                            font-size: 15px;
+                                            display: flex;
+                                            align-items: center;
+                                            transition: background-color 0.3s ease;
+                                        }
+
+                                        i{
+                                            width: 20px;
+                                            height: 20px;
+                                            margin-right: 2px;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: #2b618e;
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            .filemanager-bi-context-menu-properties {
+                                border-top: 1px solid #e6e6e6;
+                                padding: 5px 3px;
+                                cursor: text;
+
+                                .filemanager-bi-context-menu-properties-name {
+                                    text-align: center;
+                                    padding-bottom: 6px;
+                                    font-weight: 600;
+                                }
+                                div{
+                                    font-size: 14px;
+                                    div{
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 1px 0px;
+
+                                        i{
+                                            width: 20px;
+                                            height: 20px;
+                                            margin-right: 2px;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: #2b618e;
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
+
+
                         .filemanager-bi-select-folder {
                             position: absolute;
                             width: 22px;
@@ -787,6 +902,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
                         }
+
 
                         .filemanager-bi-content-item-folder-info-mobile {
                             display: none;
@@ -1064,6 +1180,15 @@ h1, h2, h3, h4, h5, h6 {
     border: 3px solid #00b6fd !important;
 }
 
+.select-folder-active {
+    border: 3px solid #00b6fd !important;
+}
+
+.select-folder-context-active {
+    border: 3px solid #00b6fd !important;
+}
+
+
 
 /*   DROPZONE UPLOAD FILE START   */
 .filemanager-bi-dropzone {
@@ -1210,3 +1335,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*   DROPZONE UPLOAD FILE END   */
+
+
+
+

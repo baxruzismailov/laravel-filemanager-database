@@ -6,21 +6,21 @@ $.ajaxSetup({
 });
 
 /*   LOCAL STORAGE START   */
-function filemanagerForSetLocalStorage(){
+function filemanagerForSetLocalStorage() {
     let filemanagerCurrentFolder = localStorage.getItem('fileManagerBiCurrentFolder');
-    if(filemanagerCurrentFolder == null){
-        localStorage.setItem('fileManagerBiCurrentFolder',0);
-    }else {
+    if (filemanagerCurrentFolder == null) {
+        localStorage.setItem('fileManagerBiCurrentFolder', 0);
+    } else {
         let localStorageCurrentFolder = localStorage.getItem('fileManagerBiCurrentFolder');
         $.ajax({
-            type:"POST",
-            url:SET_LOCALSTORAGE_ROUTE,
-            data:{folderID:localStorageCurrentFolder},
-            dataType:'JSON',
-            success:function (response){
-                if(response.error){
+            type: "POST",
+            url: SET_LOCALSTORAGE_ROUTE,
+            data: {folderID: localStorageCurrentFolder},
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.error) {
                     //IF IS NOT FOLDER
-                    localStorage.setItem('fileManagerBiCurrentFolder',0);
+                    localStorage.setItem('fileManagerBiCurrentFolder', 0);
                 }
 
             }
@@ -29,12 +29,12 @@ function filemanagerForSetLocalStorage(){
 
 }
 
-function filemanagerForGetLocalStorage(){
+function filemanagerForGetLocalStorage() {
     let filemanagerCurrentFolder = localStorage.getItem('fileManagerBiCurrentFolder');
-    if(filemanagerCurrentFolder == null){
-        localStorage.setItem('fileManagerBiCurrentFolder',0);
+    if (filemanagerCurrentFolder == null) {
+        localStorage.setItem('fileManagerBiCurrentFolder', 0);
         return 0;
-    }else {
+    } else {
         return parseInt(filemanagerCurrentFolder);
     }
 }
@@ -43,23 +43,23 @@ filemanagerForSetLocalStorage();
 
 /*   LOCAL STORAGE END   */
 
-function filemanagerBiErrorMsg(option = true,name = '',){
+function filemanagerBiErrorMsg(option = true, name = '',) {
 
-    if(option == true){
+    if (option == true) {
         $('.filemanager-bi-modal-body .filemanager-bi-error').html(name);
         $('.filemanager-bi-modal-body .filemanager-bi-error').show();
-    }else {
+    } else {
         $('.filemanager-bi-modal-body .filemanager-bi-error').html(name);
         $('.filemanager-bi-modal-body .filemanager-bi-error').hide();
     }
 
 }
 
-function filemanagerBiInputsValEmpty(){
+function filemanagerBiInputsValEmpty() {
     $('.filemanager-bi-modal-body input').val('');
 }
 
-$(document).on('click','.filemanager-bi-modal-body input',function (){
+$(document).on('click', '.filemanager-bi-modal-body input', function () {
     filemanagerBiErrorMsg(false);
 })
 
@@ -199,6 +199,7 @@ function modalOverlayClass() {
     modalOverlay.classList.remove("visible");
     document.querySelector(".modalOverlayClass").innerHTML = '';
 
+    /*   REMOVE ERRROR MESAGES AND INPUT VAL   */
     filemanagerBiErrorMsg(false);
     filemanagerBiInputsValEmpty();
 }
@@ -545,17 +546,17 @@ $(document).on('click', '#filemanager-bi-remove-only-one-folder-modal-success', 
 
 /*   CREATE NEW FOLDER START   */
 
-$(document).on('click','#filemanager-bi-new-folder-create',function (){
+$(document).on('click', '#filemanager-bi-new-folder-create', function () {
     const filemanagerNewFolderName = $('#file-manager-bi-new-folder-name').val();
     filemanagerForSetLocalStorage();
 
-    if(filemanagerNewFolderName.length == 0){
-        filemanagerBiErrorMsg(true,'Error bash verdi');
-    }else {
+    if (filemanagerNewFolderName.length == 0) {
+        filemanagerBiErrorMsg(true, 'Error bash verdi');
+    } else {
         filemanagerBiErrorMsg(false);
         let data = {
-            folderID:filemanagerForGetLocalStorage(),
-            folderName:filemanagerNewFolderName
+            folderID: filemanagerForGetLocalStorage(),
+            folderName: filemanagerNewFolderName
         };
 
         clearTimeout(CREATE_NEW_FOLDER_TIME_OUT);
@@ -565,22 +566,23 @@ $(document).on('click','#filemanager-bi-new-folder-create',function (){
 
 })
 
-var CREATE_NEW_FOLDER_TIME_OUT;
+var CREATE_NEW_FOLDER_TIME_OUT,
+    REMOVE_EFFECT_BOX_FILEMANAGER_BI;
 
 function createNewFolderFileManaerBi(data) {
     CREATE_NEW_FOLDER_TIME_OUT = setTimeout(function () {
 
         $.ajax({
-            type:"POST",
-            url:FILE_MANAGER_BI_CREATE_NEW_FOLDER,
-            data:data,
-            dataType:'JSON',
-            success:function (response){
-                if(response.success){
-                    console.log('Ela');
+            type: "POST",
+            url: FILE_MANAGER_BI_CREATE_NEW_FOLDER_ROUTE,
+            data: data,
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.success) {
+                    createNewFolderBoxFileManagerBi(response)
                     filemanagerBiInputsValEmpty();
                     filemanagerModalClose();
-                }else {
+                } else {
                     console.log('Xeta');
                     filemanagerForSetLocalStorage();
                 }
@@ -592,10 +594,212 @@ function createNewFolderFileManaerBi(data) {
 
 }
 
+function removeEffectBoxFilemanagerBi() {
+    REMOVE_EFFECT_BOX_FILEMANAGER_BI = setTimeout(function () {
+
+        $('.filemanager-bi-effect-box').removeClass('filemanager-bi-effect-box');
+
+    }, 3000);
+}
+
+function createNewFolderBoxFileManagerBi(response) {
+    /*   ADD FOLDER BOX   */
+    $(".filemanager-bi-content-item-folder-box").first().before(`
+                                        <div class="filemanager-bi-content-item-folder-box filemanager-bi-effect-box"
+                     data-folder-id="${response.folder.id}"
+                     data-folder-name="${response.folder.name}"
+                >
+                    <!--  SELECT FILE  -->
+                    <div class="filemanager-bi-select-folder"></div>
+
+                    <div class="filemanager-bi-content-item-folder-image">
+                        <img src="${response.folder.folder_img}" alt="${response.folder.name}">
+                    </div>
+                    <div class="filemanager-bi-content-item-folder-info-mobile">
+                        <div>${response.folder.name}</div>
+                        <div>${response.folder.created_at}</div>
+                        <div>${FILEMANAGER_FOLDER_COUNT_FILE}</div>
+                    </div>
+                    <div class="filemanager-bi-content-item-folder-name filemanager-bi-effect-box">${response.folder.name}</div>
+                    <!-- FOLDER TOOLS  -->
+                    <div class="filemanager-bi-content-item-folder-tools filemanager-bi-effect-box">
+                        <i title="${FILEMANAGER_EDIT_BUTTON_TEXT}" class="far fa-edit"></i>
+                        <i
+                            title="${FILEMANAGER_DELETE_BUTTON_TEXT}"
+                            class="far fa-trash-alt filemanager-bi-delete-one-folder"
+                            onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                            data-modal="#filemanager-bi-remove-only-one-folder-modal"
+                        ></i>
+                    </div>
+                </div>
+                    `);
+
+    /*   REMOVE EFFECT   */
+    clearTimeout(REMOVE_EFFECT_BOX_FILEMANAGER_BI);
+    removeEffectBoxFilemanagerBi();
+
+}
+
 /*   CREATE NEW FOLDER END   */
 
 
+/*   RENAME FODLER NAME START   */
+$(document).on('click', '.filemanager-bi-context-menu-rename', function () {
+    let filemanagerBiRenameFolderName = $('.select-folder-context-active').find('.filemanager-bi-content-item-folder-name').text();
+    let filemanagerBiFolderID = $('.select-folder-context-active').attr('data-folder-id');
+
+    $('#file-manager-bi-rename-folder-name').val(filemanagerBiRenameFolderName);
+    $('#filemanager-bi-rename-folder-update').attr('data-update-folder-id', filemanagerBiFolderID);
+
+})
+
+/*   MODAL   */
+$(document).on('click', '#filemanager-bi-rename-folder-update', function () {
+    let filemanagerBiFolderID = $(this).attr('data-update-folder-id');
+    let filemanagerBiNewFolderName = $('#file-manager-bi-rename-folder-name').val();
+
+    clearTimeout(FILEAMANGER_BI_RENAME_FOLDER_NAME);
+    filemanagerBiRenameFolderName(filemanagerBiFolderID, filemanagerBiNewFolderName);
+
+})
+
+
+var FILEAMANGER_BI_RENAME_FOLDER_NAME;
+
+function filemanagerBiRenameFolderName(folderID, folderName) {
+    FILEAMANGER_BI_RENAME_FOLDER_NAME = setTimeout(function () {
+
+        $.ajax({
+            type: "POST",
+            url: FILE_MANAGER_BI_RENAME_FOLDER_NAME_ROUTE,
+            data: {
+                folderID: folderID,
+                folderName: folderName,
+                currentFolder: localStorage.getItem('fileManagerBiCurrentFolder')
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.success) {
+
+                    $(".filemanager-bi-content-item-folder-box[data-folder-id='" + folderID + "']").find('.filemanager-bi-content-item-folder-name').text(response.fodlerName);
+
+                    /*   REMOVE EFFECT   */
+                    $(".filemanager-bi-content-item-folder-box[data-folder-id='" + folderID + "']").addClass('filemanager-bi-effect-box');
+                    $(".filemanager-bi-content-item-folder-box[data-folder-id='" + folderID + "']").find('.filemanager-bi-content-item-folder-name').addClass('filemanager-bi-effect-box');
+
+                    clearTimeout(REMOVE_EFFECT_BOX_FILEMANAGER_BI);
+                    removeEffectBoxFilemanagerBi();
+                    filemanagerModalClose()
+
+                } else {
+                    /*   ERROR   */
+                    filemanagerBiErrorMsg(true, response.msg);
+
+                }
+
+            }
+        })
+
+    }, 300);
+
+}
+
+
+/*   RENAME FODLER NAME END   */
+
+
+/*   FILES WIDTH & HEIGTH START  */
+function filemanagerDetectedImageUrlSize(URL, callback) {
+    let image = new Image();
+    image.src = URL;
+    image.onload = function () {
+        let result = this.width + 'x' + this.height;
+        callback(result);
+    };
+}
+
+/*   FILES WIDTH & HEIGTH END  */
+
+
+/*   MOUSE RIGHT CLICK START   */
+
+$(document).on('contextmenu', '.filemanager-bi-content-item-folder-box', function (event) {
+    $('.filemanager-bi-content-item-folder-box').removeClass('select-folder-context-active');
+    $('.filemanager-bi-content-item-folder-box').removeClass('filemanagerBicontextMenuActive');
+    $('.filemanager-bi-context-menu').hide();
+
+    /*   BOX X & BOX Y   */
+    $(this).find('.filemanager-bi-context-menu').css('top', event.pageY);
+    $(this).find('.filemanager-bi-context-menu').css('left', event.pageX);
+    $(this).find('.filemanager-bi-context-menu').show();
+
+
+    $(this).addClass('filemanagerBicontextMenuActive');
+    $(this).addClass('select-folder-context-active');
+    return false;
+})
+
+
+$(document).on('click', function () {
+    $('.filemanager-bi-context-menu').hide();
+    $('.filemanager-bi-content-item-folder-box').removeClass('filemanagerBicontextMenuActive');
+    $('.filemanager-bi-content-item-folder-box').removeClass('select-folder-context-active');
+});
+
+$(window.parent.document).on('click', function () {
+    $('.filemanager-bi-context-menu').hide();
+    $('.filemanager-bi-content-item-folder-box').removeClass('filemanagerBicontextMenuActive');
+    $('.filemanager-bi-content-item-folder-box').removeClass('select-folder-context-active');
+});
+
+/*   MOUSE RIGHT CLICK END   */
+
+/*   GET HOME PAGE START   */
+var GET_FILEMANAGER_BI_HOME_PAGE;
+
+function getHomePageFileManagerBi() {
+    GET_FILEMANAGER_BI_HOME_PAGE = setTimeout(function () {
+
+        $.ajax({
+            type: "POST",
+            url: GET_HOME_PAGE_FILEMANAGER_BI_ROUTE,
+            data: {data: true},
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.success) {
+
+                    console.log(response);
+
+                    response.files.forEach(function (value) {
+
+
+                        filemanagerDetectedImageUrlSize(value.url, function (result) {
+                            console.log(result);
+                        });
+
+
+                    })
+                } else {
+                    console.log('Xeta');
+                    filemanagerForSetLocalStorage();
+                }
+
+            }
+        })
+
+    }, 300);
+
+}
+
+$(document).on('click', '#filemanager-bi-get-home', function () {
+    clearTimeout(GET_FILEMANAGER_BI_HOME_PAGE);
+    getHomePageFileManagerBi();
+})
+/*   GET HOME PAGE END   */
+
+
 /*   -------------------------------------------------------------------------------------------------   */
+
 /*   DROPZONE FILE UPLOAD START   */
 
 function fileIcon(name) {

@@ -13,5 +13,10 @@ class FilemanagerFolder extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+    public function files()
+    {
+        return $this->hasMany(FilemanagerFile::class,'folder_id','id');
+    }
+
 
 }
