@@ -21,8 +21,10 @@ class RouteService
                     /*   FOLDER   */
                     Route::post('/create-new-folder', 'FilemanagerController@createNewFolder')->name('filemanager.bi.createNewFolder');
                     Route::post('/rename-folder-name', 'FilemanagerController@renameFolderName')->name('filemanager.bi.renameFolderName');
+                    Route::post('/cut-folder', 'FilemanagerController@cutFolder')->name('filemanager.bi.cutFolder');
+                    Route::post('/get-folders', 'FilemanagerController@getFolders')->name('filemanager.bi.getFolders');
                     /*   LOCAL STORAGE   */
-                    Route::post('/local-storage', 'FilemanagerController@localStorage')->name('filemanager.bi.localStorage');
+                    Route::post('/local-storage', 'FilemanagerController@setCurrentFolderLocalStorage')->name('filemanager.bi.setCurrentFolderLocalStorage');
                 });
 
 

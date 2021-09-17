@@ -58,7 +58,7 @@ class FolderService
             if ($folder['parent'] == $parent_id) {
                 if (in_array($folder['id'], $parents)) {
                     $html .= '<li class="filemanager-bi-menu-item-has-children filemanager-bi-has-children">
-                                <div class="filemanager-bi-main-menu-item-container " style="padding-left: '.$sub_mark.'px">
+                                <div class="filemanager-bi-main-menu-item-container " data-folder-id="'.$folder['id'].'" style="padding-left: '.$sub_mark.'px">
                            <div class="filemanager-bi-main-menu-item-left">
                                <div class="filemanager-bi-main-menu-item-folder">
                                    <i class="fas fa-folder"></i>
@@ -70,7 +70,7 @@ class FolderService
                 } else {
 
 
-                    $html .= '<li><div class="filemanager-bi-main-menu-item-container " style="padding-left: '.$sub_mark.'px">
+                    $html .= '<li><div class="filemanager-bi-main-menu-item-container " data-folder-id="'.$folder['id'].'" style="padding-left: '.$sub_mark.'px">
                            <div class="filemanager-bi-main-menu-item-left">
                                <div class="filemanager-bi-main-menu-item-folder">
                                    <i class="fas fa-folder"></i>
@@ -105,14 +105,32 @@ class FolderService
 
         while ((FilemanagerFolder::where('name',$nSlug)->where('parent',$parent)->count()) > 0) {
             $i++;
-            $nSlug = $name . ' (' . ($i + 1).')';
+            $nSlug = trim($name) . ' (' . ($i + 1).')';
         }
         if ($i > 0) {
-            $newSlug = substr($nSlug, 0, strlen($name)) . ' (' . ($i + 1).')';
+            $newSlug = substr($nSlug, 0, strlen(trim($name))) . ' (' . ($i + 1).')';
         } else {
-            $newSlug = $name;
+            $newSlug = trim($name);
         }
         return $newSlug;
+    }
+
+    public static function getParentFolderID( $folderID)
+    {
+
+        $folders = FilemanagerFolder::where('id', $folderID)
+            ->get();
+
+        foreach ($folders as   $folder):
+
+                if($folder->parent != 0){
+                   return self::getParentFolderID( $folder->parent);
+                }else{
+                    return  $folder->id;
+                }
+
+        endforeach;
+
     }
 
 }

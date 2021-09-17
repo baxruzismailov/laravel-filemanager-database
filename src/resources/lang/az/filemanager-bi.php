@@ -32,11 +32,22 @@ return [
     'rename' => 'Adını dəyiş',
     'rename_folder' => 'Qovluğun adını dəyiş',
     'cut' => 'Kəs',
+    'folders_cut' => 'Seçilmiş qovluğları kəs',
+    'select_folder_paste' => 'Qovluğu köçür',
+    'select_folders_paste' => 'Seçilmiş qovluğları köçür',
+    'folders_paste' => 'Qovluğların köçürülməsi',
+    'auto_rename' => 'Avtomatik adını dəyiş',
+    'next_folder' => 'Növbəti qovluğa keç',
+    'back' => 'Geri',
 
-    /*   ERROR MSG FOLDER  */
+    /*   MSG FOLDER  */
     'exists_folder_name' => 'Bu qovluq altında belə bir qovluq mövcuddur',
     'not_exists_folder' => 'Belə bir qovluq mövcud deyil',
     'empty_folder_name' => 'Qovluğun adı boş buraxıla bilməz',
+    'cut_folder_warning' => 'Diqqət: Köçürüləcək qovluğda eyni adlı qovluq varsa.',
+    'the_same_folder' => 'Diqqət: (<b>%s</b>) adlı qovluğun mənbəyi və təyinatı eynidir.',
+    'the_folder_sub_folder' => 'Diqqət: Qovluğu özünün alt qovluğu edə bilmərsiniz. (<b>%s</b>)',
+    'success_cut_folders' => 'Köçürülmüş qovluğların sayı: ',
 
 
 ];

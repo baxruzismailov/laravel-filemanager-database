@@ -1,4 +1,3 @@
-
 <!--  FILE UPLOAD START-->
 <div class="filemanager-bi-modal-overlay" id="filemanager-bi-file-upload">
     <div class="filemanager-bi-modal-container filemanager-bi-modal-lg">
@@ -84,7 +83,6 @@
 <!--  FILE MODAL END  -->
 
 
-
 <!--  ------------------------------------  -->
 <!--  FOLDER MODAL START  -->
 <!--  REMOVE SELECT FOLDERS MODAL START  -->
@@ -145,7 +143,8 @@
             </div>
         </div>
         <div class="filemanager-bi-modal-body">
-            <label for="file-manager-bi-new-folder-name">{{ trans('fm-translations::filemanager-bi.new_folder_name') }}</label>
+            <label
+                for="file-manager-bi-new-folder-name">{{ trans('fm-translations::filemanager-bi.new_folder_name') }}</label>
             <input id="file-manager-bi-new-folder-name" autocomplete="OFF" type="text" class="fm-bi-form-control mt-1">
             <!--  ERROR MSG  -->
             <div class="filemanager-bi-error mt-2"></div>
@@ -174,8 +173,10 @@
             </div>
         </div>
         <div class="filemanager-bi-modal-body">
-            <label for="file-manager-bi-rename-folder-name">{{ trans('fm-translations::filemanager-bi.new_folder_name') }}</label>
-            <input id="file-manager-bi-rename-folder-name" autocomplete="OFF" type="text" class="fm-bi-form-control mt-1">
+            <label
+                for="file-manager-bi-rename-folder-name">{{ trans('fm-translations::filemanager-bi.new_folder_name') }}</label>
+            <input id="file-manager-bi-rename-folder-name" autocomplete="OFF" type="text"
+                   class="fm-bi-form-control mt-1">
             <!--  ERROR MSG  -->
             <div class="filemanager-bi-error mt-2"></div>
         </div>
@@ -192,6 +193,51 @@
     <div class="modalOverlayClass"></div>
 </div>
 <!--  RENAME FOLDER MODAL END  -->
+
+<!--  CUT FOLDERS MODAL START  -->
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-cut-folders-modal">
+    <div class="filemanager-bi-modal-container filemanager-bi-modal-md">
+        <div class="filemanager-bi-modal-header">
+            <h4>{{ trans('fm-translations::filemanager-bi.folders_paste') }}</h4>
+            <div class="headerClose" onclick="filemanagerModalClose()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="filemanager-bi-modal-body">
+            <!--  INFO  -->
+            <div id="filemanager-bi-info-cut-folder" class="filemanager-bi-success-msg"></div>
+            <!--  WARNING FOLDER  -->
+            <div id="filemanager-bi-warning-menu-folder">
+                <div>{{ trans('fm-translations::filemanager-bi.cut_folder_warning') }}</div>
+                <button id="filemanager-bi-auto-rename" class="my-btn-default">{{ trans('fm-translations::filemanager-bi.auto_rename') }}</button>
+                <button id="filemanager-bi-next-folder" class="my-btn-default">{{ trans('fm-translations::filemanager-bi.next_folder') }}</button>
+            </div>
+            <!--  CUT FOLDER  -->
+            <div id="filemanager-bi-cut-menu">
+                <div id="filemanager-bi-left-menu-container">
+                    <div id="filemanager-bi-left-menu-items">
+                        <div class="filemanager-bi-main-menu">
+                            <ul>
+                                {!! \Baxruzismailov\Filemanager\Services\FolderService::getFolders() !!}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="filemanager-bi-modal-footer">
+            <button id="filemanager-bi-modal-back-cut-folder" class="my-btn">
+                {{ trans('fm-translations::filemanager-bi.back') }}
+            </button>
+            <button class="my-btn " onclick="filemanagerModalClose()">
+                {{ trans('fm-translations::filemanager-bi.cancle') }}
+            </button>
+        </div>
+
+    </div>
+    <div class="modalOverlayClass"></div>
+</div>
+<!--  CUT SELECT FOLDERS MODAL END  -->
 
 <!--  FOLDER MODAL END  -->
 

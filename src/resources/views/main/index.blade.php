@@ -5,7 +5,9 @@
         <div id="filemanager-bi-information-left">
             <span id="filemanager-bi-get-home"><i class="fa fa-home"></i></span>
             <span id="filemanager-bi-information-folder-name">Images</span> |
-            {!! sprintf(trans('fm-translations::filemanager-bi.information'),$foldersCount,$filesCount) !!}
+            <span id="filemanager-bi-folders-and-files-count">
+                {!! sprintf(trans('fm-translations::filemanager-bi.information'),$foldersCount,$filesCount) !!}
+            </span>
         </div>
         <div id="filemanager-bi-information-right"></div>
     </div>
@@ -39,7 +41,9 @@
                         <div class="filemanager-bi-context-menu-item">
                             <ul>
                                 <!--  RENAMAE  -->
-                                <li onclick="filemanagerModalOpen(this.getAttribute('data-modal'))" data-modal="#filemanager-bi-rename-folder-modal" class="filemanager-bi-context-menu-rename">
+                                <li onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                                    data-modal="#filemanager-bi-rename-folder-modal"
+                                    class="filemanager-bi-context-menu-rename">
                                     <i title="{{ trans('fm-translations::filemanager-bi.rename') }}"
                                        class="far fa-edit"></i>
                                     <span>{{ trans('fm-translations::filemanager-bi.rename') }}</span>
@@ -50,11 +54,20 @@
                                        class="fas fa-cut"></i>
                                     <span>{{ trans('fm-translations::filemanager-bi.cut') }}</span>
                                 </li>
+                                <!--  DELETE  -->
+                                <li class="filemanager-bi-delete-one-folder"
+                                    onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                                    data-modal="#filemanager-bi-remove-only-one-folder-modal">
+                                    <i title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                                       class="far fa-trash-alt"></i>
+                                    <span>{{ trans('fm-translations::filemanager-bi.file_delete') }}</span>
+                                </li>
                             </ul>
                         </div>
                         <div class="filemanager-bi-context-menu-properties">
                             <!--  properties  -->
-                            <div class="filemanager-bi-context-menu-properties-name">{{ trans('fm-translations::filemanager-bi.properties') }}</div>
+                            <div
+                                class="filemanager-bi-context-menu-properties-name">{{ trans('fm-translations::filemanager-bi.properties') }}</div>
                             <div>
 
                                 <!--  NAME  -->
@@ -92,7 +105,11 @@
                     <div class="filemanager-bi-content-item-folder-name">{{ $folder->name }}</div>
                     <!-- FOLDER TOOLS  -->
                     <div class="filemanager-bi-content-item-folder-tools">
-                        <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>
+                        <i
+                            title="{{ trans('fm-translations::filemanager-bi.rename') }}"
+                            onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                            data-modal="#filemanager-bi-rename-folder-modal"
+                            class="far fa-edit filemanager-bi-menu-rename"></i>
                         <i
                             title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
                             class="far fa-trash-alt filemanager-bi-delete-one-folder"
@@ -188,8 +205,6 @@
                         <div class="filemanager-bi-content-item-tools">
                             <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
                                class="far fa-arrow-alt-circle-down"></i>
-                            <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"
-                               class="fas fa-feather-alt"></i>
                             <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>
                             <i
                                 title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
@@ -243,8 +258,6 @@
                         <div class="filemanager-bi-content-item-tools">
                             <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
                                class="far fa-arrow-alt-circle-down"></i>
-                            <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"
-                               class="fas fa-feather-alt"></i>
                             <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>
                             <i
                                 title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
@@ -295,8 +308,6 @@
                         <div class="filemanager-bi-content-item-tools">
                             <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"
                                class="far fa-arrow-alt-circle-down"></i>
-                            <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"
-                               class="fas fa-feather-alt"></i>
                             <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>
                             <i
                                 title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
@@ -399,8 +410,6 @@
             {{--                <div class="filemanager-bi-content-item-tools">--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"--}}
             {{--                       class="far fa-arrow-alt-circle-down"></i>--}}
-            {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"--}}
-            {{--                       class="fas fa-feather-alt"></i>--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>--}}
             {{--                    <i--}}
             {{--                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"--}}
@@ -454,8 +463,6 @@
             {{--                <div class="filemanager-bi-content-item-tools">--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"--}}
             {{--                       class="far fa-arrow-alt-circle-down"></i>--}}
-            {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"--}}
-            {{--                       class="fas fa-feather-alt"></i>--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>--}}
             {{--                    <i--}}
             {{--                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"--}}
@@ -509,8 +516,6 @@
             {{--                <div class="filemanager-bi-content-item-tools">--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_download') }}"--}}
             {{--                       class="far fa-arrow-alt-circle-down"></i>--}}
-            {{--                    <i title="{{ trans('fm-translations::filemanager-bi.file_edit') }}"--}}
-            {{--                       class="fas fa-feather-alt"></i>--}}
             {{--                    <i title="{{ trans('fm-translations::filemanager-bi.rename') }}" class="far fa-edit"></i>--}}
             {{--                    <i--}}
             {{--                        title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"--}}
