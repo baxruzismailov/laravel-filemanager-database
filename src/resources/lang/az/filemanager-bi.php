@@ -48,6 +48,7 @@ return [
     'the_same_folder' => 'Diqqət: (<b>%s</b>) adlı qovluğun mənbəyi və təyinatı eynidir.',
     'the_folder_sub_folder' => 'Diqqət: Qovluğu özünün alt qovluğu edə bilmərsiniz. (<b>%s</b>)',
     'success_cut_folders' => 'Köçürülmüş qovluğların sayı: ',
+    'not_cut_folders' => 'Köçürülməmiş qovluğlar ',
 
 
 ];

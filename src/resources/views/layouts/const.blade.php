@@ -20,11 +20,13 @@
         FILE_MANAGER_BI_CUT_FOLDER_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.folders_cut') }}",
         FILE_MANAGER_BI_SELECT_FOLDER_PASTE_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.select_folder_paste') }}",
         FILE_MANAGER_BI_SUCCESS_CUT_FOLDERS_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.success_cut_folders') }}",
+        FILE_MANAGER_BI_NOT_CUT_FOLDERS_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.not_cut_folders') }}",
+        FILE_MANAGER_BI_EMPTY_FOLDER_NAME_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.empty_folder_name') }}",
         FILEMANAGER_FOLDER_COUNT_FILE_TRANSLATE = "{{ sprintf(trans('fm-translations::filemanager-bi.files_count'),0) }}",
         FILE_MANAGER_BI_CREATE_NEW_FOLDER_ROUTE = "{{ route('filemanager.bi.createNewFolder') }}",
         FILE_MANAGER_BI_CUT_FOLDER_ROUTE = "{{ route('filemanager.bi.cutFolder') }}",
         FILE_MANAGER_BI_GET_FOLDERS_ROUTE = "{{ route('filemanager.bi.getFolders') }}",
-        FILE_MANAGER_BI_RENAME_FOLDER_NAME_ROUTE = "{{ route('filemanager.bi.renameFolderName') }}";
+        FILE_MANAGER_BI_RENAME_FOLDER_NAME_ROUTE = "{{ route('filemanager.bi.updateFolderName') }}";
 
     /*   UPLOAD FILES   */
     const FILEMANAGER_BI_MAX_UPLOAD_SIZE = "{{ str_replace('M', null, ini_get('upload_max_filesize')) * 1024 * 1024 }}",

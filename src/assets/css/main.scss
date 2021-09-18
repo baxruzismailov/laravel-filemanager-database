@@ -1290,6 +1290,25 @@ h1, h2, h3, h4, h5, h6 {
                     color: #ff0000;
                 }
             }
+
+            .filemanager-bi-warning-msg{
+                background: #fff9e9;
+                padding: 10px;
+                margin: 12px 0;
+
+            }
+
+            .filemanager-bi-default-msg{
+                background: #ffffff;
+                margin: 4px 0;
+                text-align: left;
+                padding: 4px;
+               &:not(:last-child){
+                   border-bottom: 1px solid #e2e2e2;
+               }
+            }
+
+
         }
 
     }
