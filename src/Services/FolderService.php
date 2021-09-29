@@ -3,11 +3,12 @@
 namespace Baxruzismailov\Filemanager\Services;
 
 use Baxruzismailov\Filemanager\Models\FilemanagerFolder;
+use phpDocumentor\Reflection\Types\This;
 
 class FolderService
 {
 
-    public static function getFolders($parent_id = 0, $parents = [],$sub_mark = 11)
+    public static function getFolders($parent_id = 0, $parents = [], $sub_mark = 11)
     {
 
         $sortField = '';
@@ -21,24 +22,23 @@ class FolderService
             } else {
                 $sortField = 'created_at';
             }
-        }else{
+        } else {
             $sortField = 'created_at';
         }
 
         //Order By
-        if(isset($_COOKIE['filemanager_bi_order_by'])){
+        if (isset($_COOKIE['filemanager_bi_order_by'])) {
             if ($_COOKIE['filemanager_bi_order_by'] == 1) {
                 $orderBy = 'ASC';
             } else {
                 $orderBy = 'DESC';
             }
-        }else{
+        } else {
             $orderBy = 'DESC';
         }
 
 
-
-        $folders = FilemanagerFolder::orderBy($sortField,$orderBy)
+        $folders = FilemanagerFolder::orderBy($sortField, $orderBy)
             ->get()
             ->toArray();
 
@@ -58,31 +58,31 @@ class FolderService
             if ($folder['parent'] == $parent_id) {
                 if (in_array($folder['id'], $parents)) {
                     $html .= '<li class="filemanager-bi-menu-item-has-children filemanager-bi-has-children">
-                                <div class="filemanager-bi-main-menu-item-container " data-folder-id="'.$folder['id'].'" style="padding-left: '.$sub_mark.'px">
+                                <div class="filemanager-bi-main-menu-item-container " data-folder-id="' . $folder['id'] . '" style="padding-left: ' . $sub_mark . 'px">
                            <div class="filemanager-bi-main-menu-item-left">
                                <div class="filemanager-bi-main-menu-item-folder">
                                    <i class="fas fa-folder"></i>
                                </div>
-                               <div>'.$folder['name'].'</div>
+                               <div>' . $folder['name'] . '</div>
                            </div>
                        </div>';
 
                 } else {
 
 
-                    $html .= '<li><div class="filemanager-bi-main-menu-item-container " data-folder-id="'.$folder['id'].'" style="padding-left: '.$sub_mark.'px">
+                    $html .= '<li><div class="filemanager-bi-main-menu-item-container " data-folder-id="' . $folder['id'] . '" style="padding-left: ' . $sub_mark . 'px">
                            <div class="filemanager-bi-main-menu-item-left">
                                <div class="filemanager-bi-main-menu-item-folder">
                                    <i class="fas fa-folder"></i>
                                </div>
-                               <div>'.$folder['name'].'</div>
+                               <div>' . $folder['name'] . '</div>
                            </div>
                        </div>';
 
                 }
                 if (in_array($folder['id'], $parents)) {
                     $html .= '<ul class="filemanager-bi-sub-menu">';
-                    $html .= self::getFolders($folder['id'], $parents,$sub_mark+20);
+                    $html .= self::getFolders($folder['id'], $parents, $sub_mark + 20);
                     $html .= '</ul>';
                 }
                 $html .= '</li>';
@@ -94,7 +94,7 @@ class FolderService
     }
 
 
-    public static function uniquName($name = '',$parent = 0)
+    public static function uniquName($name = '', $parent = 0)
     {
         $slug = \Illuminate\Support\Str::slug($name);
         //get unique slug...
@@ -102,35 +102,53 @@ class FolderService
         $i = 0;
 
 
-
-        while ((FilemanagerFolder::where('name',$nSlug)->where('parent',$parent)->count()) > 0) {
+        while ((FilemanagerFolder::where('name', $nSlug)->where('parent', $parent)->count()) > 0) {
             $i++;
-            $nSlug = trim($name) . ' (' . ($i + 1).')';
+            $nSlug = trim($name) . ' (' . ($i + 1) . ')';
         }
         if ($i > 0) {
-            $newSlug = substr($nSlug, 0, strlen(trim($name))) . ' (' . ($i + 1).')';
+            $newSlug = substr($nSlug, 0, strlen(trim($name))) . ' (' . ($i + 1) . ')';
         } else {
             $newSlug = trim($name);
         }
         return $newSlug;
     }
 
-    public static function getParentFolderID( $folderID)
+    public static function getParentFolderID($folderID)
     {
 
         $folders = FilemanagerFolder::where('id', $folderID)
             ->get();
 
-        foreach ($folders as   $folder):
+        foreach ($folders as $folder):
 
-                if($folder->parent != 0){
-                   return self::getParentFolderID( $folder->parent);
-                }else{
-                    return  $folder->id;
-                }
+            if ($folder->parent != 0) {
+                return self::getParentFolderID($folder->parent);
+            } else {
+                return $folder->id;
+            }
 
         endforeach;
 
     }
+
+
+
+
+    public static function getParentFolderID4($cutFolderID,&$arr = [])
+    {
+        $folders = FilemanagerFolder::where('parent', $cutFolderID)
+            ->get()->toArray();
+
+        foreach ($folders as $folder):
+
+            $arr[] = $folder['id'];
+            self::getParentFolderID4($folder['id'],$arr);
+        endforeach;
+
+        return $arr;
+
+    }
+
 
 }

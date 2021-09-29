@@ -10,6 +10,7 @@
         </section>
     </div>
     @include('filemanager::layouts.pswp')
+    @include('filemanager::layouts.data')
 </div>
 @include('filemanager::layouts.footer')
 

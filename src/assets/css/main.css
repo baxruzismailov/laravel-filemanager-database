@@ -282,6 +282,30 @@ h1, h2, h3, h4, h5, h6 {
       display: flex;
       align-items: center;
       justify-content: flex-end; }
+      #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type {
+        display: flex; }
+        #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div {
+          margin: 0;
+          margin-right: 9px;
+          background: white;
+          border-radius: 50%;
+          padding: 0;
+          padding-right: 1px;
+          display: flex;
+          width: 26px;
+          height: 26px;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #d7dcdf;
+          -webkit-transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          cursor: pointer; }
+          #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div:hover {
+            background: #F7F8F9; }
+          #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div i {
+            font-size: 12px; }
       #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter {
         width: 140px;
         height: 29px; }
@@ -293,7 +317,11 @@ h1, h2, h3, h4, h5, h6 {
         background: transparent;
         width: 30px;
         height: 30px;
-        flex: 1; }
+        flex: 1;
+        position: absolute;
+        margin-top: 6px;
+        left: 3px;
+        justify-content: center; }
         #filemanager-bi #filemanager-bi-navbar #right-navbar-item .filemanager-bi-menu-icon i {
           font-size: 19px;
           color: #373a3c; }
@@ -343,6 +371,12 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 275px;
     overflow: auto;
     background: #F7F8F9; }
+    #filemanager-bi #filemanager-bi-cut-menu .filemanager-bi-cut-folder-disable-parent-folder {
+      background: rgba(207, 207, 207, 0.56) !important;
+      opacity: 0.5;
+      border-bottom: 1px solid #b3b3b3 !important; }
+      #filemanager-bi #filemanager-bi-cut-menu .filemanager-bi-cut-folder-disable-parent-folder:hover {
+        background: #dedede !important; }
     #filemanager-bi #filemanager-bi-cut-menu #filemanager-bi-left-menu-container {
       background: #F7F8F9;
       display: block;

@@ -39,6 +39,11 @@ return [
     'auto_rename' => 'Avtomatik adını dəyiş',
     'next_folder' => 'Növbəti qovluğa keç',
     'back' => 'Geri',
+    'images' => 'Şəkillər',
+    'videos' => 'Videolar',
+    'audios' => 'Audiolar',
+    'documents' => 'Sənədlər',
+    'archives' => 'Arxivlər',
 
     /*   MSG FOLDER  */
     'exists_folder_name' => 'Bu qovluq altında belə bir qovluq mövcuddur',

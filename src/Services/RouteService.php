@@ -15,6 +15,7 @@ class RouteService
 
                 Route::prefix('filemanager-bi')->group(function () {
                     Route::post('/home', 'FilemanagerController@home')->name('filemanager.bi.home');
+                    Route::post('/get-folders-and-files', 'FilemanagerController@getFoldersAndFiles')->name('filemanager.bi.getFoldersAndFiles');
                     /*   FILE   */
                     Route::get('/{type?}', 'FilemanagerController@index')->where('type', '[image,media]+');
                     Route::post('/upload-file', 'FilemanagerController@uploadFile')->name('filemanager.bi.uploadFile');

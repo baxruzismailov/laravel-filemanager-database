@@ -51,68 +51,90 @@ class FilemanagerController extends Controller
 
     public function index(Request $request)
     {
+
+        return view('filemanager::main.index');
+    }
+
+    public function getFoldersAndFiles(Request $request)
+    {
+
+        $folderID = $request->folderID;
+        $urlType = $request->urlType;
+        $filterType = $request->filterType;
+
         //FOLDERS
         $folders = FilemanagerFolder::with('files')
             ->withCount('files')
-            ->where('parent', 0)
+            ->where('parent', $folderID)
             ->orderBy($this->sortField, $this->orderBy)
             ->limit(config('file-manager-bi.folders_limit'))
             ->get();
 
 
-//        $folders = FilemanagerFolder::with(['files' => function($query) use($request){
-//
-//            //type image, media (video,audio).
-//            if (!$request->type == null) {
-//
-//                if ($request->type == 'image') {
-//                    $query->where('type', $request->type);
-//                } elseif ($request->type == 'media') {
-//                    $query->where('type', 'video');
-//                    $query->orWhere('type', 'audio');
-//                }
-//
-//            }
-//
-//            $query->limit(config('file-manager-bi.files_limit'));
-//        }])
-//            ->withCount('files')
-//            ->where('parent', 0)
-//            ->orderBy($this->sortField, $this->orderBy)
-//            ->limit(config('file-manager-bi.folders_limit'))
-//            ->get();
-
 
         //FILES
-        $files = FilemanagerFile::where(function ($query) use ($request) {
+        $files = FilemanagerFile::where(function ($query) use ($urlType,$filterType) {
             //type image, media (video,audio).
-            if (!$request->type == null) {
+            if (!$urlType == null) {
 
-                if ($request->type == 'image') {
-                    $query->where('type', $request->type);
-                } elseif ($request->type == 'media') {
+                if ($urlType == 'image') {
+                    $query->where('type', 'image');
+                } elseif ($urlType == 'media') {
                     $query->where('type', 'video');
                     $query->orWhere('type', 'audio');
                 }
 
+            }else{
+                if(!$filterType == null){
+                    $query->where('type', $filterType);
+                }
             }
         })
-            ->where('folder_id', 0)
+            ->where('folder_id', $folderID)
             ->orderBy($this->sortField, $this->orderBy)
             ->limit(config('file-manager-bi.files_limit'))
             ->get();
 
 
+        $folderCheck = FilemanagerFolder::where('id',$folderID)
+            ->select('parent','name')
+            ->first();
+
+        $folderName = '';
+        $folderParentID = '';
+        if($folderCheck){
+            $folderName = $folderCheck->name;
+            $folderParentID = $folderCheck->parent;
+        }else{
+            $folderName ='';
+            $folderParentID ='';
+        }
+
+
         $foldersCount = $folders->count();
         $filesCount = $files->count();
 
+        $data = [
+            'folders' => $folders,
+            'files' => $files,
+            'folder_name' => $folderName,
+            'folter_parent_ID' => $folderParentID,
+            'folders_and_files' => sprintf(trans('fm-translations::filemanager-bi.information'),$foldersCount,$filesCount)
+        ];
 
-        return view('filemanager::main.index', compact(
-            'folders',
-            'foldersCount',
-            'files',
-            'filesCount'
-        ));
+
+//        return view('filemanager::main.index', compact(
+//            'folders',
+//            'foldersCount',
+//            'files',
+//            'filesCount'
+//        ));
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ]);
+
     }
 
     public function home(Request $request)
@@ -356,168 +378,193 @@ class FilemanagerController extends Controller
         $successFolder = [];
         $nextFolderID = [];
         $nextFolderName = [];
-        if ($folder) {
 
 
-            foreach (json_decode($cut_folder_id) as $cutFolderID):
-                //IF EXISTS CUT FOLDER
-                $cutFolder = FilemanagerFolder::where('id', $cutFolderID)
-                    ->first();
-                if ($cutFolder) {
+        if($folderID != $current_folder){
+            if ($folder || $folderID == 0) {
 
 
-                    $parentFolder = FilemanagerFolder::where('parent', $folderID)
-                        ->where('name', $cutFolder->name)
+                foreach (json_decode($cut_folder_id) as $cutFolderID):
+                    //IF EXISTS CUT FOLDER
+                    $cutFolder = FilemanagerFolder::where('id', $cutFolderID)
                         ->first();
+                    if ($cutFolder) {
 
 
-                    //If this folder == cut Folder ID
-                    if ($folder->id != $cutFolderID) {
+                        $parentFolder = FilemanagerFolder::where('parent', $folderID)
+                            ->where('name', $cutFolder->name)
+                            ->first();
 
-                        //If the folder is not its own subfolder
-                        if (\Baxruzismailov\Filemanager\Services\FolderService::getParentFolderID($folder->id) != $cutFolderID) {
 
-                            //AUTO RENAME
-                            if ($type == 1) {
 
-                                if ($parentFolder) {
+                        //CHECK DESTINATION FOLDER ID
+                        if($folderID == 0){
+                            $destinationFolderCheck = true;
+                            $destinationFolderID = 0;
+                            //If this folder == cut Folder ID
+                        }elseif ($folder->id != $cutFolderID){
+                            $destinationFolderCheck = true;
+                            $destinationFolderID = $folder->id;
+                        }else{
+                            $destinationFolderCheck = false;
+                        }
 
-                                    if (strtolower($cutFolder->name) == strtolower($parentFolder->name)) {
+                        if ($destinationFolderCheck) {
 
-                                        FilemanagerFolder::where('id', $cutFolderID)
-                                            ->update([
-                                                'name' => FolderService::uniquName($cutFolder->name, $folder->id),
-                                                'parent' => $folder->id
-                                            ]);
+                            //If the folder is not its own subfolder
+                            $subFolderCheck = \Baxruzismailov\Filemanager\Services\FolderService::getParentFolderID4($cutFolderID);
+                            if (!in_array($destinationFolderID,$subFolderCheck)) {
 
+
+
+                                //AUTO RENAME
+                                if ($type == 1) {
+
+                                    if ($parentFolder) {
+
+                                        if (strtolower($cutFolder->name) == strtolower($parentFolder->name)) {
+
+                                            FilemanagerFolder::where('id', $cutFolderID)
+                                                ->update([
+                                                    'name' => FolderService::uniquName($cutFolder->name, $folderID),
+                                                    'parent' => $folderID
+                                                ]);
+
+
+                                        } else {
+
+                                            FilemanagerFolder::where('id', $cutFolderID)
+                                                ->update([
+                                                    'name' => $cutFolder->name,
+                                                    'parent' => $folderID
+                                                ]);
+
+
+                                        }
 
                                     } else {
-
                                         FilemanagerFolder::where('id', $cutFolderID)
                                             ->update([
                                                 'name' => $cutFolder->name,
-                                                'parent' => $folder->id
+                                                'parent' => $folderID
                                             ]);
-
-
                                     }
+                                    array_push($successFolder, $cutFolder->id);
+                                }//IF TYPE 1 AUTO RENAME
 
-                                } else {
-                                    FilemanagerFolder::where('id', $cutFolderID)
-                                        ->update([
-                                            'name' => $cutFolder->name,
-                                            'parent' => $folder->id
-                                        ]);
-                                }
-                                array_push($successFolder, $cutFolder->id);
-                            }//IF TYPE 1 AUTO RENAME
+                                //NEXT FOLDER
+                                if ($type == 2) {
 
-                            //NEXT FOLDER
-                            if ($type == 2) {
+                                    if ($parentFolder) {
 
-                                if ($parentFolder) {
+                                        if (strtolower($cutFolder->name) == strtolower($parentFolder->name)) {
 
-                                    if (strtolower($cutFolder->name) == strtolower($parentFolder->name)) {
+                                            array_push($nextFolderID, $cutFolder->id);
+                                            array_push($nextFolderName, $cutFolder->name);
 
-                                        array_push($nextFolderID, $cutFolder->id);
-                                        array_push($nextFolderName, $cutFolder->name);
+                                            $arrMsg['error'] = true;
+                                            $arrMsg['next_folder_error'] = true;
+                                            $arrMsg['next_folder_name'] = $nextFolderName;
+                                            $arrMsg['next_folder_id'] = $nextFolderID;
+                                            $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_folder_sub_folder'), $cutFolder->name);
 
-                                        $arrMsg['error'] = true;
-                                        $arrMsg['next_folder_error'] = true;
-                                        $arrMsg['next_folder_name'] = $nextFolderName;
-                                        $arrMsg['next_folder_id'] = $nextFolderID;
-                                        $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_folder_sub_folder'), $cutFolder->name);
+                                        } else {
+
+                                            FilemanagerFolder::where('id', $cutFolderID)
+                                                ->update([
+                                                    'name' => $cutFolder->name,
+                                                    'parent' => $folderID
+                                                ]);
+
+
+                                        }
 
                                     } else {
-
                                         FilemanagerFolder::where('id', $cutFolderID)
                                             ->update([
                                                 'name' => $cutFolder->name,
-                                                'parent' => $folder->id
+                                                'parent' => $folderID
                                             ]);
-
-
                                     }
 
-                                } else {
-                                    FilemanagerFolder::where('id', $cutFolderID)
-                                        ->update([
-                                            'name' => $cutFolder->name,
-                                            'parent' => $folder->id
-                                        ]);
-                                }
+                                    array_push($successFolder, $cutFolder->id);
 
-                                array_push($successFolder, $cutFolder->id);
+                                }//IF TYPE 2 NEXT FOLDER
 
-                            }//IF TYPE 2 NEXT FOLDER
+                            } else {
+                                //If the folder is not its own subfolder error true
+                                $arrMsg['error'] = true;
+                                $arrMsg['sub_folder_error'] = true;
+                                $arrMsg['error_cut_folder_id'] = $cutFolder->id;
+                                $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_folder_sub_folder'), $cutFolder->name);
+                            }
+
 
                         } else {
-                            //If the folder is not its own subfolder error true
+                            //If this folder == cut Folder ID error true
                             $arrMsg['error'] = true;
                             $arrMsg['sub_folder_error'] = true;
                             $arrMsg['error_cut_folder_id'] = $cutFolder->id;
-                            $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_folder_sub_folder'), $cutFolder->name);
+                            $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_same_folder'), $cutFolder->name);
+
+
                         }
 
 
-                    } else {
-                        //If this folder == cut Folder ID error true
-                        $arrMsg['error'] = true;
-                        $arrMsg['sub_folder_error'] = true;
-                        $arrMsg['error_cut_folder_id'] = $cutFolder->id;
-                        $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_same_folder'), $cutFolder->name);
+                        //SUCCESS
+                        $arrMsg['success_cut_folder'] = $successFolder;
+
+                        //FOLDERS COUNT
+                        $foldersCount = FilemanagerFolder::with('files')
+                            ->where('parent', $current_folder)
+                            ->select('id')
+                            ->count();
 
 
-                    }
+                        //FILES COUNT
+                        $filesCount = FilemanagerFile::where(function ($query) use ($request) {
+                            //type image, media (video,audio).
+                            if (!$request->type == null) {
 
+                                if ($request->type == 'image') {
+                                    $query->where('type', $request->type);
+                                } elseif ($request->type == 'media') {
+                                    $query->where('type', 'video');
+                                    $query->orWhere('type', 'audio');
+                                }
 
-
-                    //SUCCESS
-                    $arrMsg['success_cut_folder'] = $successFolder;
-
-                    //FOLDERS COUNT
-                    $foldersCount = FilemanagerFolder::with('files')
-                        ->where('parent', $current_folder)
-                        ->select('id')
-                        ->count();
-
-
-                    //FILES COUNT
-                    $filesCount = FilemanagerFile::where(function ($query) use ($request) {
-                        //type image, media (video,audio).
-                        if (!$request->type == null) {
-
-                            if ($request->type == 'image') {
-                                $query->where('type', $request->type);
-                            } elseif ($request->type == 'media') {
-                                $query->where('type', 'video');
-                                $query->orWhere('type', 'audio');
                             }
-
-                        }
-                    })
-                        ->select('id')
-                        ->where('folder_id', $current_folder)
-                        ->count();
+                        })
+                            ->select('id')
+                            ->where('folder_id', $current_folder)
+                            ->count();
 
 
-                    $arrMsg['folders_and_files_count'] = sprintf(trans('fm-translations::filemanager-bi.information'), $foldersCount, $filesCount);
-                    $arrMsg['exists_cut_folder'] = true;
-                } else {
+                        $arrMsg['folders_and_files_count'] = sprintf(trans('fm-translations::filemanager-bi.information'), $foldersCount, $filesCount);
+                        $arrMsg['exists_cut_folder'] = true;
+                    } else {
 
-                    $arrMsg['error'] = true;
-                    $arrMsg['not_cut_folder'] = true;
-                    $arrMsg['error_text'] = trans('fm-translations::filemanager-bi.not_exists_folder');
-                }
-            endforeach;
+                        $arrMsg['error'] = true;
+                        $arrMsg['not_cut_folder'] = true;
+                        $arrMsg['error_text'] = trans('fm-translations::filemanager-bi.not_exists_folder');
+                    }
+                endforeach;
 
 
-        } else {
+            } else {
+                $arrMsg['error'] = true;
+                $arrMsg['not_exists_folder'] = true;
+                $arrMsg['error_text'] = trans('fm-translations::filemanager-bi.not_exists_folder');
+
+            }//ELSE ERROR
+        }else{
             $arrMsg['error'] = true;
-            $arrMsg['not_exists_folder'] = true;
-            $arrMsg['error_text'] = trans('fm-translations::filemanager-bi.not_exists_folder');
+            $arrMsg['sub_folder_error'] = true;
+            $arrMsg['error_cut_folder_id'] = $folderID;
+            $arrMsg['error_text'] = sprintf(trans('fm-translations::filemanager-bi.the_same_folder'), $folder->name);
+        }
 
-        }//ELSE ERROR
+
 
 
         if(isset($arrMsg['next_folder_error'])){
