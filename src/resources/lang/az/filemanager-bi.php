@@ -5,6 +5,7 @@ return [
     'upload_server' => 'Serverə yüklə',
     'new_folder' => 'Yeni qovluq',
     'new_folder_name' => 'Qovluğun adını daxil edin',
+    'main_folder_name' => 'Əsas qovluq',
     'information' => '&nbsp;<span id="filemanager-bi-information-folder">%s</span>&nbsp;qovluq -&nbsp;<span id="filemanager-bi-information-file">%s</span>&nbsp;fayl',
     'filter_placeholder' => 'Süzgəc',
     'settings' => 'Ayarlar',

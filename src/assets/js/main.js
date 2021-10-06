@@ -52,6 +52,9 @@ $(function () {
     const getUrlType = filemanagerBiGetUrlType();
     filemanagerBiGetFoldersAndFiles(currentFolderID, getUrlType);
 
+    /*   FOLDER DRAGGABLE   */
+    filemanagerBiFoldersDraggable();
+
 })
 
 /*   FUNCTION REMOVE CONTENT DATA START   */
@@ -76,6 +79,7 @@ function filemanagerBiSprintf(template, values) {
 }
 
 /*  FUNCTIONS DECODE HTML AND SPRINTF END   */
+
 
 /*   FUNCTION DATE FILTER START   */
 function filemanagerBiDatefilter(date) {
@@ -120,6 +124,96 @@ function filemanagerBiGetUrlType() {
 
 /*   GET URL TYPE END   */
 
+
+/*   BREADCRUMP START   */
+function filemanagerBiBreadcrump(currentFolder) {
+    const leftMenuActiveParents = $('.filemanager-bi-folder-left-menu-active');
+    const leftMenuActive = $('.filemanager-bi-menu-active');
+
+    $('#filemanager-bi #filemanager-bi-breadcrump').html('');
+
+    if (currentFolder != 0) {
+        $('#filemanager-bi #filemanager-bi-breadcrump').append(
+            `<div class="filemanager-bi-breadcrump-name" data-folder-id="0">${FILE_MANAGER_BI_MAIN_FOLDER_NAME_TRANSLATE}</div>`
+        );
+        $('#filemanager-bi #filemanager-bi-breadcrump').show();
+    } else {
+        $('#filemanager-bi #filemanager-bi-breadcrump').hide();
+    }
+
+
+    leftMenuActiveParents.each(function (index, value) {
+        const data = $(value);
+        $('#filemanager-bi #filemanager-bi-breadcrump').append(
+            `
+            ${index == 0 ? '<span>/</span>' : ''}
+            <div class="filemanager-bi-breadcrump-name" data-folder-id="${data.attr('data-folder-id')}">
+             ${data.find('.filemanager-bi-main-menu-item-folder').next().text()}</div> <span>/</span>`
+        );
+
+    })
+
+    const hasActiveClass = $('.filemanager-bi-menu-active').hasClass('filemanager-bi-folder-left-menu-active');
+    if (hasActiveClass) {
+        $('.filemanager-bi-breadcrump-name').last().remove();
+        $('.filemanager-bi-breadcrump-name').last().next().remove();
+    }
+
+
+    $('#filemanager-bi #filemanager-bi-breadcrump').append(
+        `<div class="filemanager-bi-breadcrump-name-last">${leftMenuActive.find('.filemanager-bi-main-menu-item-folder').next().text()}</div>`
+    );
+}
+
+/*   BREADCRUMP END   */
+
+/*   BREADCRUMP CLICK START   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-breadcrump-name', function () {
+    const folderID = $(this).attr('data-folder-id');
+
+    const filterTypeName = $('#filemanager-bi #filemanager-bi-filter-type-name').text();
+
+
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(folderID);
+
+
+    //IF IS NOT FOLDER
+    localStorage.setItem('filemanager_bi_current_folder', folderID);
+    $('#filemanager-bi #filemanager-bi-current-folder-id').text(folderID);
+
+    /*   GET FODLERS AND FILES   */
+    filemanagerBiRemoveContentData();
+    $('#filemanager-bi-content-item-folder-back-box').remove();
+    filemanagerBiGetFoldersAndFiles(folderID, filemanagerBiGetUrlType(), filterTypeName);
+
+
+})
+/*   BREADCRUMP CLICK END   */
+
+
+/*   LEFT MENU ALL PARENTS ACTIVE CLASS START   */
+function filemanagerBiLeftMenuAllParentsActive(currentFolderID) {
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    const currentFolderClass = $("#filemanager-bi #filemanager-bi-left-menu .filemanager-bi-main-menu-item-container[data-folder-id='" + currentFolderID + "']");
+
+    $('#filemanager-bi-left-menu').find('.filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-folder-left-menu-active');
+    currentFolderClass.parents('.filemanager-bi-menu-item-has-children').children('.filemanager-bi-main-menu-item-container')
+        .addClass('filemanager-bi-folder-left-menu-active');
+
+    $('#filemanager-bi-left-menu').find('.filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-menu-active');
+    currentFolderClass.addClass('filemanager-bi-menu-active');
+
+
+    /*   BREADCRUMP START   */
+    filemanagerBiBreadcrump(currentFolderID);
+    /*   BREADCRUMP END   */
+
+
+}
+
+/*   LEFT MENU ALL PARENTS ACTIVE CLASS END   */
+
 /*   GET MENU FOLDERS START   */
 function filemanagerBiGetMenuFolders() {
     $.ajax({
@@ -132,6 +226,13 @@ function filemanagerBiGetMenuFolders() {
                 $('#filemanager-bi-left-menu .filemanager-bi-main-menu ul').html(response.folders)
                 $('#filemanager-bi-cut-menu .filemanager-bi-main-menu ul').html(response.folders)
                 filemanagerBiFoldersItem();
+
+                <!--  DRAGGABLE LISTINER MOUSEOVER  -->
+                filemanagerBiAddActiveFolderDraggable();
+
+                /*   ADD ACTIVE ALL PARENTS  CLASS   */
+                const currentFolderID = $('#filemanager-bi-current-folder-id').text();
+                filemanagerBiLeftMenuAllParentsActive(currentFolderID);
             }
 
         }
@@ -173,6 +274,8 @@ function filemanagerBISetLocalStorage() {
         }
     }
 
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(filemanagerCurrentFolder);
 
 }
 
@@ -229,16 +332,17 @@ function filemanagerBiGetFilterType() {
                        <i class="fas fa-music"></i>
                     </div>`);
 }
+
 /*   GET FILTER TYPE END   */
 
 /*   FOLDERS START  */
-function filemanagerBiGetFolders(folderID,folter_parent_ID,data) {
+function filemanagerBiGetFolders(folderID, folder_parent_ID, data) {
 
     let folders = '';
     if (folderID != 0) {
         folders = `
                 <div class="filemanager-bi-content-item-folder-back-box"
-             data-back-folder-id="${folter_parent_ID}"
+             data-folder-id="${folder_parent_ID}"
         >
 
             <div class="filemanager-bi-content-item-folder-back-image">
@@ -314,7 +418,7 @@ function filemanagerBiGetFolders(folderID,folter_parent_ID,data) {
                     </div>
                     <!--  CONTEXT MENU END -->
 
-                    <!--  SELECT FILE  -->
+                    <!--  SELECT FOLDER  -->
                     <div class="filemanager-bi-select-folder"></div>
 
                     <div class="filemanager-bi-content-item-folder-image">
@@ -329,12 +433,12 @@ function filemanagerBiGetFolders(folderID,folter_parent_ID,data) {
                     <!-- FOLDER TOOLS  -->
                     <div class="filemanager-bi-content-item-folder-tools">
                         <i
-                            title="{{ trans('fm-translations::filemanager-bi.rename') }}"
+                            title="${FILE_MANAGER_BI_RENAME_TRANSLATE}"
                             onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
                             data-modal="#filemanager-bi-rename-folder-modal"
                             class="far fa-edit filemanager-bi-menu-rename"></i>
                         <i
-                            title="{{ trans('fm-translations::filemanager-bi.file_delete') }}"
+                            title="${FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE}"
                             class="far fa-trash-alt filemanager-bi-delete-one-folder"
                             onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
                             data-modal="#filemanager-bi-remove-only-one-folder-modal"
@@ -346,13 +450,16 @@ function filemanagerBiGetFolders(folderID,folter_parent_ID,data) {
     })
 
 }
+
 /*   FOLDERS END  */
 
 /*   FILES START  */
 function filemanagerBiGetFiles(data) {
     console.log('File function olacaq');
 }
+
 /*   FILES END  */
+
 
 var FILEMANAGER_BI_GET_FOLDERS_AND_FILES;
 
@@ -379,7 +486,7 @@ function filemanagerBiGetFoldersAndFiles(folderID, urlType = "", filterType = ""
             success: function (response) {
                 if (response.success) {
                     /*  GET FOLDERS   */
-                    filemanagerBiGetFolders(folderID, response.data.folter_parent_ID,response.data.folders)
+                    filemanagerBiGetFolders(folderID, response.data.folder_parent_ID, response.data.folders)
                     /*  GET FILES   */
                     filemanagerBiGetFiles(response.data.files)
 
@@ -391,6 +498,10 @@ function filemanagerBiGetFoldersAndFiles(folderID, urlType = "", filterType = ""
                         $('#filemanager-bi #filemanager-bi-information #filemanager-bi-information-left #filemanager-bi-folders-and-files-count').html(response.data.folders_and_files);
                     }
                     console.log(response);
+
+                    /*   FOLDER DRAGGABLE   */
+                    filemanagerBiFoldersDraggable();
+
                 } else {
                     console.log('ERROR 1');
                 }
@@ -403,11 +514,13 @@ function filemanagerBiGetFoldersAndFiles(folderID, urlType = "", filterType = ""
 }
 
 /*   FOLDER BACK BUTTON START   */
-$(document).on('click','.filemanager-bi-content-item-folder-back-box',function (){
-    const folderBackButtonID = $(this).attr('data-back-folder-id');
-    // $('.filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-menu-active');
-    // $(".filemanager-bi-main-menu-item-container[data-folder-id='" + folderBackButtonID + "']").addClass('filemanager-bi-menu-active');
+$(document).on('click', '.filemanager-bi-content-item-folder-back-box', function () {
+    const folderBackButtonID = $(this).attr('data-folder-id');
     const filterTypeName = $('#filemanager-bi #filemanager-bi-filter-type-name').text();
+
+
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(folderBackButtonID);
 
     //IF IS NOT FOLDER
     localStorage.setItem('filemanager_bi_current_folder', folderBackButtonID);
@@ -416,17 +529,20 @@ $(document).on('click','.filemanager-bi-content-item-folder-back-box',function (
     /*   GET FODLERS AND FILES   */
     filemanagerBiRemoveContentData();
     $('#filemanager-bi-content-item-folder-back-box').remove();
-    filemanagerBiGetFoldersAndFiles(folderBackButtonID, filemanagerBiGetUrlType(),filterTypeName);
+    filemanagerBiGetFoldersAndFiles(folderBackButtonID, filemanagerBiGetUrlType(), filterTypeName);
 })
 /*   FOLDER BACK BUTTON END   */
 
 
 /*   FOLDER BOX CLICK START   */
-$(document).on('click','.filemanager-bi-content-item-folder-image, .filemanager-bi-content-item-folder-info-mobile',function (){
+$(document).on('click', '.filemanager-bi-content-item-folder-image, .filemanager-bi-content-item-folder-info-mobile', function () {
     const folderBoxID = $(this).closest('.filemanager-bi-content-item-folder-box').attr('data-folder-id');
-    // $('.filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-menu-active');
-    // $(".filemanager-bi-main-menu-item-container[data-folder-id='" + folderBoxID + "']").addClass('filemanager-bi-menu-active');
     const filterTypeName = $('#filemanager-bi #filemanager-bi-filter-type-name').text();
+
+
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(folderBoxID);
+
 
     //IF IS NOT FOLDER
     localStorage.setItem('filemanager_bi_current_folder', folderBoxID);
@@ -435,27 +551,9 @@ $(document).on('click','.filemanager-bi-content-item-folder-image, .filemanager-
     /*   GET FODLERS AND FILES   */
     filemanagerBiRemoveContentData();
     $('#filemanager-bi-content-item-folder-back-box').remove();
-    filemanagerBiGetFoldersAndFiles(folderBoxID, filemanagerBiGetUrlType(),filterTypeName);
+    filemanagerBiGetFoldersAndFiles(folderBoxID, filemanagerBiGetUrlType(), filterTypeName);
 })
 /*   FOLDER BOX CLICK END   */
-
-
-/*   LEFT MENU FOLDER CLICK START   */
-// $(document).on('click','.filemanager-bi-main-menu-item-container',function (){
-//
-//     const folderMenuID = $(this).attr('data-folder-id');
-//     const filterTypeName = $('#filemanager-bi #filemanager-bi-filter-type-name').text();
-//
-//     //IF IS NOT FOLDER
-//     localStorage.setItem('filemanager_bi_current_folder', folderMenuID);
-//     $('#filemanager-bi #filemanager-bi-current-folder-id').text(folderMenuID);
-//
-//     /*   GET FODLERS AND FILES   */
-//     filemanagerBiRemoveContentData();
-//     $('#filemanager-bi-content-item-folder-back-box').remove();
-//     filemanagerBiGetFoldersAndFiles(folderMenuID, filemanagerBiGetUrlType(),filterTypeName);
-// })
-/*   LEFT MENU FOLDER CLICK END   */
 
 
 /*   GET FOLDERS AND FILES END   */
@@ -639,6 +737,7 @@ $(document).on('click', '.filemanager-bi-menu-icon', function () {
 
 })
 
+/*   LEFT MENU AND CUT MENU   */
 function filemanagerBiFoldersItem() {
     $('.filemanager-bi-left-menu-arrows').remove();
     let filemanagerBiFoldersItem = document.querySelectorAll('#filemanager-bi-left-menu-container .filemanager-bi-main-menu li.filemanager-bi-menu-item-has-children');
@@ -666,6 +765,7 @@ function filemanagerBiFoldersItem() {
     });
 }
 
+/*   GET LEFT MENU AND CUT MENU ITEMS AND ARROWS   */
 filemanagerBiFoldersItem();
 
 
@@ -678,6 +778,27 @@ $(document).on('click', '#filemanager-bi-left-menu .filemanager-bi-main-menu-ite
 
     $('.filemanager-bi-menu-active').find('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').removeClass('fa-folder');
     $('.filemanager-bi-menu-active').find('.filemanager-bi-main-menu-item-left .filemanager-bi-main-menu-item-folder i').addClass('fa-folder-open');
+
+
+    /*   GET FOLDERS AND FILES START  */
+    const folderBoxID = $(this).attr('data-folder-id');
+    // $('.filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-menu-active');
+    // $(".filemanager-bi-main-menu-item-container[data-folder-id='" + folderBoxID + "']").addClass('filemanager-bi-menu-active');
+    const filterTypeName = $('#filemanager-bi #filemanager-bi-filter-type-name').text();
+
+    //IF IS NOT FOLDER
+    localStorage.setItem('filemanager_bi_current_folder', folderBoxID);
+    $('#filemanager-bi #filemanager-bi-current-folder-id').text(folderBoxID);
+
+    /*   GET FODLERS AND FILES   */
+    filemanagerBiRemoveContentData();
+    $('#filemanager-bi-content-item-folder-back-box').remove();
+    filemanagerBiGetFoldersAndFiles(folderBoxID, filemanagerBiGetUrlType(), filterTypeName);
+    /*   GET FOLDERS AND FILES END  */
+
+
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(folderBoxID);
 
 
 })
@@ -1200,6 +1321,9 @@ function filemanagerBiRenameFolderName(folderID, folderName) {
                     removeEffectBoxFilemanagerBi();
                     filemanagerModalClose()
 
+                    /*   REFRESH LEFT FOLDER MENU AND CUT MENU   */
+                    filemanagerBiGetMenuFolders();
+
                 } else {
                     /*   ERROR   */
                     filemanagerBiCreateAndUpdateErrorMsg(true, response.msg);
@@ -1219,11 +1343,11 @@ function filemanagerBiRenameFolderName(folderID, folderName) {
 
 
 /*   ADD MAIN FOLDER START   */
-function filemanagerBiAddMainFolder(){
+function filemanagerBiAddMainFolder() {
 
     const checkMainFolder = $("#filemanager-bi-cut-menu .filemanager-bi-main-menu-item-container[data-folder-id='0']");
 
-    if(checkMainFolder.length > 0){
+    if (checkMainFolder.length > 0) {
         checkMainFolder.closest('li').remove();
     }
 
@@ -1233,15 +1357,16 @@ function filemanagerBiAddMainFolder(){
                                <div class="filemanager-bi-main-menu-item-folder">
                                    <i class="fas fa-folder"></i>
                                </div>
-                               <div>Əsas Qovluq</div>
+                               <div>${FILE_MANAGER_BI_MAIN_FOLDER_NAME_TRANSLATE}</div>
                            </div>
                        </div></li>
     `);
 }
+
 /*   ADD MAIN FOLDER END   */
 
 /*   DISABLE CUT FOLDER IF SUB FODLER START   */
-function filemanagerBiDisableCutSubFolder(folderID){
+function filemanagerBiDisableCutSubFolder(folderID) {
     /*   OFF ALL COLLAPSE MENU AND REMOVE CLASS DOWN ARROW   */
     $('#filemanager-bi-cut-menu').find('.filemanager-bi-left-menu-arrows').removeClass('fa-caret-down').addClass('fa-caret-right');
     $('#filemanager-bi-cut-menu').find('.filemanager-bi-sub-menu').hide();
@@ -1260,6 +1385,7 @@ function filemanagerBiDisableCutSubFolder(folderID){
     currentCutFolderID.closest('li').find('.filemanager-bi-main-menu-item-container').addClass('filemanager-bi-cut-folder-disable-parent-folder');
 
 }
+
 /*   DISABLE CUT FOLDER IF SUB FODLER END   */
 
 
@@ -1276,15 +1402,13 @@ $(document).on('click', '#filemanager-bi-cut-select-folder', function () {
     });
 
 
-
-
     $('#filemanager-bi #filemanager-bi-cut-folder-id').text(JSON.stringify(dataFoldersID));
 
     $('#filemanager-bi-warning-menu-folder').hide();
     $('#filemanager-bi-info-cut-folder').hide();
     $('#filemanager-bi-cut-menu').show();
 
-    filemanagerBiAddMainFolder();
+
     filemanagerBiDisableCutSubFolder(dataFoldersID);
     filemanagerModalOpen('#filemanager-bi-cut-folders-modal');
 
@@ -1306,13 +1430,10 @@ $(document).on('click', '#filemanager-bi .filemanager-bi-context-menu-cut', func
 
 
 
-    filemanagerBiAddMainFolder();
     filemanagerBiDisableCutSubFolder(folderID);
     filemanagerModalOpen('#filemanager-bi-cut-folders-modal');
 
 
-        // $("#filemanager-bi-cut-menu .filemanager-bi-main-menu-item-container[data-folder-id='" + folderID + "']")
-        //     .addClass('filemanager-bi-cut-folder-disable-parent-folder');
 
 
 })
@@ -1340,14 +1461,14 @@ $(document).on('click', '#filemanager-bi-cut-menu .filemanager-bi-main-menu-item
     const disableClickFolder = $(this).hasClass('filemanager-bi-cut-folder-disable-parent-folder');
 
     /*   IF FOLDER NOT DISABLE   */
-   if(!disableClickFolder){
-       $('#filemanager-bi-cut-menu  ul li .filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-cut-folder-active')
-       $(this).addClass('filemanager-bi-cut-folder-active');
+    if (!disableClickFolder) {
+        $('#filemanager-bi-cut-menu  ul li .filemanager-bi-main-menu-item-container').removeClass('filemanager-bi-cut-folder-active')
+        $(this).addClass('filemanager-bi-cut-folder-active');
 
-       $('#filemanager-bi-modal-back-cut-folder').show();
-       $('#filemanager-bi-warning-menu-folder').show();
-       $('#filemanager-bi-cut-menu').hide();
-   }
+        $('#filemanager-bi-modal-back-cut-folder').show();
+        $('#filemanager-bi-warning-menu-folder').show();
+        $('#filemanager-bi-cut-menu').hide();
+    }
 
 
 })
@@ -1355,7 +1476,7 @@ $(document).on('click', '#filemanager-bi-cut-menu .filemanager-bi-main-menu-item
 
 
 /*   CUT FOLDER BACK BUTTON START   */
-$(document).on('click', '#filemanager-bi-modal-back-cut-folder', function () {
+$(document).on('click', '#filemanager-bi #filemanager-bi-modal-back-cut-folder', function () {
     $(this).hide();
     $('#filemanager-bi-warning-menu-folder').hide();
     $('#filemanager-bi-cut-menu').show();
@@ -1363,13 +1484,13 @@ $(document).on('click', '#filemanager-bi-modal-back-cut-folder', function () {
 /*   CUT FOLDER BACK BUTTON END   */
 
 
-$(document).on('click', '#filemanager-bi-auto-rename', function () {
+$(document).on('click', '#filemanager-bi #filemanager-bi-auto-rename', function () {
     let folderID = $('#filemanager-bi-cut-menu .filemanager-bi-cut-folder-active').attr('data-folder-id');
     clearTimeout(FILE_MANAGER_BI_CUT_FOLDER);
     setFileManagerCutFolder(1, folderID);
 })
 
-$(document).on('click', '#filemanager-bi-next-folder', function () {
+$(document).on('click', '#filemanager-bi #filemanager-bi-next-folder', function () {
     let folderID = $('#filemanager-bi-cut-menu .filemanager-bi-cut-folder-active').attr('data-folder-id');
     clearTimeout(FILE_MANAGER_BI_CUT_FOLDER);
     setFileManagerCutFolder(2, folderID);
@@ -1487,6 +1608,270 @@ function setFileManagerCutFolder(type, folderID) {
 
 
 /*   CUT FOLDER END   */
+
+$(document).on('click', '#tikla2', function () {
+
+
+    /*   ADD ACTIVE ALL PARENTS  CLASS   */
+    filemanagerBiLeftMenuAllParentsActive(115);
+})
+
+/*   ADD ACTIVE DRAGGABLE FOLDER START   */
+function filemanagerBiAddActiveFolderDraggable() {
+
+    $('.filemanager-bi-main-menu-item-container').on({
+        mouseenter: function () {
+            $(this).addClass('filemanager-bi-content-folder-draggable-active');
+        },
+        mouseleave: function () {
+            $(this).removeClass('filemanager-bi-content-folder-draggable-active');
+        }
+    });
+
+
+    $('.filemanager-bi-content-item-folder-box').on({
+        mouseenter: function () {
+            $(this).addClass('filemanager-bi-content-folder-draggable-active');
+        },
+        mouseleave: function () {
+            $(this).removeClass('filemanager-bi-content-folder-draggable-active');
+        }
+    });
+
+
+    $('.filemanager-bi-content-item-folder-back-box').on({
+        mouseenter: function () {
+            $(this).addClass('filemanager-bi-content-folder-draggable-active');
+        },
+        mouseleave: function () {
+            $(this).removeClass('filemanager-bi-content-folder-draggable-active');
+        }
+    });
+
+}
+
+/*   ADD ACTIVE DRAGGABLE FOLDER END   */
+
+
+/*   CUT DRAGGABLE FOLDER START   */
+
+var FILE_MANAGER_BI_CUT_DRAGGABLE_FOLDER;
+
+function setFileManagerCutDraggableFolder(type, folderID) {
+    FILE_MANAGER_BI_CUT_DRAGGABLE_FOLDER = setTimeout(function () {
+
+        let FILEMANAGER_BI_CUT_FOLDER_ID = $('#filemanager-bi #filemanager-bi-cut-folder-id').text();
+
+        $.ajax({
+            type: "POST",
+            url: FILE_MANAGER_BI_CUT_FOLDER_ROUTE,
+            data: {
+                type: type,
+                cut_folder_id: FILEMANAGER_BI_CUT_FOLDER_ID,
+                folderID: folderID,
+                current_folder: filemanagerBIGetCurrentFolderID()
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                console.log(response);
+
+                $('#filemanager-bi-info-cut-folder-draggable').html('');
+                $('#filemanager-bi-modal-back-cut-folder').hide();
+                $('.select-folder-active').find('.filemanager-bi-select-folder').html('');
+                $('.select-folder-active').removeClass('select-folder-active');
+                filemanagerBiRemoveNavbarFolderToolsButton();
+
+                if (response.success) {
+                    // console.log(response);
+
+                    if (!response.msg.error) {
+
+
+                        if (response.msg.success_cut_folder.length !== 0) {
+                            response.msg.success_cut_folder.forEach(function (value) {
+                                $('.filemanager-bi-content-item-folder-box[data-folder-id="' + value + '"]').remove();
+                            })
+                        }
+
+                        //COUNT FODLERS AND FILES
+                        $('#filemanager-bi-information-left #filemanager-bi-folders-and-files-count').html(response.msg.folders_and_files_count);
+                        let successMsg = FILE_MANAGER_BI_SUCCESS_CUT_FOLDERS_TRANSLATE + '' + response.msg.success_cut_folder.length;
+                        filemanagerBiSuccessDraggableMsg(successMsg);
+                        $('#filemanager-bi-info-cut-folder-draggable').show();
+                        $('#filemanager-bi-warning-menu-folder-draggable').hide();
+                    } else {
+
+
+                        $('#filemanager-bi-info-cut-folder-draggable').html('');
+                        if (response.msg.exists_cut_folder) {
+                            let countSuccessFolder = 0;
+                            if (response.msg.success_cut_folder.length !== 0) {
+                                response.msg.success_cut_folder.forEach(function (value) {
+                                    if (response.msg.error_cut_folder_id != value) {
+                                        $('.filemanager-bi-content-item-folder-box[data-folder-id="' + value + '"]').remove();
+                                        countSuccessFolder = countSuccessFolder + 1;
+                                    }
+                                })
+                            }
+
+                            //COUNT FODLERS AND FILES
+                            $('#filemanager-bi-information-left #filemanager-bi-folders-and-files-count').html(response.msg.folders_and_files_count);
+
+
+                            if (!response.msg.sub_folder_error || countSuccessFolder > 0) {
+
+                                let successMsg = FILE_MANAGER_BI_SUCCESS_CUT_FOLDERS_TRANSLATE + '' + countSuccessFolder;
+                                filemanagerBiSuccessDraggableMsg(successMsg);
+                            }
+
+                        }
+
+                        if (response.msg.not_cut_folder && !response.msg.exists_cut_folder) {
+                            filemanagerBiErrorDraggableMsg(response.msg.error_text);
+                        }
+
+                        if (response.msg.not_exists_folder) {
+                            filemanagerBiErrorDraggableMsg(response.msg.error_text);
+                        }
+
+                        if (response.msg.sub_folder_error) {
+                            filemanagerBiErrorDraggableMsg(response.msg.error_text);
+                        }
+                        if (response.msg.next_folder_error) {
+                            filemanagerBiWarningDraggableMsg(FILE_MANAGER_BI_NOT_CUT_FOLDERS_TRANSLATE);
+
+                            response.msg.next_folder_name.forEach(function (value) {
+
+                                filemanagerBiDefaultDraggableMsg(value);
+                            })
+                        }
+
+
+                        $('#filemanager-bi-info-cut-folder-draggable').show();
+                        $('#filemanager-bi-warning-menu-folder-draggable').hide();
+
+                    }
+
+
+                    filemanagerBiGetMenuFolders();
+                    $('#filemanager-bi #filemanager-bi-cut-folder-id').text('');
+                }
+
+
+            }
+        })
+
+    }, 300);
+
+}
+
+function filemanagerBiSuccessDraggableMsg(msgText) {
+    $('#filemanager-bi-info-cut-folder-draggable').append(`<div class="filemanager-bi-success-msg">${msgText}</div>`);
+}
+
+function filemanagerBiErrorDraggableMsg(msgText) {
+    $('#filemanager-bi-info-cut-folder-draggable').append(`<div class="filemanager-bi-error-msg">${msgText}</div>`);
+}
+
+function filemanagerBiWarningDraggableMsg(msgText) {
+    $('#filemanager-bi-info-cut-folder-draggable').append(`<div class="filemanager-bi-warning-msg">${msgText}</div>`);
+}
+
+function filemanagerBiDefaultDraggableMsg(msgText) {
+    $('#filemanager-bi-info-cut-folder-draggable').append(`<div class="filemanager-bi-default-msg">${msgText}</div>`);
+}
+
+
+$(document).on('click', '#filemanager-bi #filemanager-bi-auto-rename-draggable', function () {
+    let folderID = $('#filemanager-bi-destination-folder-id-draggable').text();
+    clearTimeout(FILE_MANAGER_BI_CUT_DRAGGABLE_FOLDER);
+    setFileManagerCutDraggableFolder(1, folderID);
+})
+
+$(document).on('click', '#filemanager-bi #filemanager-bi-next-folder-draggable', function () {
+    let folderID = $('#filemanager-bi-destination-folder-id-draggable').text();
+    clearTimeout(FILE_MANAGER_BI_CUT_DRAGGABLE_FOLDER);
+    setFileManagerCutDraggableFolder(2, folderID);
+})
+
+
+function filemanagerBiFoldersDraggable() {
+
+    filemanagerBiAddActiveFolderDraggable();
+
+    $(".filemanager-bi-content-item-folder-box").draggable({
+        cursor: "move",
+        cursorAt: {top: 0, left: -20},
+        scroll: false,
+        delay:200,
+        helper: function (event) {
+            const activeSelectFolder = $('#filemanager-bi-content-container').find('.select-folder-active');
+            const thisFolderID = $(this).attr('data-folder-id');
+
+            //Check folders ID & Ajax Post
+            let dataFoldersID = [];
+            activeSelectFolder.each(function () {
+                const foldersID = $(this).attr('data-folder-id');
+                dataFoldersID.push(foldersID);
+            });
+
+            if(activeSelectFolder.length > 0){
+                $('#filemanager-bi #filemanager-bi-cut-folder-id').text(JSON.stringify(dataFoldersID));
+            }else {
+                $('#filemanager-bi #filemanager-bi-cut-folder-id').text(JSON.stringify([thisFolderID]));
+            }
+
+
+
+
+            if (activeSelectFolder.length > 0) {
+                return $(`
+                     <div class='filemanager-bi-draggable-folders-container'>
+                         <div class="filemanager-bi-draggable-folders">
+
+                         <div class="filemanager-bi-draggable-folders-count">${activeSelectFolder.length}</div>
+                            <div class="filemanager-bi-draggable-folders-image">
+                                <img src="${FILE_MANAGER_BI_FOLDER_IMAGE}">
+                            </div>
+                        </div>
+                    </div>
+                `);
+            } else {
+                const folderName = $(this).find('.filemanager-bi-content-item-folder-name').text();
+
+                return $(`
+                     <div class='filemanager-bi-draggable-folder'>
+                        <div class="filemanager-bi-draggable-folder-image">
+                            <img src="${FILE_MANAGER_BI_FOLDER_IMAGE}" alt="${folderName}">
+                        </div>
+                        <div class="filemanager-bi-draggable-folder-name">${folderName}</div>
+                    </div>
+                `);
+            }
+
+
+        },
+        stop: function (event, ui) {
+
+            const thisDataFolderID = $(this).attr('data-folder-id');
+            const activeSelectFolder = $('#filemanager-bi-content-container').find('.select-folder-active').length
+
+            const destinationFolder = $('.filemanager-bi-content-folder-draggable-active').attr('data-folder-id');
+
+            $('#filemanager-bi-destination-folder-id-draggable').text(destinationFolder);
+
+            if((destinationFolder != null && thisDataFolderID != destinationFolder) || (activeSelectFolder > 0 && destinationFolder != null) ){
+                $('#filemanager-bi-warning-menu-folder-draggable').show();
+                $('#filemanager-bi-info-cut-folder-draggable').hide();
+
+                filemanagerModalOpen('#filemanager-bi-cut-folders-draggable-modal');
+            }
+
+
+        }
+    });
+}
+/*   CUT DRAGGABLE FOLDER END   */
 
 
 /*   FILES WIDTH & HEIGTH START  */

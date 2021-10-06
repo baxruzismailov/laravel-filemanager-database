@@ -20,6 +20,7 @@
     /*   FOLDER   */
     const FILE_MANAGER_BI_FOLDER_IMAGE = "{{ asset('vendor/file-manager-bi/images/folder.svg') }}",
         FILE_MANAGER_BI_SELECT_FOLDER_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.select_folder_length') }}",
+        FILE_MANAGER_BI_MAIN_FOLDER_NAME_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.main_folder_name') }}",
         FILE_MANAGER_BI_SELECT_ALL_FOLDER_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.select_folder_all') }}",
         FILE_MANAGER_BI_DELETE_ALL_FOLDER_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.folder_delete_all') }}",
         FILE_MANAGER_BI_DELETE_FOLDER_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.folder_delete_text') }}",

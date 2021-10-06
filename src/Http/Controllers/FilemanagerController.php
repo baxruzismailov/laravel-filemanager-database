@@ -8,6 +8,7 @@ use Baxruzismailov\Filemanager\Models\FilemanagerFolder;
 use Baxruzismailov\Filemanager\Services\FolderService;
 use Baxruzismailov\Filemanager\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -118,7 +119,7 @@ class FilemanagerController extends Controller
             'folders' => $folders,
             'files' => $files,
             'folder_name' => $folderName,
-            'folter_parent_ID' => $folderParentID,
+            'folder_parent_ID' => $folderParentID,
             'folders_and_files' => sprintf(trans('fm-translations::filemanager-bi.information'),$foldersCount,$filesCount)
         ];
 
@@ -262,6 +263,8 @@ class FilemanagerController extends Controller
         $folderName = $request->folderName;
         $folderID = $request->folderID;
 
+        Cache::forget('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz');
+
 
         //FOLDERS
         $folders = FilemanagerFolder::where('id', $folderID)
@@ -301,6 +304,8 @@ class FilemanagerController extends Controller
         $folderID = $request->folderID;
         $folderName = $request->folderName;
         $currentFolder = $request->currentFolder;
+
+        Cache::forget('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz');
 
         $folder = FilemanagerFolder::where('id', $folderID)
             ->where('parent', $currentFolder)
@@ -370,6 +375,8 @@ class FilemanagerController extends Controller
         $cut_folder_id = $request->cut_folder_id;
         $current_folder = $request->current_folder;
 
+        Cache::forget('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz');
+
         $folder = FilemanagerFolder::where('id', $folderID)
             ->first();
 
@@ -412,7 +419,7 @@ class FilemanagerController extends Controller
                         if ($destinationFolderCheck) {
 
                             //If the folder is not its own subfolder
-                            $subFolderCheck = \Baxruzismailov\Filemanager\Services\FolderService::getParentFolderID4($cutFolderID);
+                            $subFolderCheck = \Baxruzismailov\Filemanager\Services\FolderService::getParentFolderID($cutFolderID);
                             if (!in_array($destinationFolderID,$subFolderCheck)) {
 
 

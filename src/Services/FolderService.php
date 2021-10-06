@@ -3,6 +3,7 @@
 namespace Baxruzismailov\Filemanager\Services;
 
 use Baxruzismailov\Filemanager\Models\FilemanagerFolder;
+use Illuminate\Support\Facades\Cache;
 use phpDocumentor\Reflection\Types\This;
 
 class FolderService
@@ -38,21 +39,35 @@ class FolderService
         }
 
 
-        $folders = FilemanagerFolder::orderBy($sortField, $orderBy)
-            ->get()
-            ->toArray();
+        Cache::rememberForever('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz', function () use ($sortField,$orderBy) {
+            return  FilemanagerFolder::orderBy($sortField, $orderBy)
+                ->get()
+                ->toArray();
 
+        });
+
+
+        $html = '';
 
         if ($parent_id == 0) {
-            foreach ($folders as $folder) {
+            foreach (cache('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz') as $folder) {
                 if (($folder['parent'] != 0) && !in_array($folder['parent'], $parents)) {
                     $parents[] = $folder['parent'];
                 }
             }
-        }
-        $html = '';
 
-        foreach ($folders as $folder) {
+            $html .= '<li><div class="filemanager-bi-main-menu-item-container" data-folder-id="0" style="padding-left: 11px">
+                           <div class="filemanager-bi-main-menu-item-left">
+                               <div class="filemanager-bi-main-menu-item-folder">
+                                   <i class="fas fa-folder"></i>
+                               </div>
+                               <div>'.trans('fm-translations::filemanager-bi.main_folder_name').'</div>
+                           </div>
+                       </div></li>';
+        }
+
+
+        foreach (cache('filemanager-bi-folders-6JIz1EB1GuKEiahMvyWz') as $folder) {
 
 
             if ($folder['parent'] == $parent_id) {
@@ -114,28 +129,11 @@ class FolderService
         return $newSlug;
     }
 
-    public static function getParentFolderID($folderID)
-    {
-
-        $folders = FilemanagerFolder::where('id', $folderID)
-            ->get();
-
-        foreach ($folders as $folder):
-
-            if ($folder->parent != 0) {
-                return self::getParentFolderID($folder->parent);
-            } else {
-                return $folder->id;
-            }
-
-        endforeach;
-
-    }
 
 
 
 
-    public static function getParentFolderID4($cutFolderID,&$arr = [])
+    public static function getParentFolderID($cutFolderID,&$arr = [])
     {
         $folders = FilemanagerFolder::where('parent', $cutFolderID)
             ->get()->toArray();
@@ -143,7 +141,7 @@ class FolderService
         foreach ($folders as $folder):
 
             $arr[] = $folder['id'];
-            self::getParentFolderID4($folder['id'],$arr);
+            self::getParentFolderID($folder['id'],$arr);
         endforeach;
 
         return $arr;

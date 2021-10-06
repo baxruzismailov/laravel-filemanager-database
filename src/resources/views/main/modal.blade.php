@@ -239,5 +239,36 @@
 </div>
 <!--  CUT SELECT FOLDERS MODAL END  -->
 
+
+<!--  DRAGGABLE FOLDERS MODAL START  -->
+<div class="filemanager-bi-modal-overlay" id="filemanager-bi-cut-folders-draggable-modal">
+    <div class="filemanager-bi-modal-container filemanager-bi-modal-md">
+        <div class="filemanager-bi-modal-header">
+            <h4>{{ trans('fm-translations::filemanager-bi.folders_paste') }}</h4>
+            <div class="headerClose" onclick="filemanagerModalClose()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="filemanager-bi-modal-body">
+            <!--  INFO  -->
+            <div id="filemanager-bi-info-cut-folder-draggable" class="filemanager-bi-success-msg"></div>
+            <!--  WARNING FOLDER  -->
+            <div id="filemanager-bi-warning-menu-folder-draggable">
+                <div>{{ trans('fm-translations::filemanager-bi.cut_folder_warning') }}</div>
+                <button id="filemanager-bi-auto-rename-draggable" class="my-btn-default">{{ trans('fm-translations::filemanager-bi.auto_rename') }}</button>
+                <button id="filemanager-bi-next-folder-draggable" class="my-btn-default">{{ trans('fm-translations::filemanager-bi.next_folder') }}</button>
+            </div>
+        </div>
+        <div class="filemanager-bi-modal-footer">
+            <button class="my-btn " onclick="filemanagerModalClose()">
+                {{ trans('fm-translations::filemanager-bi.cancle') }}
+            </button>
+        </div>
+
+    </div>
+    <div class="modalOverlayClass"></div>
+</div>
+<!--  DRAGGABLE SELECT FOLDERS MODAL END  -->
+
 <!--  FOLDER MODAL END  -->
 

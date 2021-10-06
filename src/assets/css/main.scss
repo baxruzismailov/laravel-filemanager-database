@@ -420,7 +420,7 @@ h1, h2, h3, h4, h5, h6 {
             align-items: center;
             justify-content: flex-end;
 
-            #filemanager-bi-filter-type{
+            #filemanager-bi-filter-type {
                 display: flex;
 
                 div {
@@ -446,7 +446,7 @@ h1, h2, h3, h4, h5, h6 {
                         background: #F7F8F9;
                     }
 
-                    i{
+                    i {
                         font-size: 12px;
                     }
                 }
@@ -500,6 +500,27 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
 
+    #filemanager-bi-breadcrump {
+        background: #F7F8F9;
+        padding: 4px 17px;
+        border-bottom: 1px solid #f1f1f1;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        flex-wrap: wrap;
+
+        .filemanager-bi-breadcrump-name {
+            color: #708ddf;
+            margin-right: 6px;
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        .filemanager-bi-breadcrump-name-last {
+            margin-left: 6px;
+        }
+    }
+
     #filemanager-bi-information {
         background: #F7F8F9;
         padding: 10px 17px;
@@ -544,10 +565,11 @@ h1, h2, h3, h4, h5, h6 {
         background: #F7F8F9;
 
         .filemanager-bi-cut-folder-disable-parent-folder {
-            background: rgba(207, 207, 207, 0.56) !important;
+            background: rgba(179, 176, 176, 0.56) !important;
             opacity: 0.5;
             border-bottom: 1px solid #b3b3b3 !important;
-            &:hover{
+
+            &:hover {
                 background: #dedede !important;
             }
         }
@@ -673,11 +695,15 @@ h1, h2, h3, h4, h5, h6 {
                 #filemanager-bi-left-menu-items {
                     cursor: pointer;
 
+                    .filemanager-bi-folder-left-menu-active {
+                        background: #fafffa !important;
+                    }
+
                     .filemanager-bi-menu-active {
                         border: 2px solid #0a90eb !important;
                         background: #FFFFFF !important;
-                        line-height: 1px;
                     }
+
 
                     ul {
                         padding: 0;
@@ -778,6 +804,118 @@ h1, h2, h3, h4, h5, h6 {
                     justify-content: space-evenly;
                     grid-gap: 20px;
                     align-content: start;
+
+                    .filemanager-bi-draggable-folders-container {
+                        width: 100px;
+                        z-index: 6;
+
+                        .filemanager-bi-draggable-folders {
+                            width: 100px;
+                            background: #F7F8F9;
+                            border-radius: 3px;
+                            border: 1px solid #eaeaea;
+                            position: relative;
+
+                            &:before {
+                                width: 100%;
+                                height: 100%;
+                                top: 0;
+                                background: white;
+                                z-index: -1;
+                                border-radius: 3px;
+                                border: 1px solid #eaeaea;
+                                position: absolute;
+                                content: '';
+                                transform: rotate(-8deg);
+                                -webkit-transform: rotate(-8deg);
+                            }
+
+                            &:after {
+                                width: 100%;
+                                height: 100%;
+                                top: 0;
+                                background: white;
+                                z-index: -2;
+                                border-radius: 3px;
+                                border: 1px solid #eaeaea;
+                                position: absolute;
+                                content: '';
+                                transform: rotate(-13deg);
+                                -webkit-transform: rotate(-13deg);
+                            }
+
+
+                            .filemanager-bi-draggable-folders-image {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 100%;
+                                border: 5px solid #FFFFFF;
+                                border-radius: 3px;
+                                background: #F7F8F9;
+                                padding: 5px;
+
+                                img {
+                                    width: 60px;
+                                }
+                            }
+
+                            .filemanager-bi-draggable-folders-count {
+                                position: absolute;
+                                top: -9px;
+                                left: -9px;
+                                width: 24px;
+                                height: 24px;
+                                background: #ff0000;
+                                border-radius: 50%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: #FFFFFF;
+                                font-weight: 600;
+                                font-size: 13px;
+                            }
+
+                        }
+                    }
+
+                    .filemanager-bi-draggable-folder {
+                        width: 88px;
+                        height: 91px;
+                        display: flex;
+                        flex-direction: column;
+                        background: #F7F8F9;
+                        transform: rotate(337deg);
+                        -webkit-transform: rotate(337deg);
+                        z-index: 3;
+                        border: 1px solid #eaeaea;
+                        border-radius: 3px;
+
+
+                        .filemanager-bi-draggable-folder-image {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 70px;
+
+                            img {
+                                width: 60px;
+                            }
+                        }
+
+                        .filemanager-bi-draggable-folder-name {
+                            background: #FFFFFF;
+                            height: 30px;
+                            border-top: 1px solid #eaeaea;
+                            font-size: 12px;
+                            text-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                        }
+                    }
 
 
                     .filemanager-bi-content-item-box {
@@ -1312,7 +1450,8 @@ h1, h2, h3, h4, h5, h6 {
 
         #filemanager-bi-warning-menu-folder {
             display: none;
-            div{
+
+            div {
                 font-size: 14px;
                 font-weight: 600;
                 background: #fff9e9;
@@ -1328,35 +1467,92 @@ h1, h2, h3, h4, h5, h6 {
             text-align: center;
             border-radius: 4px;
 
-            .filemanager-bi-success-msg{
+            .filemanager-bi-success-msg {
                 background: rgba(0, 201, 0, 0.08);
                 padding: 10px;
                 margin-bottom: 12px;
             }
 
-            .filemanager-bi-error-msg{
+            .filemanager-bi-error-msg {
                 background: rgba(255, 0, 0, 0.12);
                 padding: 10px;
-                b{
+
+                b {
                     color: #ff0000;
                 }
             }
 
-            .filemanager-bi-warning-msg{
+            .filemanager-bi-warning-msg {
                 background: #fff9e9;
                 padding: 10px;
                 margin: 12px 0;
 
             }
 
-            .filemanager-bi-default-msg{
+            .filemanager-bi-default-msg {
                 background: #ffffff;
                 margin: 4px 0;
                 text-align: left;
                 padding: 4px;
-               &:not(:last-child){
-                   border-bottom: 1px solid #e2e2e2;
-               }
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid #e2e2e2;
+                }
+            }
+
+
+        }
+
+        #filemanager-bi-warning-menu-folder-draggable {
+            display: none;
+
+            div {
+                font-size: 14px;
+                font-weight: 600;
+                background: #fff9e9;
+                padding: 10px;
+                text-align: center;
+                border-radius: 4px;
+            }
+        }
+
+        #filemanager-bi-info-cut-folder-draggable {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 4px;
+
+            .filemanager-bi-success-msg {
+                background: rgba(0, 201, 0, 0.08);
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+
+            .filemanager-bi-error-msg {
+                background: rgba(255, 0, 0, 0.12);
+                padding: 10px;
+
+                b {
+                    color: #ff0000;
+                }
+            }
+
+            .filemanager-bi-warning-msg {
+                background: #fff9e9;
+                padding: 10px;
+                margin: 12px 0;
+
+            }
+
+            .filemanager-bi-default-msg {
+                background: #ffffff;
+                margin: 4px 0;
+                text-align: left;
+                padding: 4px;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid #e2e2e2;
+                }
             }
 
 
@@ -1379,7 +1575,7 @@ h1, h2, h3, h4, h5, h6 {
             margin: 5px;
         }
 
-        #filemanager-bi-modal-back-cut-folder{
+        #filemanager-bi-modal-back-cut-folder {
             display: none;
         }
     }

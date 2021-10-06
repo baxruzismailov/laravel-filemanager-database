@@ -10,13 +10,16 @@
         <div id="filemanager-bi-information-right"></div>
     </div>
 
+    <!--  breadcrump  -->
+    <div id="filemanager-bi-breadcrump"></div>
+
     <div id="filemanager-bi-content-item">
         <!--  CONTENT START  -->
         <div id="filemanager-bi-content-container" class="photoswipe-wrapper">
 
             <!--  FOLDER BACK  -->
         {{--                    <div class="filemanager-bi-content-item-folder-back-box"--}}
-        {{--                         data-back-folder-id="1"--}}
+        {{--                         data-folder-id="1"--}}
         {{--                    >--}}
 
         {{--                        <div class="filemanager-bi-content-item-folder-back-image">--}}

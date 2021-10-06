@@ -1,5 +1,6 @@
 <!--  JQUERY JS  -->
 <script src="{{ asset('vendor/file-manager-bi/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager-bi/plugins/jquery/jquery.ui.min.js') }}"></script>
 
 <!--  PHOTOSWIPE JS  -->
 <script src='{{ asset('vendor/file-manager-bi/plugins/photoswipe/js/photoswipe.min.js') }}'></script>
