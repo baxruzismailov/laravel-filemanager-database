@@ -284,6 +284,9 @@ h1, h2, h3, h4, h5, h6 {
       justify-content: flex-end; }
       #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type {
         display: flex; }
+        #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type .filemanager-bi-filter-type-active {
+          background: #00b6fd !important;
+          color: #FFFFFF !important; }
         #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div {
           margin: 0;
           margin-right: 9px;
@@ -292,8 +295,8 @@ h1, h2, h3, h4, h5, h6 {
           padding: 0;
           padding-right: 1px;
           display: flex;
-          width: 26px;
-          height: 26px;
+          width: 30px;
+          height: 30px;
           justify-content: center;
           align-items: center;
           border: 1px solid #d7dcdf;
@@ -305,7 +308,7 @@ h1, h2, h3, h4, h5, h6 {
           #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div:hover {
             background: #F7F8F9; }
           #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter-type div i {
-            font-size: 12px; }
+            font-size: 13px; }
       #filemanager-bi #filemanager-bi-navbar #right-navbar-item #filemanager-bi-filter {
         width: 140px;
         height: 29px; }
@@ -325,22 +328,27 @@ h1, h2, h3, h4, h5, h6 {
         #filemanager-bi #filemanager-bi-navbar #right-navbar-item .filemanager-bi-menu-icon i {
           font-size: 19px;
           color: #373a3c; }
-      #filemanager-bi #filemanager-bi-navbar #right-navbar-item div {
-        margin-left: 8px;
-        background: white;
-        border-radius: 50%;
-        padding: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #d7dcdf;
-        -webkit-transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
-        transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
-        transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out;
-        transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
-        cursor: pointer; }
-        #filemanager-bi #filemanager-bi-navbar #right-navbar-item div:hover {
-          background: #F7F8F9; }
+      #filemanager-bi #filemanager-bi-navbar #right-navbar-item .right-navbar-remove-filters {
+        display: flex; }
+        #filemanager-bi #filemanager-bi-navbar #right-navbar-item .right-navbar-remove-filters div {
+          margin-left: 8px;
+          background: white;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #d7dcdf;
+          -webkit-transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out;
+          transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out, box-shadow .1s ease-in-out, -webkit-box-shadow .1s ease-in-out;
+          cursor: pointer; }
+          #filemanager-bi #filemanager-bi-navbar #right-navbar-item .right-navbar-remove-filters div:hover {
+            background: #F7F8F9; }
+          #filemanager-bi #filemanager-bi-navbar #right-navbar-item .right-navbar-remove-filters div i {
+            font-size: 15px; }
   #filemanager-bi #filemanager-bi-breadcrump {
     background: #F7F8F9;
     padding: 4px 17px;
@@ -452,6 +460,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex; }
     #filemanager-bi #filemanager-bi-container #filemanager-bi-left-menu {
       min-width: 275px;
+      max-width: 275px;
       overflow: auto;
       background: #F7F8F9;
       display: none;
@@ -590,8 +599,6 @@ h1, h2, h3, h4, h5, h6 {
             display: flex;
             flex-direction: column;
             background: #F7F8F9;
-            transform: rotate(337deg);
-            -webkit-transform: rotate(337deg);
             z-index: 3;
             border: 1px solid #eaeaea;
             border-radius: 3px; }

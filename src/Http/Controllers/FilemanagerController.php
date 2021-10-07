@@ -72,9 +72,8 @@ class FilemanagerController extends Controller
             ->get();
 
 
-
         //FILES
-        $files = FilemanagerFile::where(function ($query) use ($urlType,$filterType) {
+        $files = FilemanagerFile::where(function ($query) use ($urlType, $filterType) {
             //type image, media (video,audio).
             if (!$urlType == null) {
 
@@ -85,8 +84,8 @@ class FilemanagerController extends Controller
                     $query->orWhere('type', 'audio');
                 }
 
-            }else{
-                if(!$filterType == null){
+            } else {
+                if (!$filterType == null) {
                     $query->where('type', $filterType);
                 }
             }
@@ -97,39 +96,57 @@ class FilemanagerController extends Controller
             ->get();
 
 
-        $folderCheck = FilemanagerFolder::where('id',$folderID)
-            ->select('parent','name')
+        $folderCheck = FilemanagerFolder::where('id', $folderID)
+            ->select('parent', 'name')
             ->first();
 
         $folderName = '';
         $folderParentID = '';
-        if($folderCheck){
+        if ($folderCheck) {
             $folderName = $folderCheck->name;
             $folderParentID = $folderCheck->parent;
-        }else{
-            $folderName ='';
-            $folderParentID ='';
+        } else {
+            $folderName = '';
+            $folderParentID = '';
         }
 
 
         $foldersCount = $folders->count();
         $filesCount = $files->count();
 
+        //ADD NEW FIELD FOR FILES
+        $filesMap = array_map(function ($data) {
+            $arrMergeFiles['size'] = \Baxruzismailov\Filemanager\Services\FileService::fileSize($data['url']);
+            $arrMergeFiles['extension'] = \Baxruzismailov\Filemanager\Services\FileService::fileExtension($data['url']);
+            if ($data['type'] == 'image') {
+                $arrMergeFiles['weight_height'] = \Baxruzismailov\Filemanager\Services\FileService::imageSize($data['url'])[0] . 'x' . \Baxruzismailov\Filemanager\Services\FileService::imageSize($data['url'])[1];
+            } else {
+                $arrMergeFiles['weight_height'] = '';
+            }
+            $data['created_at'] = \Illuminate\Support\Carbon::parse($data['created_at'])->format('d.m.Y H:i');
+
+            return array_merge($arrMergeFiles, $data);
+
+        }, $files->toArray());
+
+
+        //ADD NEW FIELD FOR FOLDERS
+        $foldersMap = array_map(function ($data) {
+            $data['created_at'] = \Illuminate\Support\Carbon::parse($data['created_at'])->format('d.m.Y H:i');
+            return $data;
+        }, $folders->toArray());
+
+
         $data = [
-            'folders' => $folders,
-            'files' => $files,
+            'folders' => $foldersMap,
+            'files' => $filesMap,
             'folder_name' => $folderName,
             'folder_parent_ID' => $folderParentID,
-            'folders_and_files' => sprintf(trans('fm-translations::filemanager-bi.information'),$foldersCount,$filesCount)
+            'files_count' => $filesCount,
+            'limit_files_count' => config('file-manager-bi.files_limit'),
+            'folders_and_files' => sprintf(trans('fm-translations::filemanager-bi.information'), $foldersCount, $filesCount)
         ];
 
-
-//        return view('filemanager::main.index', compact(
-//            'folders',
-//            'foldersCount',
-//            'files',
-//            'filesCount'
-//        ));
 
         return response()->json([
             'success' => true,
@@ -387,7 +404,7 @@ class FilemanagerController extends Controller
         $nextFolderName = [];
 
 
-        if($folderID != $current_folder){
+        if ($folderID != $current_folder) {
             if ($folder || $folderID == 0) {
 
 
@@ -403,16 +420,15 @@ class FilemanagerController extends Controller
                             ->first();
 
 
-
                         //CHECK DESTINATION FOLDER ID
-                        if($folderID == 0){
+                        if ($folderID == 0) {
                             $destinationFolderCheck = true;
                             $destinationFolderID = 0;
                             //If this folder == cut Folder ID
-                        }elseif ($folder->id != $cutFolderID){
+                        } elseif ($folder->id != $cutFolderID) {
                             $destinationFolderCheck = true;
                             $destinationFolderID = $folder->id;
-                        }else{
+                        } else {
                             $destinationFolderCheck = false;
                         }
 
@@ -420,8 +436,7 @@ class FilemanagerController extends Controller
 
                             //If the folder is not its own subfolder
                             $subFolderCheck = \Baxruzismailov\Filemanager\Services\FolderService::getParentFolderID($cutFolderID);
-                            if (!in_array($destinationFolderID,$subFolderCheck)) {
-
+                            if (!in_array($destinationFolderID, $subFolderCheck)) {
 
 
                                 //AUTO RENAME
@@ -564,7 +579,7 @@ class FilemanagerController extends Controller
                 $arrMsg['error_text'] = trans('fm-translations::filemanager-bi.not_exists_folder');
 
             }//ELSE ERROR
-        }else{
+        } else {
             $arrMsg['error'] = true;
             $arrMsg['sub_folder_error'] = true;
             $arrMsg['error_cut_folder_id'] = $folderID;
@@ -572,10 +587,8 @@ class FilemanagerController extends Controller
         }
 
 
-
-
-        if(isset($arrMsg['next_folder_error'])){
-            $result  = array_diff($successFolder,$nextFolderID);
+        if (isset($arrMsg['next_folder_error'])) {
+            $result = array_diff($successFolder, $nextFolderID);
             $arrMsg['success_cut_folder'] = array_values($result);
         }
 

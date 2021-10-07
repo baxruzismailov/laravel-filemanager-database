@@ -65,9 +65,15 @@
                 </span>
                 <input id="filemanager-bi-filter" type="text" class="fm-bi-form-control"
                        placeholder="{{ trans('fm-translations::filemanager-bi.filter_placeholder') }}">
-                <div title="{{ trans('fm-translations::filemanager-bi.settings') }}" id="filemanager-bi-setting-icon"
-                     data-setting-status="0">
-                    <i class="fas fa-cog"></i>
+
+                <div class="right-navbar-remove-filters">
+                    <div title="{{ trans('fm-translations::filemanager-bi.settings') }}" id="filemanager-bi-all-filters-remove">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div title="{{ trans('fm-translations::filemanager-bi.settings') }}" id="filemanager-bi-setting-icon"
+                         data-setting-status="0">
+                        <i class="fas fa-cog"></i>
+                    </div>
                 </div>
             </div>
         </div>

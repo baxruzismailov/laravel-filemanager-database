@@ -15,6 +15,7 @@
         FILE_MANAGER_BI_DELETE_ALL_FILE_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.file_delete_all') }}",
         FILE_MANAGER_BI_DELETE_FILE_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.file_delete_text') }}",
         FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.file_delete') }}",
+        FILEMANAGER_BI_DOWNLOAD_BUTTON_TEXT_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.file_download') }}",
         FILEMANAGER_BI_EDIT_BUTTON_TEXT_TRANSLATE = "{{ trans('fm-translations::filemanager-bi.file_edit') }}";
 
     /*   FOLDER   */

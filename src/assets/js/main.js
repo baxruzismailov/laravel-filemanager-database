@@ -410,7 +410,7 @@ function filemanagerBiGetFolders(folderID, folder_parent_ID, data) {
                                 <!--  CREATED AT  -->
                                 <div>
                                     <i class="far fa-calendar-alt"></i>
-                                    <span>${filemanagerBiDatefilter(value.created_at)}</span>
+                                    <span>${value.created_at}</span>
                                 </div>
 
                             </div>
@@ -426,7 +426,7 @@ function filemanagerBiGetFolders(folderID, folder_parent_ID, data) {
                     </div>
                     <div class="filemanager-bi-content-item-folder-info-mobile">
                         <div>${value.name}</div>
-                        <div>${filemanagerBiDatefilter(value.created_at)}</div>
+                        <div>${value.created_at}</div>
                         <div>${filemanagerBiSprintf(FILE_MANAGER_BI_FOLDER_FILE_COUNT_TRANSLATE, [value.files_count])}</div>
                     </div>
                     <div class="filemanager-bi-content-item-folder-name">${value.name}</div>
@@ -454,8 +454,237 @@ function filemanagerBiGetFolders(folderID, folder_parent_ID, data) {
 /*   FOLDERS END  */
 
 /*   FILES START  */
-function filemanagerBiGetFiles(data) {
-    console.log('File function olacaq');
+function filemanagerBiGetFiles(data,filesCount,limitFilesCount) {
+    let files;
+    data.forEach(function (value) {
+        /*   IMAGES   */
+        if(value.type == 'image'){
+
+            files = `
+            <div class="filemanager-bi-content-item-box"
+             data-file-id="${value.id}"
+             data-file-name="${value.name}"
+        >
+            <!--  SELECT FILE  -->
+            <div class="filemanager-bi-select-file"></div>
+
+            <div class="filemanager-bi-content-item-image">
+                <div class="photoswipe-item">
+                    <a
+                       data-size="${value.weight_height}"
+                        data-title="${value.name}"
+                        href="${value.url}">
+                        <img src="${value.url}">
+                            <div class="fm-photoswipe-item-mobile">
+                                <div>${value.name}</div>
+                                <div>${value.created_at}</div>
+                                <div>${value.size}</div>
+                            </div>
+                    </a>
+                </div>
+            </div>
+            <div class="filemanager-bi-content-item-info">${value.name}</div>
+            <!--  TOOLS  -->
+            <div class="filemanager-bi-content-item-tools">
+                <i title="${FILEMANAGER_BI_DOWNLOAD_BUTTON_TEXT_TRANSLATE}"
+                   class="far fa-arrow-alt-circle-down"></i>
+                <i title="${FILEMANAGER_BI_EDIT_BUTTON_TEXT_TRANSLATE}"
+                   class="fas fa-feather-alt"></i>
+                <i title="${FILE_MANAGER_BI_RENAME_TRANSLATE}" class="far fa-edit"></i>
+                <i
+                    title="${FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE}"
+                    class="far fa-trash-alt filemanager-bi-delete-one-file"
+                    onClick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                    data-modal="#filemanager-bi-remove-only-one-file-modal"
+                ></i>
+            </div>
+        </div>
+        `;
+            $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(files);
+        }
+
+        /*   VIDEO   */
+        else if(value.type == 'video'){
+
+            files = `
+            <div class="filemanager-bi-content-item-box"
+                         data-file-id="${value.id}"
+                         data-file-name="${value.name}"
+                    >
+                        <!--  SELECT FILE  -->
+                        <div class="filemanager-bi-select-file"></div>
+
+                        <div class="filemanager-bi-content-item-image">
+                            <div class="photoswipe-item">
+
+
+                                <a href="#" data-type="video"
+                                   data-title="${value.name}"
+                                   data-size="512x512"
+                                   data-video='<div class="wrapper">
+                                           <div class="video-wrapper">
+                                           <video width="960" class="pswp__video" src="${value.url}" controls></video>
+                                           </div>
+                                           </div>'>
+                                    <div class="photoswipe-item-files-container">
+                                        <img class="photoswipe-item-files"
+                                             src="${value.extension}">
+                                    </div>
+                                    <div class="fm-photoswipe-item-mobile">
+                                        <div>${value.name}</div>
+                                        <div>${value.created_at}</div>
+                                        <div>${value.size}</div>
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+                        <div class="filemanager-bi-content-item-info">${value.name}</div>
+                        <!--  TOOLS  -->
+                        <div class="filemanager-bi-content-item-tools">
+                            <i title="${FILEMANAGER_BI_DOWNLOAD_BUTTON_TEXT_TRANSLATE}"
+                               class="far fa-arrow-alt-circle-down"></i>
+                            <i title="${FILE_MANAGER_BI_RENAME_TRANSLATE}" class="far fa-edit"></i>
+                            <i
+                                title="${FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE}"
+                                class="far fa-trash-alt filemanager-bi-delete-one-file"
+                                onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                                data-modal="#filemanager-bi-remove-only-one-file-modal"
+                            ></i>
+                        </div>
+
+                    </div>
+        `;
+            $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(files);
+        }
+
+
+        /*   AUDIO   */
+        else if(value.type == 'audio'){
+
+            files = `
+                  <div class="filemanager-bi-content-item-box"
+                         data-file-id="${value.id}"
+                         data-file-name="${value.name}"
+                    >
+                        <!--  SELECT FILE  -->
+                        <div class="filemanager-bi-select-file"></div>
+
+                        <div class="filemanager-bi-content-item-image">
+                            <div class="photoswipe-item">
+
+
+                                <a href="#" data-type="audio"
+                                   data-size="512x512"
+                                   data-title="${value.name}"
+                                   data-audio='<div class="wrapper">
+                                               <div class="audio-wrapper">
+                                               <audio controls><source class="pswp__audio" src="${value.url}" type="audio/mpeg"> Your browser does not support the audio element. </audio>
+                                               </div>
+                                               </div>'>
+                                    <div class="photoswipe-item-files-container">
+                                        <img class="photoswipe-item-files"
+                                             src="${value.extension}">
+                                    </div>
+                                    <div class="fm-photoswipe-item-mobile">
+                                        <div>${value.name}</div>
+                                        <div>${value.created_at}</div>
+                                        <div>${value.size}</div>
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+                        <div class="filemanager-bi-content-item-info">${value.name}</div>
+                        <!--  TOOLS  -->
+                        <div class="filemanager-bi-content-item-tools">
+                            <i title="${FILEMANAGER_BI_DOWNLOAD_BUTTON_TEXT_TRANSLATE}"
+                               class="far fa-arrow-alt-circle-down"></i>
+                            <i title="${FILE_MANAGER_BI_RENAME_TRANSLATE}" class="far fa-edit"></i>
+                            <i
+                                title="${FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE}"
+                                class="far fa-trash-alt filemanager-bi-delete-one-file"
+                                onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                                data-modal="#filemanager-bi-remove-only-one-file-modal"
+                            ></i>
+                        </div>
+                    </div>
+        `;
+            $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(files);
+        }
+
+        /*   DOCUMENT, ARCHIVE, FILE   */
+        else {
+
+            files = `
+                <div class="filemanager-bi-content-item-box"
+                         data-file-id="${value.id}"
+                         data-file-name="${value.name}"
+                    >
+                        <!--  SELECT FILE  -->
+                        <div class="filemanager-bi-select-file"></div>
+
+                        <div class="filemanager-bi-content-item-image">
+                            <div class="photoswipe-item">
+                                <a href="#" data-type="file"
+                                   data-size="512x512"
+                                   data-title="${value.name}"
+                                   data-file='<div class="wrapper">
+                                           <div class="document-wrapper">
+                                          <img src="${value.extension}">
+                                           </div>
+                                           </div>'>
+                                    <div class="photoswipe-item-files-container">
+                                        <img class="photoswipe-item-files"
+                                             src="${value.extension}">
+                                    </div>
+                                    <div class="fm-photoswipe-item-mobile">
+                                        <div>${value.name}</div>
+                                        <div>${value.created_at}</div>
+                                        <div>${value.size}</div>
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+                        <div class="filemanager-bi-content-item-info">${value.name}</div>
+                        <!--  TOOLS  -->
+                        <div class="filemanager-bi-content-item-tools">
+                            <i title="${FILEMANAGER_BI_DOWNLOAD_BUTTON_TEXT_TRANSLATE}"
+                               class="far fa-arrow-alt-circle-down"></i>
+                            <i title="${FILE_MANAGER_BI_RENAME_TRANSLATE}" class="far fa-edit"></i>
+                            <i
+                                title="${FILEMANAGER_BI_DELETE_BUTTON_TEXT_TRANSLATE}"
+                                class="far fa-trash-alt filemanager-bi-delete-one-file"
+                                onclick="filemanagerModalOpen(this.getAttribute('data-modal'))"
+                                data-modal="#filemanager-bi-remove-only-one-file-modal"
+                            ></i>
+                        </div>
+                    </div>
+            `;
+            $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(files);
+        }
+
+    })
+
+
+
+    if(filesCount == limitFilesCount){
+
+        $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(`
+            <div class="filemanager-bi-content-item-footer">
+                <!--  NOT FILE   -->
+                <div class="filemanager-bi-content-item-footer-text"></div>
+            </div>
+        `);
+    }
+
+
+
+
 }
 
 /*   FILES END  */
@@ -465,11 +694,11 @@ var FILEMANAGER_BI_GET_FOLDERS_AND_FILES;
 
 function filemanagerBiGetFoldersAndFiles(folderID, urlType = "", filterType = "") {
     /*   GET FILTER TYPE   */
-    if (urlType != null) {
-        $('#filemanager-bi-filter-type').empty();
-    } else {
-        filemanagerBiGetFilterType();
-    }
+    // if (urlType != null) {
+    //     $('#filemanager-bi-filter-type').empty();
+    // } else {
+    //     filemanagerBiGetFilterType();
+    // }
 
     clearTimeout(FILEMANAGER_BI_GET_FOLDERS_AND_FILES);
     FILEMANAGER_BI_GET_FOLDERS_AND_FILES = setTimeout(function () {
@@ -488,7 +717,9 @@ function filemanagerBiGetFoldersAndFiles(folderID, urlType = "", filterType = ""
                     /*  GET FOLDERS   */
                     filemanagerBiGetFolders(folderID, response.data.folder_parent_ID, response.data.folders)
                     /*  GET FILES   */
-                    filemanagerBiGetFiles(response.data.files)
+                    filemanagerBiGetFiles(response.data.files,response.data.files_count,response.data.limit_files_count)
+
+                    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').append(files);
 
                     if (response.data.folder_name == '') {
                         $('#filemanager-bi #filemanager-bi-information #filemanager-bi-information-left #filemanager-bi-information-folder-name').html('');
@@ -555,8 +786,97 @@ $(document).on('click', '.filemanager-bi-content-item-folder-image, .filemanager
 })
 /*   FOLDER BOX CLICK END   */
 
-
 /*   GET FOLDERS AND FILES END   */
+
+
+
+/*   REMOVE ALL FILTERS START   */
+$(document).on('click', '#filemanager-bi #filemanager-bi-all-filters-remove', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text('');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType);
+})
+/*   REMOVE ALL FILTERS END   */
+
+
+/*   FITLER TYPES CLICK START   */
+/*   ARCHIVE   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-filter-type-archive', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $(this).addClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    const filterType = 'archive';
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text(filterType);
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType, filterType);
+})
+
+/*   DOCUMENT   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-filter-type-document', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $(this).addClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    const filterType = 'document';
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text(filterType);
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType, filterType);
+})
+
+/*   IMAGE   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-filter-type-image', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $(this).addClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    const filterType = 'image';
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text(filterType);
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType, filterType);
+})
+
+/*   VIDEO   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-filter-type-video', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $(this).addClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    const filterType = 'video';
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text(filterType);
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType, filterType);
+})
+
+/*   AUDIO   */
+$(document).on('click', '#filemanager-bi .filemanager-bi-filter-type-audio', function () {
+    $('#filemanager-bi').find('.filemanager-bi-filter-type-active').removeClass('filemanager-bi-filter-type-active');
+    $(this).addClass('filemanager-bi-filter-type-active');
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-folder-box').empty();
+    $('#filemanager-bi').find('.filemanager-bi-select-navbar-file-box').empty();
+    const currentFolderID = $('#filemanager-bi #filemanager-bi-current-folder-id').text();
+    const urlType = filemanagerBiGetUrlType();
+    const filterType = 'audio';
+    $('#filemanager-bi #filemanager-bi-content #filemanager-bi-content-item #filemanager-bi-content-container').empty();
+    $('#filemanager-bi #filemanager-bi-filter-type-name').text(filterType);
+    filemanagerBiGetFoldersAndFiles(currentFolderID, urlType, filterType);
+})
+/*   FITLER TYPES CLICK END   */
+
+
 
 $(document).on('click', '#tikla', function () {
     const currentFolderID = localStorage.getItem('filemanager_bi_current_folder');
@@ -1801,7 +2121,7 @@ function filemanagerBiFoldersDraggable() {
 
     $(".filemanager-bi-content-item-folder-box").draggable({
         cursor: "move",
-        cursorAt: {top: 0, left: -20},
+        cursorAt: {top: -10, left: -20},
         scroll: false,
         delay:200,
         helper: function (event) {
@@ -1874,16 +2194,18 @@ function filemanagerBiFoldersDraggable() {
 /*   CUT DRAGGABLE FOLDER END   */
 
 
-/*   FILES WIDTH & HEIGTH START  */
-function filemanagerDetectedImageUrlSize(URL, callback) {
-    let image = new Image();
-    image.src = URL;
-    image.onload = function () {
-        let result = this.width + 'x' + this.height;
-        callback(result);
-    };
-}
 
+/*   FILES WIDTH & HEIGTH START  */
+// function filemanagerDetectedImageUrlSize(URL, fileID) {
+//     const filemanagerBiGetImage = new Image();
+//     filemanagerBiGetImage.src = URL;
+//     filemanagerBiGetImage.onload = function () {
+//         const resultImageSize = this.width + 'x' + this.height;
+//         $("#filemanager-bi #filemanager-bi-content-container .filemanager-bi-content-item-box[data-file-id='" + fileID + "']").find('.filemanager-bi-content-item-image').find('a').attr('data-size',resultImageSize);
+//     };
+//
+//
+// }
 /*   FILES WIDTH & HEIGTH END  */
 
 
@@ -1944,9 +2266,7 @@ function getHomePageFileManagerBi() {
                     response.files.forEach(function (value) {
 
 
-                        filemanagerDetectedImageUrlSize(value.url, function (result) {
-                            console.log(result);
-                        });
+                        console.log(filemanagerDetectedImageUrlSize(value.url,7));
 
 
                     })
